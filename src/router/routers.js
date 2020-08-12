@@ -6,7 +6,8 @@ const routes = [
     component: () => import('@/views/home/index.vue'),
     meta: {
       name: '精品课程',
-      title: '精品课程'
+      title: '精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 评价evaluate **************************************** **/
@@ -17,7 +18,8 @@ const routes = [
     component: () => import('@/views/evaluate/outside/index.vue'),
     meta: {
       name: '校外专家评价 | 精品课程',
-      title: '校外专家评价 | 精品课程'
+      title: '校外专家评价 | 精品课程',
+      keepAlive: true
     }
   },
   // 校内专家评价
@@ -27,7 +29,8 @@ const routes = [
     component: () => import('@/views/evaluate/school/index.vue'),
     meta: {
       name: '校内专家评价 | 精品课程',
-      title: '校内专家评价 | 精品课程'
+      title: '校内专家评价 | 精品课程',
+      keepAlive: true
     }
   },
   // 教师评价
@@ -37,7 +40,8 @@ const routes = [
     component: () => import('@/views/evaluate/teacher/index.vue'),
     meta: {
       name: '教师评价 | 精品课程',
-      title: '教师评价 | 精品课程'
+      title: '教师评价 | 精品课程',
+      keepAlive: true
     }
   },
   // 学生评价
@@ -47,7 +51,8 @@ const routes = [
     component: () => import('@/views/evaluate/student/index.vue'),
     meta: {
       name: '学生评价 | 精品课程',
-      title: '学生评价 | 精品课程'
+      title: '学生评价 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 考试平台exam **************************************** **/
@@ -58,7 +63,8 @@ const routes = [
     component: () => import('@/views/exam/objective/index.vue'),
     meta: {
       name: '客观题 | 精品课程',
-      title: '客观题 | 精品课程'
+      title: '客观题 | 精品课程',
+      keepAlive: true
     }
   },
   // 主观题
@@ -68,7 +74,8 @@ const routes = [
     component: () => import('@/views/exam/subjective/index.vue'),
     meta: {
       name: '主观题 | 精品课程',
-      title: '主观题 | 精品课程'
+      title: '主观题 | 精品课程',
+      keepAlive: true
     }
   },
   // 模拟考试
@@ -78,7 +85,8 @@ const routes = [
     component: () => import('@/views/exam/practice/index.vue'),
     meta: {
       name: '模拟考试 | 精品课程',
-      title: '模拟考试 | 精品课程'
+      title: '模拟考试 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 教学资源resource **************************************** **/
@@ -89,7 +97,8 @@ const routes = [
     component: () => import('@/views/resource/courseware/index.vue'),
     meta: {
       name: '教学课件 | 精品课程',
-      title: '教学课件 | 精品课程'
+      title: '教学课件 | 精品课程',
+      keepAlive: true
     }
   },
   // 教学录像
@@ -99,7 +108,8 @@ const routes = [
     component: () => import('@/views/resource/video/index.vue'),
     meta: {
       name: '教学录像 | 精品课程',
-      title: '教学录像 | 精品课程'
+      title: '教学录像 | 精品课程',
+      keepAlive: true
     }
   },
   // 教学大纲
@@ -109,7 +119,8 @@ const routes = [
     component: () => import('@/views/resource/outline/index.vue'),
     meta: {
       name: '教学大纲 | 精品课程',
-      title: '教学大纲 | 精品课程'
+      title: '教学大纲 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 学习记录record **************************************** **/
@@ -119,7 +130,8 @@ const routes = [
     component: () => import('@/views/record/index.vue'),
     meta: {
       name: '学习记录 | 精品课程',
-      title: '学习记录 | 精品课程'
+      title: '学习记录 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 师生互动interaction **************************************** **/
@@ -129,7 +141,8 @@ const routes = [
     component: () => import('@/views/interaction/index.vue'),
     meta: {
       name: '师生互动 | 精品课程',
-      title: '师生互动 | 精品课程'
+      title: '师生互动 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 作业提交homework **************************************** **/
@@ -139,7 +152,8 @@ const routes = [
     component: () => import('@/views/homework/index.vue'),
     meta: {
       name: '作业提交 | 精品课程',
-      title: '作业提交 | 精品课程'
+      title: '作业提交 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 用户模块user **************************************** **/
@@ -150,7 +164,8 @@ const routes = [
     component: () => import('@/views/user/login/index.vue'),
     meta: {
       name: '用户登录 | 精品课程',
-      title: '用户登录 | 精品课程'
+      title: '用户登录 | 精品课程',
+      keepAlive: false
     }
   },
   // 注册
@@ -160,7 +175,8 @@ const routes = [
     component: () => import('@/views/user/register/index.vue'),
     meta: {
       name: '用户注册 | 精品课程',
-      title: '用户注册 | 精品课程'
+      title: '用户注册 | 精品课程',
+      keepAlive: false
     }
   },
   // 个人中心

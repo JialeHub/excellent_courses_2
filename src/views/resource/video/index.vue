@@ -1,6 +1,6 @@
 <template>
   <div id="resourceVideo">
-
+    教学录像
   </div>
 </template>
 

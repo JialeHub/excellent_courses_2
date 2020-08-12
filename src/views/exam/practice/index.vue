@@ -1,6 +1,6 @@
 <template>
   <div id="examPractice">
-
+    模拟考试
   </div>
 </template>
 

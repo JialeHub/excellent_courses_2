@@ -1,6 +1,6 @@
 <template>
   <div id="interaction">
-
+    师生互动
   </div>
 </template>
 

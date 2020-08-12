@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link>
-      <span v-html="xssTest">xssTest</span>
+    <div v-if="$route.meta.keepAlive">
+      <head-menu/>
+      <router-view/>
+      <foot-menu/>
     </div>
-    <router-view/>
+    <div v-else>
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
-window.xssTest = {}
 export default {
   name: 'app',
   data () {

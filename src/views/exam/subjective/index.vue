@@ -1,6 +1,6 @@
 <template>
   <div id="examSubjective">
-
+    主观题
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div id="resourceOutline">
-
+    教学大纲
   </div>
 </template>
 

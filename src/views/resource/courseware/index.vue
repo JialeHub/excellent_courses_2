@@ -1,6 +1,6 @@
 <template>
   <div id="resourceCourseware">
-
+    教学课件
   </div>
 </template>
 

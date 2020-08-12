@@ -1,6 +1,6 @@
 <template>
   <div id="record">
-
+    学习记录
   </div>
 </template>
 

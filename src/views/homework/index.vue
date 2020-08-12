@@ -1,6 +1,6 @@
 <template>
   <div id="homework">
-
+    作业提交
   </div>
 </template>
 
