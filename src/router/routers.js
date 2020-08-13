@@ -179,6 +179,17 @@ const routes = [
       keepAlive: false
     }
   },
+  // 修改密码
+  {
+    path: '/password',
+    name: 'password',
+    component: () => import('@/views/user/password/index.vue'),
+    meta: {
+      name: '修改密码 | 精品课程',
+      title: '修改密码 | 精品课程',
+      keepAlive: false
+    }
+  },
   // 个人中心
   {
     path: '/register',

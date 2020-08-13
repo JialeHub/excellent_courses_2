@@ -4,7 +4,9 @@
       <!--Nav导航栏-->
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent"
       >
-        <a class="navbar-brand" href="#">Logo</a>
+        <a class="navbar-brand" href="#">
+          <img src="../../../assets/img/logo02.png">
+        </a>
         <span style="font-family: AliHYAiHei-Beta,cursive;font-size: 26px;letter-spacing: 2px;color: #1089f0;font-weight: bold;margin-right: 6%">嵌入式</span>
         <button
           class="navbar-toggler"
