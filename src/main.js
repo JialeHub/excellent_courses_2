@@ -8,8 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/reset.scss'
 import './styles/index.scss'
 import './styles/common.scss'
-import HeadMenu from './views/Layout/Head'
-import FootMenu from './views/Layout/Foot'
+import HeadMenu from './views/Layout/Head' //顶部导航栏
+import FootMenu from './views/Layout/Foot' //底部
+import MakeStar from './components/makeStar' //星星评分组件
 Vue.config.productionTip = false
 
 new Vue({
@@ -20,3 +21,4 @@ new Vue({
 
 Vue.component('HeadMenu', HeadMenu)
 Vue.component('FootMenu', FootMenu)
+Vue.component('MakeStar', MakeStar)

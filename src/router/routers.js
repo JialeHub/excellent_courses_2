@@ -55,6 +55,17 @@ const routes = [
       keepAlive: true
     }
   },
+  // 学生评价详情
+  {
+    path: '/reply',
+    name: 'reply',
+    component: () => import('@/views/evaluate/student/reply.vue'),
+    meta: {
+      name: '学生评价详情 | 精品课程',
+      title: '学生评价详情 | 精品课程',
+      keepAlive: true
+    }
+  },
   /** **************************************** 考试平台exam **************************************** **/
   // 客观题
   {

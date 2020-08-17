@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.6",
-    "@vue/cli-plugin-eslint": "~4.4.6",
     "@vue/cli-plugin-pwa": "~4.4.6",
     "@vue/cli-plugin-router": "~4.4.6",
     "@vue/cli-plugin-vuex": "~4.4.6",
@@ -43,9 +42,9 @@
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
-    "root": true,
+    "root": false,
     "env": {
-      "node": true
+      "node": false
     },
     "extends": [
       "plugin:vue/essential",

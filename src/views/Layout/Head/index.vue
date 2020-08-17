@@ -105,12 +105,12 @@
 <!--                  alt=""-->
 <!--                />-->
 <!--              </div>-->
-              <img src="public/img/icons"/>
+              <img src="../../../assets/img/portrait.png"/>
             </router-link>
           </li>
-          <router-link to="/login">Login</router-link> |
-          <router-link to="/register">register</router-link>
-          <span v-html="xssTest">xssTest</span>
+          <router-link to="/login">登录</router-link> |
+          <router-link to="/register">注册</router-link>
+<!--          <span v-html="xssTest">xssTest</span>-->
         </ul>
       </div>
       <!--导航内容End-->
