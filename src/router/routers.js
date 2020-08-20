@@ -203,12 +203,13 @@ const routes = [
   },
   // 个人中心
   {
-    path: '/register',
-    name: 'register',
+    path: '/personal',
+    name: 'personal',
     component: () => import('@/views/user/personal/index.vue'),
     meta: {
       name: '个人中心 | 精品课程',
-      title: '个人中心 | 精品课程'
+      title: '个人中心 | 精品课程',
+      keepAlive: true
     }
   },
   /** **************************************** 处理页 **************************************** **/

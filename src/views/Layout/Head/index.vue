@@ -18,7 +18,7 @@
           aria-label="Toggle navigation"
         >
         </button>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" style="display: flex;align-items: center">
           <li class="nav-item ">
             <router-link class="nav-link" to="/" :class="[ $route.name === 'home' ? 'active' : '']">
               <span>首页</span>
@@ -82,6 +82,14 @@
               <a class="dropdown-item"><router-link to="/outline"><span>教学大纲</span></router-link></a>
             </div>
           </li>
+          <li class="nav-item " style="margin-left: 80px">
+            <router-link to="/login" v-if="!isLogin">登录  |</router-link>
+            <router-link to="/record" v-if="isLogin">我的学习 | </router-link>
+          </li>
+          <li class="nav-item ">
+            <router-link to="/register" v-if="!isLogin">注册</router-link>
+            <router-link to="/personal" v-if="isLogin">{{}}</router-link>
+          </li>
           <li>
             <router-link
               class="nav-link"
@@ -89,7 +97,7 @@
               'nav-item ',
               ['user', 'login'].indexOf($route.name) !== -1 ? 'active' : ''
             ]"
-              :to="{ name: 'user' }"
+              :to="{ name: 'login' }"
             >
 <!--              <div-->
 <!--                style="width: 40px;height: 40px;border-radius: 50%;overflow: hidden;border:1px rgba(50,50,50,0.3) solid "-->
@@ -108,8 +116,6 @@
               <img src="../../../assets/img/portrait.png"/>
             </router-link>
           </li>
-          <router-link to="/login">登录</router-link> |
-          <router-link to="/register">注册</router-link>
 <!--          <span v-html="xssTest">xssTest</span>-->
         </ul>
       </div>
@@ -126,7 +132,8 @@ export default {
   data () {
     return {
       text: '',
-      xssTest: ''
+      xssTest: '',
+      isLogin: true
     }
   },
   created () {

@@ -90,7 +90,6 @@ export default {
   name: 'resourceCourseware',
   data(){
     return{
-      checkedRows:[],
       coursewareList:[
         {id:1,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
         {id:2,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
