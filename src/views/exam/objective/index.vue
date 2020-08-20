@@ -31,7 +31,49 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <div class="container">
       <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">1</div>
+        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">
+          <div class="questions" v-for="(item,index) in textList" :key="item.id">
+            <div class="topic" style="display: flex;color: #333333;font-size: 16px;padding: 8% 0 5%">
+              <span>{{item.sort}}.</span>
+              <span>【{{item.type}}】</span>
+              <span>{{item.content}}</span>
+            </div>
+            <div class="options" v-if="item.type === '单选题'">
+              <div>
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                 XXXXX
+                </label>
+              </div>
+            </div>
+            <div class="options" style="line-height: 26px;" v-if="item.type === '多选题'">
+              <ul>
+                <li>
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">XXX</label>
+                </li>
+                <li>
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                  <label class="form-check-label" for="inlineCheckbox2">XXX</label>
+                </li>
+              </ul>
+            </div>
+            <div class="options" v-if="item.type === '判断题'">
+              <div class="form-check form-check-inline" style="padding-left: 1%">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                 √
+                </label>
+              </div>
+              <div class="form-check form-check-inline" style="padding-left: 4%">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <label class="form-check-label" for="exampleRadios2">
+                  ×
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">2</div>
         <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">3</div>
         <div class="tab-pane fade" id="pills-four" aria-labelledby="pills-contact-tab">4</div>
@@ -44,7 +86,21 @@
 <script>
 
 export default {
-  name: 'examObjective'
+  name: 'examObjective',
+  data(){
+    return{
+      isdone: false,
+      textList:[
+        {id:1,sort:1,type:'简答题',content:'XXXXXXXXXXXXX?'},
+        {id:2,sort:2,type:'简答题',content:'XXXXXXXXXXXXXXXX?'},
+        {id:3,sort:3,type:'简答题',content:'XXXXXXXXXXXXX?'},
+        {id:4,sort:4,type:'简答题',content:'XXXXXXXXXXXXXXX?'},
+        {id:5,sort:5,type:'简答题',content:'XXXXXXXXXXXXX?'},
+        {id:6,sort:6,type:'简答题',content:'XXXXXXXXXXXXXXX?'},
+        {id:7,sort:7,type:'简答题',content:'XXXXXXXXXXXXX?'},
+      ]
+    }
+  }
 }
 </script>
 

@@ -31,7 +31,23 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <div class="container">
       <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">1</div>
+        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab" >
+          <div class="Text" v-for="(item,index) in textList" :key="item.id">
+            <div class="text" style="display: flex;color: #333333;font-size: 16px;padding: 8% 0 5%" >
+              <span>{{item.sort}}.</span>
+              <span>【{{item.type}}】</span>
+              <span>{{item.content}}</span>
+            </div>
+            <div v-if="!isdone">富文本放置处</div>
+            <div v-if="isdone" style="font-size: 16px;">
+              <div class="myAnswer" style="color: #333333;line-height: 26px;">我的答案：XXXXXXXX</div>
+              <div class="rightAnswer" style="color: #d61111;line-height: 26px;padding-top: 2%">正确答案：XXXXXXXX</div>
+            </div>
+          </div>
+          <div class="button text-center" style="padding:4% 0 5%">
+            <input class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
+          </div>
+        </div>
         <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">2</div>
         <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">3</div>
         <div class="tab-pane fade" id="pills-four" aria-labelledby="pills-contact-tab">4</div>
@@ -43,7 +59,21 @@
 
 <script>
 export default {
-  name: 'examSubjective'
+  name: 'examSubjective',
+  data(){
+    return{
+      isdone: false,
+      textList:[
+        {id:1,sort:1,type:'简答题',content:'XXXXXXXXXXXXX?'},
+        {id:2,sort:2,type:'简答题',content:'XXXXXXXXXXXXXXXX?'},
+        {id:3,sort:3,type:'简答题',content:'XXXXXXXXXXXXX?'},
+        {id:4,sort:4,type:'简答题',content:'XXXXXXXXXXXXXXX?'},
+        {id:5,sort:5,type:'简答题',content:'XXXXXXXXXXXXX?'},
+        {id:6,sort:6,type:'简答题',content:'XXXXXXXXXXXXXXX?'},
+        {id:7,sort:7,type:'简答题',content:'XXXXXXXXXXXXX?'},
+      ]
+    }
+  }
 }
 </script>
 
