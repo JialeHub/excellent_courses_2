@@ -40,8 +40,21 @@ export default {
 </script>
 
 <style lang="scss">
-  #examPractice{
-
+  .container{
+    .nav{
+      margin-top: 2%;
+      margin-bottom: 3%;
+      .nav-item{
+        a{
+          color: #333333;
+          font-family: MicrosoftYaHei,sans-serif;
+          font-weight: bold;
+        }
+        .active{
+          color: #1089f0;
+        }
+      }
+    }
   }
 </style>
 
