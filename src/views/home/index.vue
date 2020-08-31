@@ -3,7 +3,7 @@
     <div class="banner"
          :style="`position: relative;height: 600px;background: rgb(246, 249, 251) url(imgSrc) no-repeat center;`"
     >
-      <div style="font-family: MicrosoftYaHei,sans-serif;font-size: 50px;font-stretch: normal;color: #ffffff;padding-top: 10%;padding-left: 18%;letter-spacing: 5px;">嵌入式系统原理与开发</div>
+      <div style="font-family: MicrosoftYaHei,sans-serif;font-size: 50px;font-stretch: normal;color: #ffffff;padding-top: 8%;padding-left: 18%;letter-spacing: 5px;">嵌入式系统原理与开发</div>
       <div style="font-family: MicrosoftYaHeiLight,monospace;font-size: 24px;color: #ffffff;padding-left: 18%;padding-top: 2%;letter-spacing: 3px;">PRINCIPLE AND DEVELOPMENT OF EMBEDDED SYSTEM</div>
       <div style="width: 300px;height: 4px;background-color: #ffffff;border-radius: 2px;margin-left: 18%;margin-top: 4%;"></div>
       <div><button type="button" class="btn btn-light" style="color: #1089f0;width: 156px;border-radius: 29px;margin-left: 18%;margin-top:5%">进入学习 > > </button></div>
@@ -36,23 +36,29 @@
         <div style="width: 160px;height: 2px;background-color: #1089f0;border-radius: 1px;opacity: 0.48;"></div>
       </div>
       <div class="ThreeCard" style="display:flex;justify-content: center;margin-bottom: 6%;margin-top: 2%">
-        <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%">
-          <img src="../../assets/img/home/courseware.png" class="card-img-top">
-          <div class="card-body">
-            <p class="card-text">教学课件</p>
-          </div>
+        <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%;cursor: pointer">
+          <router-link to="/courseware">
+            <img src="../../assets/img/home/courseware.png" class="card-img-top">
+            <div class="card-body">
+                <p class="card-text" style="color: #3c3c3c">教学课件</p>
+            </div>
+          </router-link>
         </div>
-        <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%">
-          <img src="../../assets/img/home/video.png" class="card-img-top">
-          <div class="card-body">
-            <p class="card-text">教学录像</p>
-          </div>
+        <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%;cursor: pointer">
+          <router-link to="/video">
+            <img src="../../assets/img/home/video.png" class="card-img-top">
+            <div class="card-body">
+              <p class="card-text" style="color: #3c3c3c">教学录像</p>
+            </div>
+          </router-link>
         </div>
-        <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%">
-          <img src="../../assets/img/home/test.png" class="card-img-top">
-          <div class="card-body">
-            <p class="card-text">自测题</p>
-          </div>
+        <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%;cursor: pointer">
+          <router-link to="/outline">
+            <img src="../../assets/img/home/test.png" class="card-img-top">
+            <div class="card-body">
+              <p class="card-text" style="color: #3c3c3c">自测题</p>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -61,11 +67,24 @@
 
 <script>
 import logo from '../../assets/img/home/banner.png'
+import { imagesGetApi } from "../../api/modules/images";
+
 export default {
   name: 'home',
   data () {
     return {
       imgSrc: logo
+    }
+  },
+  mounted() {
+    this.getImage();
+  },
+  methods: {
+    getImage(){
+      imagesGetApi({board:'1'}).then(result => {
+        let response = result.data;
+        console.log(result)
+      })
     }
   }
 }
@@ -73,6 +92,9 @@ export default {
 
 <style lang="scss">
 #home{
+  .card:hover{
+    box-shadow: 2px 4px 6px #ced6d7;
+  }
 
 }
 </style>
