@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div id="evaluateOutside"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;background-size: cover;`">
+    <div id="evaluateOutside"
+         :style="`background-image: url('${$addBaseURL(imgSrc)}');position: relative ;width: 100%;height:350px;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`"
+    >
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">校外专家评价</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">OFF CAMPUS EXPERT EVALUATION</div>

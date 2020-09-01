@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="banner"
-         :style="`height:600px;background:rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;background-size:cover;`"
+         :style="`background-image: url('${$addBaseURL(imgSrc)}');position: relative ;width: 100%;height:600px;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`"
     >
       <div style="font-family: MicrosoftYaHei,sans-serif;font-size: 50px;font-stretch: normal;color: #ffffff;padding-top: 8%;padding-left: 18%;letter-spacing: 5px;">嵌入式系统原理与开发</div>
       <div style="font-family: MicrosoftYaHeiLight,monospace;font-size: 24px;color: #ffffff;padding-left: 18%;padding-top: 2%;letter-spacing: 3px;">PRINCIPLE AND DEVELOPMENT OF EMBEDDED SYSTEM</div>

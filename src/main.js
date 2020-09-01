@@ -9,6 +9,7 @@ import './styles/reset.scss'
 import './styles/index.scss'
 import './styles/common.scss'
 import './utils/commonPro'
+import './utils/globalFunction'
 import HeadMenu from './views/Layout/Head' //顶部导航栏
 import FootMenu from './views/Layout/Foot' //底部
 import MakeStar from './components/makeStar' //星星评分组件

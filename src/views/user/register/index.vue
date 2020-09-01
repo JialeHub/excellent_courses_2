@@ -1,5 +1,7 @@
 <template>
-  <div id="login" class="text-center">
+  <div id="login" class="text-center"
+       :style="`background-image: url('${$addBaseURL(imgSrc)}');width: 100%;height: 100%;position: fixed;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`"
+  >
     <div class="card" style="width: 30rem;height: 38rem;border-radius: 10px;opacity: 0.9;margin-left: 35%;margin-top: 2%">
       <div class="card-body">
         <div class="card-title" style="margin-top:6%">
@@ -60,14 +62,26 @@
 </template>
 
 <script>
+import {imagesGetApi} from "../../../api/modules/images";
+
 export default {
   name: 'register',
   data () {
     return {
-      sample_modal: false
+      sample_modal: false,
+      imgSrc:''
     }
   },
+  mounted() {
+    this.getImage();
+  },
   methods: {
+    getImage(){
+      imagesGetApi({board:'7'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.cover)
+      })
+    },
     toregiter () {
       this.sample_modal = true
     }
@@ -77,12 +91,6 @@ export default {
 
 <style lang="scss">
   body {
-    width:100%;
-    height:100%;
-    background:url("../../../assets/img/login/back.png") no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;
     /* 让模态框显示 */
     .modal {
       display: block;

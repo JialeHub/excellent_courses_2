@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div id="resourceCourseware"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
+    <div id="resourceCourseware"
+         :style="`background-image: url('${$addBaseURL(imgSrc)}');position: relative ;width: 100%;height:350px;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`"
+    >
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">教学课件</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">TEACHING COURSEWARE</div>
@@ -98,7 +99,8 @@ export default {
       totalPages:2,
       checkedRows:[],
       checkboxModel:[],
-      checked:false
+      checked:false,
+      imgSrc:''
     }
   },
   watch: {//深度 watcher

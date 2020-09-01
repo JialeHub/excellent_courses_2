@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div id="examSubjective"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
+    <div id="examSubjective"
+         :style="`background-image: url('${$addBaseURL(imgSrc)}');position: relative ;width: 100%;height:350px;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`"
+    >
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">主观题</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">SUBJECTIVE QUESTIONS</div>
@@ -72,7 +73,8 @@ export default {
         {id:5,sort:5,type:'简答题',content:'XXXXXXXXXXXXX?'},
         {id:6,sort:6,type:'简答题',content:'XXXXXXXXXXXXXXX?'},
         {id:7,sort:7,type:'简答题',content:'XXXXXXXXXXXXX?'},
-      ]
+      ],
+      imgSrc:''
     }
   },
   mounted() {
