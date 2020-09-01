@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div id="evaluateStudent"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+    <div id="evaluateStudent"  :style="`position: relative;height: 350px;
+         background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;
+         background-size: cover;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">学生评价</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">STUDENT EVALUATION</div>
@@ -67,10 +67,13 @@
 </template>
 
 <script>
-export default {
+  import {imagesGetApi} from "../../../api/modules/images";
+
+  export default {
   name: 'evaluateStudent',
   data() {
     return {
+      imgSrc: '',
       likeOnImg: require('../../../assets/img/likeOn.png'),
       likeOffImg: require('../../../assets/img/like.png'),
       likeNum: 25,
@@ -105,7 +108,17 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.getImage();
+  },
   methods: {
+    getImage(){
+      imagesGetApi({board:'11'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    },
     rating: function (item) {
       if(this.active){
         this.likeNum--

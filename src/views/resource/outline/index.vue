@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div id="resourceOutline"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+    <div id="resourceOutline"  :style="`position: relative;height: 350px;
+         background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;background-size: cover;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">教学大纲</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">TEACHING PROGRAM</div>
@@ -32,19 +31,120 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <div class="container">
       <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">1</div>
-        <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">2</div>
-        <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">3</div>
-        <div class="tab-pane fade" id="pills-four" aria-labelledby="pills-contact-tab">4</div>
-        <div class="tab-pane fade" id="pills-five"  aria-labelledby="pills-contact-tab">5</div>
+        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">
+          <img :src="$addBaseURL(Outline1)" style="padding: 15%">
+        </div>
+        <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline2)" style="padding: 15%">
+        </div>
+        <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline3)" style="padding: 15%">
+        </div>
+        <div class="tab-pane fade" id="pills-four" aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline4)" style="padding: 15%">
+        </div>
+        <div class="tab-pane fade" id="pills-five"  aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline5)" style="padding: 15%">
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {imagesGetApi} from "../../../api/modules/images";
+import {resourceGetApi} from "../../../api/modules/fileInfo";
+
 export default {
-  name: 'resourceOutline'
+  name: 'resourceOutline',
+  data () {
+    return {
+      imgSrc: '',
+      Outline1:'',
+      Outline2:'',
+      Outline3:'',
+      Outline4:'',
+      Outline5:''
+    }
+  },
+  mounted() {
+    this.getImage();
+    this.getOutline1();
+    this.getOutline2();
+    this.getOutline3();
+    this.getOutline4();
+    this.getOutline5();
+  },
+  methods: {
+    getImage(){
+      imagesGetApi({board:'19'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    },
+    //获取教学大纲
+    getOutline1(){
+      const params = {
+        current:'1',
+        size: '10',
+        type:'2',
+        section: '1'
+      }
+      resourceGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.Outline1 = result.data.records[0].faccess
+      })
+    },
+    getOutline2(){
+      const params = {
+        current:'1',
+        size: '10',
+        type:'2',
+        section: '2'
+      }
+      resourceGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.Outline2 = result.data.records[0].faccess
+      })
+    },
+    getOutline3(){
+      const params = {
+        current:'1',
+        size: '10',
+        type:'2',
+        section: '3'
+      }
+      resourceGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.Outline3 = result.data.records[0].faccess
+      })
+    },
+    getOutline4(){
+      const params = {
+        current:'1',
+        size: '10',
+        type:'2',
+        section: '4'
+      }
+      resourceGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.Outline4 = result.data.records[0].faccess
+      })
+    },
+    getOutline5(){
+      const params = {
+        current:'1',
+        size: '10',
+        type:'2',
+        section: '5'
+      }
+      resourceGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.Outline5 = result.data.records[0].faccess
+      })
+    },
+  }
 }
 </script>
 

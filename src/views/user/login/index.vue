@@ -10,13 +10,13 @@
           <div class="form-group row">
             <label for="StudentID" class="col-sm-2 col-form-label">学号</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="StudentID" placeholder="请输入您的学号">
+              <input type="text" class="form-control" id="StudentID" placeholder="请输入您的学号" v-model="userVo.username">
             </div>
           </div>
           <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label">密码</label>
             <div class="col-sm-9">
-              <input type="password" class="form-control" id="inputPassword" placeholder="请输入您的密码">
+              <input type="password" class="form-control" id="inputPassword" placeholder="请输入您的密码" v-model="userVo.password">
             </div>
           </div>
           <div class="text-right col-sm-12" >
@@ -24,7 +24,7 @@
           </div>
         </form>
         <div class="twoButton">
-          <input class="btn btn-primary" type="submit" value="登录" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%"><br/>
+          <input class="btn btn-primary" type="submit" value="登录" @click="login" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%"><br/>
           <a class="btn btn-outline-primary" href="register" role="button" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%">注册</a>
         </div>
       </div>
@@ -33,10 +33,28 @@
 </template>
 
 <script>
+import {stuLoginApi} from "../../../api/modules/auth";
+
 export default {
   name: 'login',
   data () {
     return {
+      userVo: {
+        username: '',
+        password: ''
+      }
+    }
+  },
+  methods:{
+    login() {
+      console.log(this.userVo)
+      stuLoginApi({username:this.userVo.username,password:this.userVo.password}).then(result => {
+        if(result.code == 200){
+          this.$store.dispatch('setUser', { username: this.userVo.username })
+          this.$store.dispatch('setToken', result.data.token)
+        }
+        console.log(result)
+      })
     }
   }
 }

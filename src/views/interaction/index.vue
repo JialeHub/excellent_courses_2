@@ -1,8 +1,7 @@
 <template>
   <div>
     <div id="interaction"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+         background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">师生互动</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">INTERACTION BETWEEN TEACHERS AND STUDENTS</div>
@@ -78,6 +77,8 @@
 </template>
 
 <script>
+import {imagesGetApi} from "../../api/modules/images";
+
 export default {
   name: 'interaction',
   data() {
@@ -148,7 +149,17 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.getImage();
+  },
   methods: {
+    getImage(){
+      imagesGetApi({board:'15'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    },
     rating: function (item) {
       if(this.active){
         this.likeNum--

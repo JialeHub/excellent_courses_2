@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="banner"
-         :style="`position: relative;height: 600px;background: rgb(246, 249, 251) url(imgSrc) no-repeat center;`"
+         :style="`height:600px;background:rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;background-size:cover;`"
     >
       <div style="font-family: MicrosoftYaHei,sans-serif;font-size: 50px;font-stretch: normal;color: #ffffff;padding-top: 8%;padding-left: 18%;letter-spacing: 5px;">嵌入式系统原理与开发</div>
       <div style="font-family: MicrosoftYaHeiLight,monospace;font-size: 24px;color: #ffffff;padding-left: 18%;padding-top: 2%;letter-spacing: 3px;">PRINCIPLE AND DEVELOPMENT OF EMBEDDED SYSTEM</div>
@@ -66,14 +66,13 @@
 </template>
 
 <script>
-import logo from '../../assets/img/home/banner.png'
 import { imagesGetApi } from "../../api/modules/images";
 
 export default {
   name: 'home',
   data () {
     return {
-      imgSrc: logo
+      imgSrc: ''
     }
   },
   mounted() {
@@ -82,8 +81,8 @@ export default {
   methods: {
     getImage(){
       imagesGetApi({board:'1'}).then(result => {
-        let response = result.data;
-        console.log(result)
+        this.imgSrc = result.data.cover
+        console.log(result.data.cover)
       })
     }
   }
@@ -95,6 +94,8 @@ export default {
   .card:hover{
     box-shadow: 2px 4px 6px #ced6d7;
   }
-
+  .banner{
+    background-size: cover;
+  }
 }
 </style>

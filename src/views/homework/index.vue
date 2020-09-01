@@ -1,8 +1,7 @@
 <template>
   <div>
     <div id="homework"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+         background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">作业提交</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">JOB SUBMISSION</div>
@@ -51,6 +50,8 @@
 </template>
 
 <script>
+import {imagesGetApi} from "../../api/modules/images";
+
 export default {
   name: 'homework',
   data(){
@@ -72,7 +73,18 @@ export default {
       checkedRows:[]
     }
   },
+  mounted() {
+    this.getImage();
+  },
   methods:{
+    getImage(){
+      imagesGetApi({board:'16'}).then(result => {
+        console.log(result)
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    },
     toDetail(id){
       console.log(id)
     },

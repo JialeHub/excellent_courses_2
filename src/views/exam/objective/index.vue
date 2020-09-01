@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div id="examObjective"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+    <div id="examObjective"  :style="`position: relative;height: 350px;background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">客观题</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">OBJECTIVE QUESTIONS</div>
@@ -85,11 +83,14 @@
 
 <script>
 
+import {imagesGetApi} from "../../../api/modules/images";
+
 export default {
   name: 'examObjective',
   data(){
     return{
       isdone: false,
+      imgSrc:'',
       textList:[
         {id:1,sort:1,type:'简答题',content:'XXXXXXXXXXXXX?'},
         {id:2,sort:2,type:'简答题',content:'XXXXXXXXXXXXXXXX?'},
@@ -99,6 +100,18 @@ export default {
         {id:6,sort:6,type:'简答题',content:'XXXXXXXXXXXXXXX?'},
         {id:7,sort:7,type:'简答题',content:'XXXXXXXXXXXXX?'},
       ]
+    }
+  },
+  mounted() {
+    this.getImage();
+  },
+  methods: {
+    getImage(){
+      imagesGetApi({board:'12'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
     }
   }
 }

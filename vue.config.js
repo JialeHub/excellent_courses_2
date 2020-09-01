@@ -6,16 +6,6 @@ module.exports = {
     name: '精品课程'
   },
 
-  css: {
-    loaderOptions: {
-      scss: {
-        prependData:
-          '@import "@/styles/variables.scss";'
-      }
-    },
-    extract: false
-  },
-
   devServer: {
     proxy: {
       '/devApi/': {

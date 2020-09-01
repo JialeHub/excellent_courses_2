@@ -1,8 +1,7 @@
 <template>
   <div>
     <div id="resourceCourseware"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+         background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">教学课件</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">TEACHING COURSEWARE</div>
@@ -45,9 +44,9 @@
             <tbody>
               <tr v-for="(item,index) in coursewareList" :key="index" >
                 <th><input type='checkbox' class='input-checkbox' v-model='checkboxModel' :value='item.id'></th>
-                <td>{{item.name}}</td>
-                <td>{{item.size}}</td>
-                <td>{{item.time}}</td>
+                <td>{{item.fname}}</td>
+                <td>{{item.fsize}}</td>
+                <td>{{item.createTime}}</td>
                 <td>
                   <a href="#" style="margin-right: 10%">
                     <img src="../../../assets/img/preview.png">
@@ -86,21 +85,14 @@
 </template>
 
 <script>
+import {imagesGetApi} from "../../../api/modules/images";
+import {resourceGetApi} from "../../../api/modules/fileInfo";
+
 export default {
   name: 'resourceCourseware',
   data(){
     return{
-      coursewareList:[
-        {id:1,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:2,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:3,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:4,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:5,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:6,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:7,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:8,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'},
-        {id:9,name:'XXXXXX',time:'2020.06.01 13:35',size:'10MB'}
-      ],
+      coursewareList:[],
       perPage:10,
       pageNow:0,
       totalPages:2,
@@ -121,7 +113,30 @@ export default {
       deep: true
     }
   },
+  mounted() {
+    this.getImage();
+    this.getCourseware();
+  },
   methods:{
+    getImage(){
+      imagesGetApi({board:'17'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    },
+    //获取课件
+    getCourseware(){
+      const params = {
+        current:'1',
+        size: '10',
+        type:'1'
+      }
+      resourceGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.coursewareList = result.data.records
+      })
+    },
     toDetail(id){
       console.log(id)
     },

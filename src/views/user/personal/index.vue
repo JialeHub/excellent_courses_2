@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div id="personal"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+    <div id="personal"  :style="`position: relative;height: 350px;
+         background-size: cover;background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">个人空间</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">PERSONAL SPACE</div>
@@ -63,9 +62,9 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="inputntroduction" class="col-sm-2 col-form-label">个人介绍：</label>
+                <label for="inputIntroduction" class="col-sm-2 col-form-label">个人介绍：</label>
                 <div class="col-sm-4">
-                  <textarea rows="4" class="form-control" id="inputntroduction" placeholder="请输入个人介绍"></textarea>
+                  <textarea rows="4" class="form-control" id="inputIntroduction" placeholder="请输入个人介绍"></textarea>
                 </div>
               </div>
               <div class="form-group row">
@@ -112,8 +111,27 @@
 </template>
 
 <script>
+import {imagesGetApi} from "../../../api/modules/images";
+
 export default {
-  name: 'personal'
+  name: 'personal',
+  data () {
+    return {
+      imgSrc: ''
+    }
+  },
+  mounted() {
+    this.getImage();
+  },
+  methods: {
+    getImage(){
+      imagesGetApi({board:'21'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    }
+  }
 }
 </script>
 

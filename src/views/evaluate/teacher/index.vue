@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div id="evaluateTeacher"  :style="`position: relative;height: 350px;background: rgb(246, 249, 251)
-         url('')
-         no-repeat center;`">
+    <div id="evaluateTeacher"  :style="`position: relative;height: 350px;
+         background: rgb(246, 249, 251) url('${$addBaseURL(imgSrc)}') no-repeat center;background-size: cover;`">
       <div class="banner" style="padding-left: 21%">
         <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">教师评价</div>
         <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">TEACHER EVALUATION</div>
@@ -16,8 +15,27 @@
 </template>
 
 <script>
-export default {
-  name: 'evaluateTeacher'
+  import {imagesGetApi} from "../../../api/modules/images";
+
+  export default {
+  name: 'evaluateTeacher',
+  data () {
+    return {
+      imgSrc: ''
+    }
+  },
+  mounted() {
+    this.getImage();
+  },
+  methods: {
+    getImage(){
+      imagesGetApi({board:'10'}).then(result => {
+        this.imgSrc = result.data.cover
+        console.log(result.data.page)
+        console.log(result.data.cover)
+      })
+    }
+  }
 }
 </script>
 
