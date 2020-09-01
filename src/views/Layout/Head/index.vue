@@ -109,10 +109,11 @@
 <!--              >-->
 <!--                <img-->
 <!--                  style="width: 100%;height: 100%;"-->
-<!--                  :src="addBaseURL('static/' + $store.getters.user.avatar)"-->
+<!--                  :src="$addBaseURL('static/' + $store.getters.user.avatar)"-->
 <!--                  alt=""-->
 <!--                />-->
 <!--              </div>-->
+              {{$store.getters.user}}
               <img src="../../../assets/img/portrait.png"/>
             </router-link>
           </li>

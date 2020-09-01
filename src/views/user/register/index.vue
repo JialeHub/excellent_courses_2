@@ -36,7 +36,7 @@
           </div>
         </form>
         <div class="twoButton">
-          <input class="btn btn-primary" type="submit" @click="toregiter" value="注册" style="width: 320px;height: 40px;border-radius: 40px;margin-top: 5%"><br/>
+          <input class="btn btn-primary" type="submit" @click="toRegiter" value="注册" style="width: 320px;height: 40px;border-radius: 40px;margin-top: 5%"><br/>
           <a class="btn btn-outline-primary" href="login" role="button" style="width: 320px;height: 40px;border-radius: 40px;margin-top: 5%">登录</a>
         </div>
       </div>
@@ -82,7 +82,7 @@ export default {
         console.log(result.data.cover)
       })
     },
-    toregiter () {
+    toRegiter () {
       this.sample_modal = true
     }
   }

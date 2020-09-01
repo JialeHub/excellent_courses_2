@@ -25,30 +25,15 @@
             <a href="/password" style="color: #999999;letter-spacing: 2px;">忘记密码？</a>
           </div>
         </form>
-        <div class="twoButton">
+        <div class="twoButton" style="padding-top: 10%">
           <button class="btn btn-primary" type="submit" value="登录" @click="login" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%">
             <span v-if="!getCodeLoading">登录</span>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="getCodeLoading"></span>
             <span v-if="getCodeLoading"> 登录中..</span>
           </button><br/>
-          <a class="btn btn-outline-primary" href="register" role="button" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%">注册</a>
+<!--          <a class="btn btn-outline-primary" href="register" role="button" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%">注册</a>-->
         </div>
         <!-- 模态框-->
-        <transition name="fade">
-          <div v-if="sample_modal">
-            <div class="modal" v-on:click.self="sample_modal=true"  >
-              <div class="modal-dialog modal-dialog-centered" style="width: 341px;height: 187px;opacity: 0.8">
-                <div class="modal-content" style="background-color: #3c3c3c">
-                  <div class="modal-body">
-                    <img src="../../../assets/img/login/success.png" style="width: 35px;height: 28px;margin-top: 6%;">
-                    <p style="color: #ffffff;font-size: 14px;margin-top: 6%;margin-bottom: 15%">注册成功</p>
-                    <a class="btn" href="login" role="button" style="width: 120px;font-size: 14px;height: 35px;border-radius: 20px;background-color: #ffffff;color: #333333;margin-bottom: 5%">去登录 > </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </transition>
       </div>
     </div>
   </div>
@@ -66,7 +51,6 @@ export default {
         username: '',
         password: ''
       },
-      sample_modal: true,
       getCodeLoading: false,
       imgSrc: ''
     }
@@ -86,16 +70,16 @@ export default {
     login() {
       this.getCodeLoading = true
       stuLoginApi({username:this.userVo.username,password:this.userVo.password}).then(result => {
+        console.log(result.data)
         if(result.code == 200){
           console.log('登录成功')
-          this.$store.dispatch('setUser', { username: this.userVo.username })
+          this.$store.dispatch('setUser', { username: this.userVo.username,Info: result.data.studentInfo })
           this.$store.dispatch('setToken', result.data.token)
           if (!this.$isEmpty(this.$route.query.redirect)) {
             console.log('!isEmpty')
             this.$router.push({ path: this.$route.query.redirect + '' })
           } else {
             console.log('isEmpty')
-            this.Tip = '登录成功,欢迎回来（3秒后自动跳转到主页）'
             let time = 2
             const interval = setInterval(() => {
               time--

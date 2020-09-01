@@ -17,6 +17,7 @@
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
+import {expertRemarkGetApi} from "../../../api/modules/expertRemark";
 
 export default {
   name: 'evaluateOutside',
@@ -27,13 +28,18 @@ export default {
   },
   mounted() {
     this.getImage();
+    this.getRemark();
   },
   methods: {
     getImage(){
       imagesGetApi({board:'8'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
-        console.log(result.data.cover)
+      })
+    },
+    getRemark(){
+      expertRemarkGetApi({type :'0'}).then(result => {
+        console.log(result)
       })
     }
   }
