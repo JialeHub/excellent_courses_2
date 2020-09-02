@@ -38,9 +38,9 @@ service.interceptors.response.use(
 )
 
 /**
- * @description 白名单，不添加token的接口
+ * @description 白名单，添加token的接口
  * */
 const isAddToken = (url) =>
-  ['file/upload', 'auth/reset', 'applyTable'].some(item => url === item)
+  ['/expertRemark'].some(item => url === item)
 
 export default service
