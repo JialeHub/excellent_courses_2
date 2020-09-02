@@ -88,7 +88,7 @@
           </li>
           <li class="nav-item ">
             <router-link to="/register" v-if="!isLogin">注册</router-link>
-            <router-link to="/personal" v-if="isLogin">{{}}</router-link>
+            <router-link to="/personal" v-if="isLogin">{{$store.getters.user.Info.sname}}</router-link>
           </li>
           <li>
             <router-link
@@ -99,25 +99,15 @@
             ]"
               :to="{ name: 'login' }"
             >
-<!--              <div-->
-<!--                style="width: 40px;height: 40px;border-radius: 50%;overflow: hidden;border:1px rgba(50,50,50,0.3) solid "-->
-<!--                class="img"-->
-<!--                v-if="-->
-<!--                  $store.getters.user.avatar !== undefined &&-->
-<!--                    $store.getters.user.avatar !== ''-->
-<!--                "-->
-<!--              >-->
-<!--                <img-->
-<!--                  style="width: 100%;height: 100%;"-->
-<!--                  :src="$addBaseURL('static/' + $store.getters.user.avatar)"-->
-<!--                  alt=""-->
-<!--                />-->
-<!--              </div>-->
-              {{$store.getters.user}}
-              <img src="../../../assets/img/portrait.png"/>
+              <img
+                v-if="
+                  $store.getters.user.Info.scover === undefined &&
+                    $store.getters.user.Info.scover === ''
+                "
+                src="../../../assets/img/portrait.png"/>
+              <img v-else :src="$addBaseURL($store.getters.user.Info.scover)" width="60px" height="60px" style="border-radius: 30px">
             </router-link>
           </li>
-<!--          <span v-html="xssTest">xssTest</span>-->
         </ul>
       </div>
       <!--导航内容End-->

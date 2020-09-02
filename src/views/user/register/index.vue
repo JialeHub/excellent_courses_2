@@ -79,7 +79,7 @@ export default {
     getImage(){
       imagesGetApi({board:'7'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.cover)
+
       })
     },
     toRegiter () {

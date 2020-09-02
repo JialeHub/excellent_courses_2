@@ -54,7 +54,7 @@ export default {
       imagesGetApi({board:'14'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
-        console.log(result.data.cover)
+
       })
     },
     // 获取测试题

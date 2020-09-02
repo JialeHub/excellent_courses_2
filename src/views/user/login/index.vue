@@ -7,7 +7,7 @@
         <div class="card-title" style="margin-top:6%">
           <img src="../../../assets/img/logo02.png" style="width: 15%;height: 22%;">
         </div>
-        <h6 class="card-subtitle mb-2" style="font-size: 25px;letter-spacing: 4px;color: #1089f0;font-weight: bold">嵌入式系统原理与开发</h6>
+        <h6 class="card-subtitle mb-2" style="font-size: 25px;letter-spacing: 4px;color: #1089f0;font-weight: bold;padding-top: 3%">嵌入式系统原理与开发</h6>
         <form style="margin-top: 12%;margin-left: 12%;">
           <div class="form-group row">
             <label for="StudentID" class="col-sm-2 col-form-label">学号</label>
@@ -68,7 +68,7 @@ export default {
     getImage(){
       imagesGetApi({board:'7'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.cover)
+
       })
     },
     //登录
@@ -98,10 +98,10 @@ export default {
           console.log(result.message)
             this.alertMessage = result.message
             this.isAlert = true
-          const interval = setInterval(() => {
-            this.getCodeLoading = false
-            this.isAlert = false
-          }, 3000)
+            const interval = setInterval(() => {
+              this.getCodeLoading = false
+              this.isAlert = false
+            }, 3000)
         }
         console.log(result)
       })

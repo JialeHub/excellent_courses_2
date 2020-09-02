@@ -118,7 +118,7 @@
       imagesGetApi({board:'11'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
-        console.log(result.data.cover)
+
       })
     },
     // 获取学生评价列表

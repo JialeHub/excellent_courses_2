@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="outsideImg text-center" style="padding: 10% 5% 10%">
-      <img src="../../../assets/img/demo.png" class="img-fluid" alt="Responsive image">
+      <img :src="$addBaseURL(remarkImg)" class="img-fluid" alt="Responsive image">
     </div>
   </div>
 </template>
@@ -23,7 +23,8 @@ export default {
   name: 'evaluateOutside',
   data () {
     return {
-      imgSrc: ''
+      imgSrc: '',
+      remarkImg: ''
     }
   },
   mounted() {
@@ -35,13 +36,12 @@ export default {
     getImage(){
       imagesGetApi({board:'8'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.page)
       })
     },
     // 获取评价
     getRemark(){
       expertRemarkGetApi({type :'0'}).then(result => {
-        console.log(result)
+        this.remarkImg = result.data.erAccPath
       })
     }
   }

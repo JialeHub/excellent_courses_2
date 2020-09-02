@@ -27,12 +27,15 @@
       <div class="tab-content" id="pills-tabContent">
         <!--基本资料-->
         <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">
+          <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top: 85%" v-if="successSave">
+            保存个人资料成功
+          </div>
           <div class="container" style="margin-top: 8%;margin-bottom: 8%;margin-left: 25%">
             <form style="color: #333333;font-family: MicrosoftYaHei,sans-serif;">
               <div class="form-group row">
                 <label for="inputName" class="col-sm-2 col-form-label">姓名：</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="inputName" placeholder="请输入姓名">
+                  <input type="text" class="form-control" id="inputName" placeholder="请输入姓名" v-model="stuInfo.sname">
                 </div>
               </div>
               <fieldset class="form-group">
@@ -40,12 +43,12 @@
                   <legend class="col-form-label col-sm-2 pt-0">性别：</legend>
                   <div class="col-sm-4">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"  checked>
-                      <label class="form-check-label" for="gridRadios1">男</label>
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" :value="false"  v-model="stuInfo.ssex" checked>
+                      <label class="form-check-label" for="gridRadios1" value="boy">男</label>
                     </div>
                     <div class="form-check form-check-inline" style="margin-left: 6%">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                      <label class="form-check-label" for="gridRadios2">女</label>
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" :value="true" v-model="stuInfo.ssex">
+                      <label class="form-check-label" for="gridRadios2" value="girl" >女</label>
                     </div>
                   </div>
                 </div>
@@ -53,24 +56,24 @@
               <div class="form-group row">
                 <label for="inputPhone" class="col-sm-2 col-form-label">手机号：</label>
                 <div class="col-sm-4">
-                  <input type="number" class="form-control" id="inputPhone" placeholder="请输入手机号">
+                  <input type="number" class="form-control" id="inputPhone" placeholder="请输入手机号" v-model="stuInfo.sphone">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="inputStudentID" class="col-sm-2 col-form-label">学号：</label>
                 <div class="col-sm-4">
-                  <input type="number" class="form-control" id="inputStudentID" placeholder="请输入学号">
+                  <input type="number" class="form-control" id="inputStudentID" placeholder="请输入学号" v-model="stuInfo.snumber">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="inputIntroduction" class="col-sm-2 col-form-label">个人介绍：</label>
                 <div class="col-sm-4">
-                  <textarea rows="4" class="form-control" id="inputIntroduction" placeholder="请输入个人介绍"></textarea>
+                  <textarea rows="4" class="form-control" id="inputIntroduction" placeholder="请输入个人介绍" v-model="stuInfo.sprofile"></textarea>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-sm-5 text-center" style="margin-top: 3%;margin-left: 2%">
-                  <button type="submit" class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;">保存</button>
+                  <input value="保存"  class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;" @click="sumbit(stuInfo)"/>
                 </div>
               </div>
             </form>
@@ -84,23 +87,26 @@
         </div>
         <!--密码管理-->
         <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">
+          <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top: 85%" v-if="passwordAlert">
+            {{passwordMes}}
+          </div>
           <div class="container" style="margin-top: 6%;margin-bottom: 20%;margin-left: 25%">
             <form style="color: #333333;font-family: MicrosoftYaHei,sans-serif;">
               <div class="form-group row">
                 <label for="inputOld" class="col-sm-2 col-form-label">旧密码：</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="inputOld" placeholder="请输入旧密码">
+                  <input type="text" class="form-control" id="inputOld" placeholder="请输入旧密码" v-model="passwordList[0].password">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="inputNew" class="col-sm-2 col-form-label">新密码：</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="inputNew" placeholder="请输入新密码">
+                  <input type="text" class="form-control" id="inputNew" placeholder="请输入新密码" v-model="passwordList[0].newPassword">
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-sm-5 text-center" style="margin-top: 2%;margin-left: 2%">
-                  <button type="submit" class="btn btn-primary" style="width: 110px;background-color: #1089f0;border-radius: 25px;">保存</button>
+                  <input value="保存" class="btn btn-primary" style="width: 110px;background-color: #1089f0;border-radius: 25px;" @click="resetPassword(passwordList)"/>
                 </div>
               </div>
             </form>
@@ -113,25 +119,67 @@
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
+import {passwordEditApi, stuInfoEditApi} from "../../../api/modules/auth";
 
 export default {
   name: 'personal',
   data () {
     return {
-      imgSrc: ''
+      imgSrc: '',
+      stuInfo: this.$store.getters.user.Info,
+      successSave: false,
+      passwordAlert: false,
+      passwordMes:'',
+      passwordList: [{
+       'newPassword': '',
+      'password': '',
+      'username': this.$store.getters.user.username
+      } ]
     }
   },
   mounted() {
     this.getImage();
+    console.log(this.$store.getters.user.Info)
   },
   methods: {
     getImage(){
       imagesGetApi({board:'21'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.page)
-        console.log(result.data.cover)
       })
-    }
+    },
+    //修改资料
+    sumbit(stuInfo){
+      console.log(stuInfo)
+      stuInfoEditApi(stuInfo).then(result => {
+        if(result.message === '请求成功'){
+          this.$store.dispatch('setUser', { username: this.$store.getters.user.username,Info: stuInfo })
+          this.successSave = true
+          const interval = setInterval(() => {
+            this.successSave = false
+          }, 2000)
+        }
+        clearInterval(interval)
+      })
+    },
+    // 修改密码
+    resetPassword(passwordList){
+      console.log(passwordList[0])
+      passwordEditApi(passwordList[0]).then(result => {
+        if(result.message === '账号或密码错误.'){
+          this.passwordMes = result.message
+          this.passwordAlert = true
+          const interval = setInterval(() => {
+            this.passwordAlert = false
+          }, 2000)
+        }else if(result.code === 200){
+          this.passwordMes = result.data
+          this.passwordAlert = true
+          const interval = setInterval(() => {
+            this.$router.push({ path: '/login' })
+          }, 3000)
+        }
+      })
+    },
   }
 }
 </script>

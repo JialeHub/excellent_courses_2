@@ -15,25 +15,25 @@
           <tbody>
             <tr v-for="item in recordList" :key="item.id" class="align-baseline">
               <th><input type='checkbox' class='input-checkbox' v-model='checkboxModel' :value='item.id'></th>
-              <td>{{item.time}}</td>
-              <td>{{item.record}}</td>
+              <td>{{item.createTime}}</td>
+              <td>{{item.fname}}</td>
               <td>
                 <input class="btn btn-danger btn-sm" type="submit" @click="deleteR(item.id)" value="删除" style="width:80px;border-radius: 20px">
               </td>
             </tr>
           </tbody>
         </table>
-        <div style="display: flex;align-items: center;margin-top: 4%">
+        <div style="display: flex;align-items: center;margin-top: 4%" v-if="!isEmpty">
           <input style="margin-left: 32px" type='checkbox' class='input-checkbox' v-model='checked' v-on:click='checkedAll'>
           <span style="margin-left: 20px;">全选</span>
           <input class="btn btn-danger btn-sm" type="submit" value="批量删除" @click="deletes(checkboxModel)" style="margin-left:5%;width:100px;height:38px;border-radius: 20px">
           <!-- 分页-->
           <div class="justify-content-end" style="margin-left: 50%">
-            <ul class="nav pagination">
+            <ul class="nav pagination" v-if="isPagination">
               <li class="page-item">
                 <a href="#" class="page-link"><span @click="switchToPage(pageNow-1)"><&nbsp;</span></a>
               </li>
-              <li class="page-item" v-for="n in totalPages" :class="{active:n==pageNow+1}">
+              <li class="page-item" v-for="n in totalPages" :class="{active:n==pageNow}">
                 <a href="#" @click="switchToPage(n)" class="page-link">{{n}}</a>
               </li>
               <li class="page-item">
@@ -42,6 +42,7 @@
             </ul>
           </div>
         </div>
+        <div class="text-center" v-if="isEmpty">您还没有学习记录噢~</div>
       </div>
     </div>
   </div>
@@ -49,27 +50,24 @@
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
-import {historyGetApi, historyStuDeleteApi} from "../../api/modules/stuVideo";
+import {historyGetApi, historyStuDeleteApi, historyStuGetApi} from "../../api/modules/stuVideo";
 
 export default {
   name: 'record',
   data(){
     return{
-      recordList:[
-        {id:1,time:'2020-06-33 22:30',record:'第一章第五节'},
-        {id:2,time:'2020-06-33 22:30',record:'第一章第五节'},
-        {id:3,time:'2020-06-33 22:30',record:'第一章第五节'},
-        {id:4,time:'2020-06-33 22:30',record:'第一章第五节'},
-        {id:5,time:'2020-06-33 22:30',record:'第一章第五节'},
-        {id:6,time:'2020-06-33 22:30',record:'第一章第五节'},
-      ],
+      recordList:[],
       checkedRows:[],
       checkboxModel:[],
       checked:false,
       perPage:10,
       pageNow:0,
-      totalPages:2,
-      imgSrc:''
+      size:'10',
+      pageNo:1,
+      totalPages:'',
+      imgSrc:'',
+      isPagination:false,
+      isEmpty:true
     }
   },
   watch: {//深度 watcher
@@ -86,6 +84,7 @@ export default {
   },
   mounted() {
     this.getImage();
+    this.getUserByPage();
   },
   methods:{
     // 获取图片
@@ -93,26 +92,38 @@ export default {
       imagesGetApi({board:'20'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
-        console.log(result.data.cover)
+
       })
     },
     // 分页跳转
     switchToPage:function (pageNo) {
       console.log(pageNo)
+      this.pageNow = pageNo
+      this.getUserByPage(pageNo);
       if (pageNo < 0 || pageNo >= this.totalPages) {
         return false;
       }
-      this.getUserByPage(pageNo);
     },
     // 获得学习记录列表
     getUserByPage(pageNo){
-      console.log(pageNo)
-      const params = {
-        current: '',
-        size: ''
+      if(pageNo==undefined){
+        pageNo = this.pageNo
       }
-      historyGetApi(params).then(result => {
-        console.log(result)
+      const params = {
+        current: pageNo,
+        size: this.size
+      }
+      historyStuGetApi(params).then(result => {
+        if(result.data.total != 0){
+          this.isEmpty = false
+        }else {
+          this.isEmpty = true
+        }
+        if(result.data.total>10){
+          this.isPagination = true
+          this.totalPages = result.data.total/this.size
+        }
+       this.recordList = result.data.records
       })
     },
     // 全选
@@ -131,13 +142,17 @@ export default {
     // 批量删除
     deletes(checkboxModel){
       console.log(checkboxModel)
+      this.deleteR(checkboxModel)
     },
     // 删除
     deleteR(id){
       console.log(id)
-      const params = {ids:''}
+      const params = {ids:id}
       historyStuDeleteApi(params).then(result => {
         console.log(result)
+        if(result.code === 200){
+          this.getUserByPage()
+        }
       })
     }
   }

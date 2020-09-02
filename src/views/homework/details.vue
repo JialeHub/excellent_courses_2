@@ -13,21 +13,18 @@
       <div class="title" style="display: flex">
         <span style="line-height: 20px">题目：</span>
         <div class="content" style="padding-left: 2%">
-          <div style="line-height: 20px">1.XXXXXX</div>
-          <div style="line-height: 20px">2.XXXXXX</div>
-          <div style="line-height: 20px">3.XXXXXX</div>
-          <div style="line-height: 20px">4.XXXXXX</div>
+          <div style="line-height: 20px">{{homeworkList[0].hwQuestion}}</div>
         </div>
       </div>
       <div class="time" style="line-height: 25px;padding-top: 5%">
         <span>截止时间： </span>
-        <span style="color: #f59f38">2020.06.23 23:30</span>
+        <span style="color: #f59f38">{{homeworkList[0].endTime}}</span>
       </div>
      <div class="require" style="line-height: 25px;padding-top: 5%">
        <span>作业要求： </span>
-       <span>XXXXXXXX</span>
+       <span>{{homeworkList[0].hwRequire}}</span>
      </div>
-      <div class="text-center">富文本放置处</div>
+      <div class="text-center" style="padding-top: 5%">富文本放置处</div>
       <button  type="button" class="btn btn-primary" style="border-radius: 20px;width: 130px;margin-top:25px">提交答案</button>
     </div>
   </div>
@@ -35,23 +32,37 @@
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
+import {homeworkListGetApi} from "../../api/modules/homework";
 
 export default {
   name: 'homeworkDetails',
   data () {
     return {
-      imgSrc: ''
+      imgSrc: '',
+      homeworkList:[]
     }
   },
   mounted() {
     this.getImage();
+    this.getUserByPage();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'16'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.page)
-        console.log(result.data.cover)
+      })
+    },
+    // 获取详情
+    getUserByPage(){
+      const params = {
+        current: '1',
+        size : '1',
+        index: this.$route.query.index
+      }
+      homeworkListGetApi(params).then(result => {
+        console.log(result.data.records)
+        this.homeworkList = result.data.records
       })
     }
   }

@@ -82,7 +82,7 @@ export default {
     getImage(){
       imagesGetApi({board:'1'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.cover)
+
       })
     }
   }

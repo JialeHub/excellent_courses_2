@@ -41,6 +41,25 @@ service.interceptors.response.use(
  * @description 白名单，添加token的接口
  * */
 const isAddToken = (url) =>
-  ['/expertRemark'].some(item => url === item)
+  [
+    '/expertRemark',
+    '/subject/sub',
+    '/subject/testing',
+    '/submit/homework',
+    '/homework',
+    '/choice/section',
+    '/choice/student',
+    '/testing/sections',
+    '/testing/student',
+    '/auth/reset',
+    '/student/info',
+    '/video/end',
+    '/video/history',
+    '/evaluate',
+    '/praiseByEval',
+    '/praiseByWB',
+    '/writeBack',
+    '/resource/section'
+  ].some(item => url === item)
 
 export default service

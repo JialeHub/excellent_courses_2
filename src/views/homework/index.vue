@@ -23,22 +23,22 @@
         <tbody>
           <tr v-for="(item,index) in homeworkList" :key="index" >
             <th>{{item.id}}</th>
-            <td>{{item.name}}</td>
-            <td>{{item.require}}</td>
-            <td>{{item.time}}</td>
+            <td>{{item.hwName}}</td>
+            <td>{{item.hwRequire}}</td>
+            <td>{{item.endTime}}</td>
             <td>
-              <button  type="button" class="btn btn-primary btn-sm" @click="toDetail(item.id)">查看详情</button>
+              <button  type="button" class="btn btn-primary btn-sm" @click="toDetail(item.hwIndex)">查看详情</button>
             </td>
           </tr>
         </tbody>
       </table>
       <!-- 分页-->
       <div class="row justify-content-center" style="padding-top: 2%;padding-bottom: 5%">
-        <ul class="nav pagination">
+        <ul class="nav pagination" v-if="isPagination">
           <li class="page-item">
             <a href="#" class="page-link"><span @click="switchToPage(pageNow-1)"><&nbsp;</span></a>
           </li>
-          <li class="page-item" v-for="n in totalPages" :class="{active:n==pageNow+1}">
+          <li class="page-item" v-for="n in totalPages" :class="{active:n == pageNow}">
             <a href="#" @click="switchToPage(n)" class="page-link">{{n}}</a>
           </li>
           <li class="page-item">
@@ -58,60 +58,58 @@ export default {
   name: 'homework',
   data(){
     return{
-      homeworkList:[
-        {id:1,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:2,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:3,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:4,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:5,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:6,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:7,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:8,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'},
-        {id:9,name:'XXXXXX',require:'XXXXXXX',time:'2020.06.01 13:35'}
-      ],
+      homeworkList:[],
       perPage:10,
-      pageNow:0,
-      totalPages:2,
+      pageNow:0 ,
+      totalPages:'',
+      size:'10',
       checkedRows:[],
-      imgSrc:''
+      imgSrc:'',
+      pageNo:1,
+      isPagination:false
     }
   },
   mounted() {
     this.getImage();
+    this.getUserByPage()
   },
   methods:{
     // 获取图片
     getImage(){
       imagesGetApi({board:'16'}).then(result => {
-        console.log(result)
         this.imgSrc = result.data.cover
-        console.log(result.data.page)
-        console.log(result.data.cover)
       })
     },
     // 跳转至详情页
-    toDetail(id){
-      console.log(id)
-      this.$router.push({name:'homeworkDetails'})
+    toDetail(hwIndex){
+      this.$router.push({name:'homeworkDetails',query:{index:hwIndex}})
     },
     // 分页跳转
     switchToPage:function (pageNo) {
       console.log(pageNo)
+      this.pageNow = pageNo
+      this.getUserByPage(pageNo);
       if (pageNo < 0 || pageNo >= this.totalPages) {
         return false;
       }
-      this.getUserByPage(pageNo);
+
     },
     // 获得作业列表
     getUserByPage(pageNo){
+      if(pageNo==undefined){
+        pageNo = this.pageNo
+      }
       const params = {
-        current: '',
-        size : ''
+        current: pageNo,
+        size : this.size
       }
       homeworkListGetApi(params).then(result => {
-        console,log(result.data.records)
+        if(result.data.total>10){
+          this.isPagination = true
+          this.totalPages = result.data.total/this.size
+        }
+          this.homeworkList = result.data.records
       })
-      console.log(pageNo)
     }
   }
 }

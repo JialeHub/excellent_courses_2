@@ -81,7 +81,7 @@ export default {
       imagesGetApi({board:'19'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
-        console.log(result.data.cover)
+
       })
     },
     //获取教学大纲
