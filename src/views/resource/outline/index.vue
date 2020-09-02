@@ -32,20 +32,20 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <div class="container">
       <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">
-          <img :src="$addBaseURL(Outline1)" style="padding: 15%">
+        <div class="tab-pane fade show active text-center" style="padding: 10% 5% 10%" id="pills-one"  aria-labelledby="pills-profile-tab">
+          <img :src="$addBaseURL(Outline1)" class="img-fluid" alt="Responsive image">
         </div>
-        <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">
-          <img :src="$addBaseURL(Outline2)" style="padding: 15%">
+        <div class="tab-pane fade text-center" style="padding: 10% 5% 10%" id="pills-two" aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline2)"  class="img-fluid" alt="Responsive image">
         </div>
-        <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">
-          <img :src="$addBaseURL(Outline3)" style="padding: 15%">
+        <div class="tab-pane fade text-center" style="padding: 10% 5% 10%" id="pills-three"  aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline3)"  class="img-fluid" alt="Responsive image">
         </div>
-        <div class="tab-pane fade" id="pills-four" aria-labelledby="pills-contact-tab">
-          <img :src="$addBaseURL(Outline4)" style="padding: 15%">
+        <div class="tab-pane fade text-center" style="padding: 10% 5% 10%" id="pills-four" aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline4)"  class="img-fluid" alt="Responsive image">
         </div>
-        <div class="tab-pane fade" id="pills-five"  aria-labelledby="pills-contact-tab">
-          <img :src="$addBaseURL(Outline5)" style="padding: 15%">
+        <div class="tab-pane fade text-center" style="padding: 10% 5% 10%" id="pills-five"  aria-labelledby="pills-contact-tab">
+          <img :src="$addBaseURL(Outline5)"  class="img-fluid" alt="Responsive image">
         </div>
       </div>
     </div>

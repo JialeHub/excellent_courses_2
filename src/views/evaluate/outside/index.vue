@@ -31,12 +31,14 @@ export default {
     this.getRemark();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'8'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
       })
     },
+    // 获取评价
     getRemark(){
       expertRemarkGetApi({type :'0'}).then(result => {
         console.log(result)

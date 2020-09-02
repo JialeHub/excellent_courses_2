@@ -49,6 +49,7 @@
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
+import {historyGetApi, historyStuDeleteApi} from "../../api/modules/stuVideo";
 
 export default {
   name: 'record',
@@ -87,6 +88,7 @@ export default {
     this.getImage();
   },
   methods:{
+    // 获取图片
     getImage(){
       imagesGetApi({board:'20'}).then(result => {
         this.imgSrc = result.data.cover
@@ -94,6 +96,7 @@ export default {
         console.log(result.data.cover)
       })
     },
+    // 分页跳转
     switchToPage:function (pageNo) {
       console.log(pageNo)
       if (pageNo < 0 || pageNo >= this.totalPages) {
@@ -101,11 +104,18 @@ export default {
       }
       this.getUserByPage(pageNo);
     },
-    //获得列表
+    // 获得学习记录列表
     getUserByPage(pageNo){
       console.log(pageNo)
+      const params = {
+        current: '',
+        size: ''
+      }
+      historyGetApi(params).then(result => {
+        console.log(result)
+      })
     },
-    //全选
+    // 全选
     checkedAll: function() {
       const _this = this;
       console.log(_this.checkboxModel)
@@ -118,13 +128,17 @@ export default {
         });
       }
     },
-    //批量删除
+    // 批量删除
     deletes(checkboxModel){
       console.log(checkboxModel)
     },
-    //删除
+    // 删除
     deleteR(id){
       console.log(id)
+      const params = {ids:''}
+      historyStuDeleteApi(params).then(result => {
+        console.log(result)
+      })
     }
   }
 }

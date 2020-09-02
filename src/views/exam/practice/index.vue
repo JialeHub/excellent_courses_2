@@ -35,6 +35,7 @@
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
+import {testStuGetApi, testStuPostApi} from "../../../api/modules/testingQues";
 
 export default {
   name: 'examPractice',
@@ -45,13 +46,33 @@ export default {
   },
   mounted() {
     this.getImage();
+    this.getTesting();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'14'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
         console.log(result.data.cover)
+      })
+    },
+    // 获取测试题
+    getTesting(){
+      const params = {testingNum:''}
+      testStuGetApi(params).then(result => {
+        console.log(result)
+      })
+    },
+    // 提交测试题答案
+    sumbit(){
+      const params = {
+        choiceAnswer: '',
+        subjectiveAnswer: '',
+        testingNum: ''
+      }
+      testStuPostApi(params).then(result => {
+        console.log(result)
       })
     }
   }

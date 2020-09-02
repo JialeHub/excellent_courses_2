@@ -86,6 +86,7 @@
 <script>
 
 import {imagesGetApi} from "../../../api/modules/images";
+import {choiceStuPostApi,choiceStuGetApi} from "../../../api/modules/choiceQues";
 
 export default {
   name: 'examObjective',
@@ -106,13 +107,32 @@ export default {
   },
   mounted() {
     this.getImage();
+    this.getChoice();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'12'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
         console.log(result.data.cover)
+      })
+    },
+    // 获取客观题
+    getChoice(){
+      const params = { section: '1' }
+      choiceStuGetApi(params).then(result => {
+        console.log(result.data)
+      })
+    },
+    // 提交客观题答案
+    sumbit(){
+      const params = {
+        answers: '',
+        section: ''
+      }
+      choiceStuPostApi(params).then(result => {
+        console.log(result.data)
       })
     }
   }

@@ -52,6 +52,7 @@
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
+import {homeworkListGetApi} from "../../api/modules/homework";
 
 export default {
   name: 'homework',
@@ -79,6 +80,7 @@ export default {
     this.getImage();
   },
   methods:{
+    // 获取图片
     getImage(){
       imagesGetApi({board:'16'}).then(result => {
         console.log(result)
@@ -87,17 +89,28 @@ export default {
         console.log(result.data.cover)
       })
     },
+    // 跳转至详情页
     toDetail(id){
       console.log(id)
+      this.$router.push({name:'homeworkDetails'})
     },
+    // 分页跳转
     switchToPage:function (pageNo) {
       console.log(pageNo)
       if (pageNo < 0 || pageNo >= this.totalPages) {
         return false;
       }
-      this.getUserByPage(pageNo); //获得作业列表
+      this.getUserByPage(pageNo);
     },
+    // 获得作业列表
     getUserByPage(pageNo){
+      const params = {
+        current: '',
+        size : ''
+      }
+      homeworkListGetApi(params).then(result => {
+        console,log(result.data.records)
+      })
       console.log(pageNo)
     }
   }

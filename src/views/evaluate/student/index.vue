@@ -110,13 +110,25 @@
   },
   mounted() {
     this.getImage();
+    this.getEvaluateList();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'11'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
         console.log(result.data.cover)
+      })
+    },
+    // 获取学生评价列表
+    getEvaluateList(){
+      const params = {
+        current: '1',
+        size: '10'
+      }
+      evaluateListGetApi(params).then(result => {
+        console.log(result)
       })
     },
     rating: function (item) {

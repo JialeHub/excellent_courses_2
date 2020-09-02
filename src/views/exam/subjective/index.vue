@@ -59,6 +59,7 @@
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
+import {quesGetApi, quesPostApi} from "../../../api/modules/subjectiveQues";
 
 export default {
   name: 'examSubjective',
@@ -79,13 +80,32 @@ export default {
   },
   mounted() {
     this.getImage();
+    this.getSubjective();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'13'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
         console.log(result.data.cover)
+      })
+    },
+    // 获取主观题
+    getSubjective(){
+      const params = { section: '1' }
+      quesGetApi(params).then(result => {
+        console.log(result.data)
+      })
+    },
+    // 提交主观题答案
+    sumbit(){
+      const params = {
+        answers: '',
+        section: ''
+      }
+      quesPostApi(params).then(result => {
+        console.log(result.data)
       })
     }
   }

@@ -17,6 +17,7 @@
 
 <script>
   import {imagesGetApi} from "../../../api/modules/images";
+  import {expertRemarkGetApi} from "../../../api/modules/expertRemark";
 
   export default {
   name: 'evaluateTeacher',
@@ -27,13 +28,21 @@
   },
   mounted() {
     this.getImage();
+    this.getRemark();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'10'}).then(result => {
         this.imgSrc = result.data.cover
         console.log(result.data.page)
         console.log(result.data.cover)
+      })
+    },
+    // 获取评价
+    getRemark(){
+      expertRemarkGetApi({type :'1'}).then(result => {
+        console.log(result)
       })
     }
   }

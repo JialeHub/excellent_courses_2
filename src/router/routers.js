@@ -167,6 +167,16 @@ const routes = [
       keepAlive: true
     }
   },
+  {
+    path: '/homeworkDetails',
+    name: 'homeworkDetails',
+    component: () => import('@/views/homework/details.vue'),
+    meta: {
+      name: '作业详情 | 精品课程',
+      title: '作业详情 | 精品课程',
+      keepAlive: true
+    }
+  },
   /** **************************************** 用户模块user **************************************** **/
   // 登录
   {

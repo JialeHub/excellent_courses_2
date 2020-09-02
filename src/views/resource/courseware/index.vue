@@ -52,7 +52,7 @@
                   <a href="#" style="margin-right: 10%">
                     <img src="../../../assets/img/preview.png">
                   </a>
-                  <a href="#">
+                  <a href="#" @click="download(item.id)">
                     <img src="../../../assets/img/download.png">
                   </a>
                 </td>
@@ -60,7 +60,7 @@
             </tbody>
           </table>
           <!--批量下载按钮-->
-          <button style="border-radius: 20px;width: 100px;height: 40px" type="button" class="btn btn-primary btn-sm" @click="download(checkboxModel)">批量下载</button>
+          <button style="border-radius: 20px;width: 100px;height: 40px" type="button" class="btn btn-primary btn-sm" @click="downloads(checkboxModel)">批量下载</button>
           <!-- 分页-->
           <div class="row justify-content-center" style="padding-top: 2%;padding-bottom: 5%">
             <ul class="nav pagination">
@@ -87,7 +87,7 @@
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
-import {resourceGetApi} from "../../../api/modules/fileInfo";
+import {resourceDownloadApi, resourceDownloadsApi, resourceGetApi} from "../../../api/modules/fileInfo";
 
 export default {
   name: 'resourceCourseware',
@@ -120,6 +120,7 @@ export default {
     this.getCourseware();
   },
   methods:{
+    // 获取图片
     getImage(){
       imagesGetApi({board:'17'}).then(result => {
         this.imgSrc = result.data.cover
@@ -127,8 +128,8 @@ export default {
         console.log(result.data.cover)
       })
     },
-    //获取课件
-    getCourseware(){
+    // 获取课件
+    getCourseware(pageNo){
       const params = {
         current:'1',
         size: '10',
@@ -139,21 +140,15 @@ export default {
         this.coursewareList = result.data.records
       })
     },
-    toDetail(id){
-      console.log(id)
-    },
+    // 分页跳转
     switchToPage:function (pageNo) {
       console.log(pageNo)
       if (pageNo < 0 || pageNo >= this.totalPages) {
         return false;
       }
-      this.getUserByPage(pageNo);
+      this.getCourseware(pageNo);
     },
-    //获得作业列表
-    getUserByPage(pageNo){
-      console.log(pageNo)
-    },
-    //全选
+    // 全选
     checkedAll: function() {
       const _this = this;
       console.log(_this.checkboxModel)
@@ -166,9 +161,19 @@ export default {
         });
       }
     },
-    //批量下载
-    download(checkboxModel){
+    // 单资源下载
+    download(id){
+      console.log(id)
+      resourceDownloadApi({fid:id}).then(result => {
+        console.log(result)
+      })
+    },
+    // 批量下载
+    downloads(checkboxModel){
       console.log(checkboxModel)
+      resourceDownloadsApi({fileIds:checkboxModel}).then(result => {
+        console.log(result)
+      })
     }
   }
 }

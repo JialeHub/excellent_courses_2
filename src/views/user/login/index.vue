@@ -31,9 +31,12 @@
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="getCodeLoading"></span>
             <span v-if="getCodeLoading"> 登录中..</span>
           </button><br/>
-<!--          <a class="btn btn-outline-primary" href="register" role="button" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%">注册</a>-->
+    <!--  <a class="btn btn-outline-primary" href="register" role="button" style="width: 300px;height: 40px;border-radius: 40px;margin-top: 5%">注册</a>-->
         </div>
-        <!-- 模态框-->
+        <!-- 警告框-->
+        <div class="alert alert-primary" role="alert" v-if="isAlert" style="margin-bottom: 50%">
+          {{alertMessage}},请重新输入!
+        </div>
       </div>
     </div>
   </div>
@@ -52,7 +55,9 @@ export default {
         password: ''
       },
       getCodeLoading: false,
-      imgSrc: ''
+      imgSrc: '',
+      isAlert: false,
+      alertMessage:''
     }
   },
   mounted() {
@@ -87,10 +92,16 @@ export default {
                 clearInterval(interval)
                 this.$router.push({ path: '/home' })
               }
-            }, 600)
+            }, 800)
           }
         }else{
           console.log(result.message)
+            this.alertMessage = result.message
+            this.isAlert = true
+          const interval = setInterval(() => {
+            this.getCodeLoading = false
+            this.isAlert = false
+          }, 3000)
         }
         console.log(result)
       })
