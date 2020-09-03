@@ -156,6 +156,16 @@ const routes = [
       keepAlive: true
     }
   },
+  {
+    path: '/interactionDetails',
+    name: 'interactionDetails',
+    component: () => import('@/views/interaction/details.vue'),
+    meta: {
+      name: '师生互动详情 | 精品课程',
+      title: '师生互动详情 | 精品课程',
+      keepAlive: true
+    }
+  },
   /** **************************************** 作业提交homework **************************************** **/
   {
     path: '/homework',

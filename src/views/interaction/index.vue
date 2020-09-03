@@ -10,75 +10,93 @@
       </div>
     </div>
     <div class="container">
+      <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top: 75%" v-if="successSave">
+        提交成功
+      </div>
       <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
-      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" value="提出话题" style="width: 155px;border-radius: 20px;"></div>
+      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" @click="submit" value="提出话题" style="width: 155px;border-radius: 20px;"></div>
     </div>
-<!--    师生互动回复-->
+    <!-- 师生互动回复-->
     <div class="container" style="margin-top: 5%">
-      <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"  v-if="index < 1">
+      <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"  v-if="index < 2">
         <div class="box1 align-items-center" style="display: flex">
-          <img src="../../assets/img/home/comment.png" style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
-          <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;padding: 0 1% 0">{{item.name}}</h6>
+          <img :src="$addBaseURL(item.scover)"  style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
+          <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;padding: 0 1% 0">{{item.sname}}</h6>
           <div class="time justify-content-end" style="width:90%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
-            <div>{{item.time}}</div>
+            <div>{{item.createTime}}</div>
           </div>
         </div>
         <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-          {{item.content}}
+          {{item.detail}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
           <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-          <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.likeNum)+likeNum}})</label>
-          <img src="../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%">
-          <a style="color: #999999;font-size: 14px;padding-left: 0.5%" href="reply">回复（{{item.replyNum}}）</a>
+          <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+          <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
+          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toReply(index)">回复（{{item.wbNum}}）</a>
         </div>
-      </div>
-      <div class="reply">
-        <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
-        <div style="display: flex" class="justify-content-end align-items-center"><input class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
-      </div>
-    </div>
-<!--    回复评论-->
-    <div class="container col-8 align-self-end">
-      <div  style="background-color: #f7f7f7;border-radius: 5px;margin-top: 5%;margin-bottom: 5%">
-        <div class="row justify-content-md-center" style="padding: 5%">
-          <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"  v-if="index < 1">
-            <div class="box1 align-items-center" style="display: flex">
-              <img src="../../assets/img/home/comment.png" style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
-              <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;padding: 0 1% 0">{{item.name}}</h6>
-              <div class="time justify-content-end" style="width:93%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
-                <div>{{item.time}}</div>
+        <div class="reply" v-if="isReply">
+          <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
+          <div style="display: flex" class="justify-content-end align-items-center"><input class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
+        </div>
+        <!--回复评论-->
+        <div class="container col-8 align-self-end">
+          <div  style="border-radius: 5px;margin-top: 5%;margin-bottom: 5%">
+            <div class="row justify-content-md-center" style="padding: 5%">
+              <div class="col col-lg-12">
+                <div class="button" style="display:flex;justify-content: center;">
+                  <button @click="toDetail(index)" type="button" class="btn btn-outline-primary" style="height: 40px;width:160px;border-radius: 20px">查看全部</button>
+                </div>
               </div>
             </div>
-            <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-              {{item.content}}
-            </div>
-            <div class="line" style="height: 1px;background-color: #dddddd;margin: 5% 0 5%"></div>
-          </div>
-          <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"   v-show="showList" v-if="index >= 1">
-            <div class="box1 align-items-center" style="display: flex">
-              <img src="../../assets/img/home/comment.png" style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
-              <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;padding: 0 1% 0">{{item.name}}</h6>
-              <div class="time justify-content-end" style="width:93%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
-                <div>{{item.time}}</div>
-              </div>
-            </div>
-            <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-              {{item.content}}
-            </div>
-            <div class="line" style="height: 1px;background-color: #dddddd;margin: 5% 0 5%"></div>
-          </div>
-          <div class="shrink" v-if="commentList.length > 4" @click='toggle()' style="margin-bottom: 0%">
-            <a  style="color: #666666;cursor:pointer">{{showList ? '收起 ↑': '查看更多 ↓'}}</a>
           </div>
         </div>
       </div>
+      <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"  v-show="showList" v-if="index >= 2">
+        <div class="box1 align-items-center" style="display: flex">
+          <img :src="$addBaseURL(item.scover)" style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
+          <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;padding: 0 1% 0">{{item.sname}}</h6>
+          <div class="time justify-content-end" style="width:90%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
+            <div>{{item.createTime}}</div>
+          </div>
+        </div>
+        <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
+          {{item.detail}}
+        </div>
+        <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
+          <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+          <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
+          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toReply(index)">回复（{{item.wbNum}}）</a>
+        </div>
+        <div class="reply" v-if="isReply">
+          <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
+          <div style="display: flex" class="justify-content-end align-items-center"><input class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
+        </div>
+        <!--回复评论-->
+        <div class="container col-8 align-self-end">
+        <div  style="border-radius: 5px;margin-top: 5%;margin-bottom: 5%">
+          <div class="row justify-content-md-center" style="padding: 5%">
+            <div class="col col-lg-12">
+              <div class="button" style="display:flex;justify-content: center;">
+                <button  @click="toDetail(index)" type="button" class="btn btn-outline-primary" style="height: 40px;width:160px;border-radius: 20px">查看全部</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="shrink text-center" v-if="commentList.length >= 2" @click='toggle()' style="margin-bottom: 5%">
+        <a  style="color: #666666;cursor:pointer">{{showList ? '收起 ↑': '查看更多 ↓'}}</a>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
+import {evaluateListGetApi, evaluatePostApi, writeBackGetApi} from "../../api/modules/evaluate";
 
 export default {
   name: 'interaction',
@@ -90,78 +108,60 @@ export default {
       replyNum: 10,
       active: false,
       showList : false,
+      successSave:false,
+      isReply: false,
       imgSrc:'',
-      commentList: [
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'2',
-          replyNum:'2'
-        },
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'5',
-          replyNum:'2'
-        },
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'25',
-          replyNum:'2'
-        },
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'25',
-          replyNum:'2'
-        },
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'25',
-          replyNum:'2'
-        },
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'25',
-          replyNum:'2'
-        },
-        {
-          icon:'../../assets/img/home/comment.png',
-          name:'Garvey.',
-          time:'2020-6-20',
-          content:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          likeNum:'25',
-          replyNum:'2'
-        }
-      ]
+      size: '2',
+      commentList: []
     }
   },
   mounted() {
     this.getImage();
+    this.getEvaluateList();
   },
   methods: {
+    // 获取图片
     getImage(){
       imagesGetApi({board:'15'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.page)
-
       })
     },
+    // 提出话题
+    submit(){
+      const params = {
+        type: '1',
+        detail: '提出的话题'
+      }
+      evaluatePostApi(params).then(result =>{
+        console.log(result)
+        if(result.isok === true){
+          this.successSave = true
+          const interval = setInterval(() => {
+            this.successSave = false
+          }, 2000)
+        }
+      })
+    },
+    // 获取话题列表
+    getEvaluateList(){
+      const params = {
+        current: 1,
+        size: this.size,
+        type: 1
+      }
+      evaluateListGetApi(params).then(result => {
+        // console.log(result)
+        this.size = result.data.total
+        this.commentList = result.data.records
+      })
+    },
+
+    //跳转至回复的详情
+    toDetail(index){
+      console.log(index)
+      this.$router.push({name:'interactionDetails',query:{comment: this.commentList[index]}})
+    },
+    // 点赞
     rating: function (item) {
       if(this.active){
         this.likeNum--
@@ -171,8 +171,14 @@ export default {
         this.active = true
       }
     },
+    // 查看收起
     toggle () {
       this.showList = ! this.showList
+      this.getEvaluateList()
+    },
+    // 去评论
+    toReply(){
+       this.isReply= ! this.isReply
     }
   }
 }

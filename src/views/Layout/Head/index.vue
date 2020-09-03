@@ -105,7 +105,7 @@
                     $store.getters.user.Info.scover === ''
                 "
                 src="../../../assets/img/portrait.png"/>
-              <img v-else :src="$addBaseURL($store.getters.user.Info.scover)" width="60px" height="60px" style="border-radius: 30px">
+              <img v-else :src="$addBaseURL($store.getters.user.Info.scover)" width="40px" height="40px" style="border-radius: 20px">
             </router-link>
           </li>
         </ul>

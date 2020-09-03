@@ -1,4 +1,4 @@
-import { axiosG, axiosK, axiosD } from '../../index'
+import { axiosG, axiosK, axiosD,axiosJ,axiosA } from '../../index'
 
 /** 课程评价模块 **/
 const evaluateListGet = '/evaluate' //  分页获取评价列表
@@ -21,7 +21,7 @@ export const evaluateListGetApi = data => axiosG(evaluateListGet, data)
 export const praiseByEvalGetApi = data => axiosG(praiseByEvalGet, data)
 export const praiseByWBGetApi = data => axiosG(praiseByWBGet, data)
 export const writeBackGetApi = data => axiosG(writeBackGet, data)
-export const evaluatePostApi = data => axiosK(evaluatePost, data)
+export const evaluatePostApi = data => axiosJ(evaluatePost, data)
 export const praiseByEvalPostApi = data => axiosK(praiseByEvalPost, data)
 export const praiseByWBPostApi = data => axiosK(praiseByWBPost, data)
 export const writeBackPostApi = data => axiosK(writeBackPost, data)

@@ -4,7 +4,8 @@
     <div class="form-group clearfix">
       <div class="col-lg-12">
         <div class="grade-box" style="width: 400px">
-          <img style="padding-bottom: 1%" v-for="(star,index) in stars" :key="index" v-bind:src="star.src" v-on:click="rating(index)" alt="星星图片" />
+          <img style="padding-bottom: 1%" v-for="(star,index) in stars" :key="index" v-bind:src="star.src" v-on:click="rating(index)" alt="星星图片" v-if="isEdit" />
+          <img style="padding-bottom: 1%" v-for="(star,index) in stars" :key="index" v-bind:src="star.src" alt="星星图片" v-if="!isEdit" />
           <label class="align-items-center" style="padding-left: 4%;color: #f79618;">{{starNum}}.0分</label>
         </div>
       </div>
@@ -15,6 +16,7 @@
 <script>
 export default {
   name: 'index',
+  props: ['star1'],
   data () {
     return {
       starOnImg: require('../../assets/img/starOn.png'),
@@ -36,11 +38,23 @@ export default {
         active: false
       }
       ],
-      starNum: 0
+      starNum: 0,
+      isEdit: true
+    }
+  },
+  mounted() {
+    if(this.star1>=0 || this.star1<=5){
+      this.isEdit = false
+      this.starNum = this.star1
+      for (let n=0;n<this.starNum;n++){
+        this.stars[n].src = this.starOnImg
+        this.stars[n].active = true
+      }
     }
   },
   methods: {
     rating: function (index) {
+      this.$emit('star', index+1)
       const total = this.stars.length
       const idx = index + 1
       if (this.starNum === 0) {
