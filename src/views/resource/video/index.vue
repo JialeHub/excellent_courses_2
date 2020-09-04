@@ -10,69 +10,227 @@
       </div>
     </div>
     <!--tab栏-->
-    <div class="container ">
-      <ul class="nav  mb-3 flex-column flex-sm-row" id="pills-tab" role="tablist">
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link active"  data-toggle="pill" href="#pills-one" role="tab" aria-controls="pills-home" aria-selected="true">第一章</a>
-        </li>
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link"  data-toggle="pill" href="#pills-two" role="tab" aria-controls="pills-profile" aria-selected="false">第二章</a>
-        </li>
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link"  data-toggle="pill" href="#pills-three" role="tab" aria-controls="pills-contact" aria-selected="false">第三章</a>
-        </li>
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link" data-toggle="pill" href="#pills-four" role="tab" aria-controls="pills-contact" aria-selected="false">第四章</a>
-        </li>
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link" data-toggle="pill" href="#pills-five" role="tab" aria-controls="pills-contact" aria-selected="false">第五章</a>
-        </li>
+    <div class="tab container col-8" id="tab">
+      <ul class="mb-3" style="padding-top: 1%">
+        <li @click='change(item)' :class='currentIndex==item?"active":""' :key='index' v-for='(item,index) in sectionList'>第{{item}}章</li>
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
-    <div class="container">
-      <div class="tab-content" id="pills-tabContent" >
-        <div class="tab-pane fade show active" id="#pills-one"  aria-labelledby="pills-profile-tab">1</div>
-        <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">2</div>
-        <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">3</div>
-        <div class="tab-pane fade" id="pills-four" aria-labelledby="pills-contact-tab">4</div>
-        <div class="tab-pane fade" id="pills-five"  aria-labelledby="pills-contact-tab">5</div>
+    <!-- 内容区域-->
+    <div class="container" style="margin-top: 5%;margin-bottom: 5%;">
+      <div class="row">
+        <!--左边卡片区域-->
+        <div class="col-sm-8">
+          <div class="card">
+            <div class="card-header " style="display: flex">
+              <span style="font-size: 22px;">目录</span>
+              <img class="justify-content-end" src="../../../assets/img/task.png" style="width: 20px;margin-left: 72%"/>
+              <span style="color: #808080;font-size: 18px;margin-left: 2%">待完成任务点</span>
+            </div>
+            <div class="card-body">
+              <div class="card-text">
+                <div class="content" v-for="(item,index) in videoList" :key="item.sort" style="display: flex;margin-top: 3%;margin-bottom: 3%">
+                  <div class="col-10">
+                    <span style="color: #666666;">{{item.findex}}.</span>
+                    <span style="color: #666666;cursor: pointer" @click="toPreview($baseApi+item.faccess,item.fname,item.ftype)" data-toggle="modal" data-target="#exampleModal">{{item.fname}}</span>
+                  </div>
+                  <div class="col-4">
+                    <img v-if="item.ftype == 1" src="../../../assets/img/taskOn.png"  style="width: 18px"/>
+                    <img v-if="item.ftype == 0" src="../../../assets/img/task.png"  style="width: 18px"/>
+                    <span style="color: #999999;margin-left: 5%">{{item.vduration}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--右边卡片区域-->
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <span style="color: #333333;font-size: 22px;">师生互动</span>
+            </div>
+            <div class="card-body">
+              <div class="form">
+                <label for="exampleFormControlTextarea1"></label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                <button class="btn btn-primary" type="submit" style="margin-top: 4%;width: 100%;border-radius: 20px">提出话题</button>
+              </div>
+              <!--师生互动模块-->
+              <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index" v-if="index < 2">
+                <div class="box1 align-items-center" style="display: flex;margin-top: 10%">
+                  <img src="../../../assets/img/home/comment.png" style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
+                  <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;">{{item.name}}</h6>
+                  <div class="time justify-content-end" style="width:90%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
+                    <div>{{item.time}}</div>
+                  </div>
+                </div>
+                <div class="box2" style="overflow: hidden;margin-top:2%;color: #666666;line-height: 30px">
+                  {{item.content}}
+                </div>
+                <div class="box3 justify-content-end" style="display: flex;margin-top: 5%;margin-bottom: 1%">
+                  <img style="padding-bottom: 2%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+                  <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 2%">赞（{{parseInt(item.likeNum)+likeNum}})</label>
+                  <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%">
+                  <a style="color: #999999;font-size: 14px;padding-left: 2%" href="reply">回复（{{item.replyNum}}）</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top: 6%">
+            <a href="/interaction" style="color: #808080;font-size: 16px;padding: 4% 0 4%" class="text-center">查看更多 > > </a>
+          </div>
+<!--          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--            <div class="modal-dialog">-->
+<!--              <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                  视频预览-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                  <video  v-if="visibleVideo" :src="videoUrl" width="100%" controls ></video>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                  <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
       </div>
     </div>
-    <!-- 内容区域-->
-    <content-card/>
   </div>
 </template>
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
-import {resourceGetApi} from "../../../api/modules/fileInfo";
+import {resourceGetApi, RsectionGetApi} from "../../../api/modules/fileInfo";
 
 export default {
   name: 'resourceVideo',
   components: {ContentCard: () => import("./components/index")},
   data(){
     return{
-      imgSrc:''
+      imgSrc:'',
+      sectionList:[],
+      section:'',
+      currentIndex:0,
+      videoList:[],
+      likeOnImg: require('../../../assets/img/likeOn.png'),
+      likeOffImg: require('../../../assets/img/like.png'),
+      likeNum: 25,
+      replyNum: 10,
+      active: false,
+      showList : false,
+      all:[1,2,3,4],
+      commentList: [],
+      videoUrl: '',
+      visibleVideo: false
     }
   },
   mounted() {
     this.getImage();
+    this.getSection();
   },
   methods: {
+    // 点击tab栏切换
+    change:function(index){
+      this.currentIndex=index;
+      this.getVideo(index)
+    },
     //获取图片
     getImage(){
       imagesGetApi({board:'18'}).then(result => {
         this.imgSrc = result.data.cover
-        console.log(result.data.page)
-
       })
     },
+    // 获取教学录像章节
+    getSection(){
+      RsectionGetApi({type:'0'}).then(result => {
+        this.sectionList = result.data
+        this.section = this.sectionList[0]
+        this.getVideo();
+      })
+    },
+    //获取视频
+    getVideo(section){
+      if(section !=undefined || section!= null){
+        this.section = section
+      }
+      const params = {
+        current:'1',
+        size: '10',
+        type:'0',
+        section: this.section
+      }
+      resourceGetApi(params).then(result => {
+        // console.log(result.data)
+        this.videoList = result.data.records
+      })
+    },
+    closeVideo(){
+      this.videoUrl = '';
+      this.visibleVideo = false
+    },
+    // 预览视频
+    toPreview(url,name,type){
+      console.log(url)
+      this.$router.push({name:'resourceVideoDetails',query:{url: url,name: name,type:type}})
+      // this.videoUrl = url;
+      // this.visibleVideo = true
+    },
+    rating: function (item) {
+      if(this.active){
+        this.likeNum--
+        this.active = false
+      }else{
+        this.likeNum++
+        this.active = true
+      }
+    },
+    toggle () {
+      this.showList = ! this.showList
+    }
   }
 }
 </script>
 
 <style lang="scss">
+  #tab{
+    .tab {
+      width: 400px;
+      height: 300px;
+    }
+    .mb-3 {
+      margin: 0;
+      padding: 0;
+      height: 50px;
+      li {
+        cursor: pointer;
+        box-sizing: border-box;
+        width: 100px;
+        list-style: none;
+        text-align: center;
+        line-height: 50px;
+        float: left;
+      }
+    }
+    .active {
+      color: #0b6ef6;
+    }
+    .img {
+      display: none;
+      height: 250px;
+      width: 400px;
+    }
+    .img img {
+      height: 100%;
+      width: 100%;
+    }
+    .current {
+      display: block;
+    }
+  }
   .container{
     .nav{
       margin-top: 2%;

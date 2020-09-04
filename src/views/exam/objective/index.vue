@@ -9,42 +9,42 @@
         <div style="width: 120px;height: 2px;background-color: #ffffff;border-radius: 2px 0px 0px 0px;margin-top: 3%"></div>
       </div>
     </div>
-    <div class="tab container" id="tab">
-      <ul class="mb-3">
-        <li @click='change(index)' :class='currentIndex==index?"active":""' :key='item.id' v-for='(item,index) in sectionList'>第{{item+1}}章</li>
+    <div class="tab container col-8" id="tab">
+      <ul class="mb-3" style="padding-top: 1%">
+        <li @click='change(item)' :class='currentIndex==item?"active":""' :key='index' v-for='(item,index) in sectionList'>第{{item+1}}章</li>
       </ul>
     </div>
-    <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
-    <div class="container">
+    <div class="line" style="height: 1px;background-color: #dddddd;"></div>
+    <div class="container col-8"  v-for="(item,index) in textList" :key="item.chIndex">
       <div :class='currentIndex==index?"current":""' class="img">
-        <div class="questions" v-for="(item,index) in textList" :key="index">
+        <div class="questions">
           <div class="topic" style="display: flex;color: #585858;font-size: 16px;padding: 3% 0 3%;font-weight: bold">
             <span>{{item.chIndex}}.</span>
             <span>【{{item.chType | typeFormat}}】</span>
             <span>{{item.chQuestion}}</span>
           </div>
           <div class="options" v-if="item.chType === 0">
-            <div style="padding-left: 3.5%;margin-bottom: 6px">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" for="exampleRadios1" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[0]}}
               </label>
             </div>
-            <div style="padding-left: 3.5%;margin-bottom: 6px">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" for="exampleRadios2" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[1]}}
               </label>
             </div>
-            <div style="padding-left: 3.5%;margin-bottom: 6px">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option1" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" for="exampleRadios3" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[2]}}
               </label>
             </div>
-            <div style="padding-left: 3.5%;margin-bottom: 6px">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option1" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" for="exampleRadios4" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[3]}}
               </label>
             </div>
@@ -71,13 +71,13 @@
           </div>
           <div class="options" v-if="item.chType === 2">
             <div class="form-check form-check-inline" style="padding-left: 3%">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios6" value="option1" checked>
+              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios6" value="option1" checked>
               <label class="form-check-label" for="exampleRadios6" style="font-size: 20px">
                 √
               </label>
             </div>
             <div class="form-check form-check-inline" style="padding-left: 4%">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios7" value="option2">
+              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios7" value="option2">
               <label class="form-check-label" for="exampleRadios7" style="font-size: 20px">
                 ×
               </label>
@@ -85,6 +85,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="button text-center" style="padding:4% 0 5%">
+      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit(answers)" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
 </template>
@@ -105,7 +108,8 @@ export default {
       sectionList:[],
       section: '',
       chItem: '',
-      chItemList: ''  //多选题选项列表
+      chItemList: '' , //多选题选项列表
+      answers:[]
     }
   },
   computed: {
@@ -116,7 +120,6 @@ export default {
   },
   mounted() {
     this.getImage();
-    this.getChoice();
     this.getSection();
   },
   filters: {  // 题目类型过滤
@@ -150,29 +153,29 @@ export default {
       sectionGetApi().then(result => {
         this.sectionList = result.data
         this.section = this.sectionList[0]
+        this.getChoice()
       })
     },
     // 获取客观题
     getChoice(section){
-      console.log(section)
       if(section!=undefined || section!= null){
         this.section = section
       }
-      const params = { section: this.section }
+      const params = { section: this.section+1 }
       choiceStuGetApi(params).then(result => {
         this.textList = result.data
-        console.log('获取到的数组',this.chItem)
       })
     },
     // 提交客观题答案
-    sumbit(){
-      const params = {
-        answers: '',
-        section: ''
-      }
-      choiceStuPostApi(params).then(result => {
-        console.log(result.data)
-      })
+    sumbit(answer){
+      console.log(answer)
+      // const params = {
+      //   answers: '',
+      //   section: ''
+      // }
+      // choiceStuPostApi(params).then(result => {
+      //   console.log(result.data)
+      // })
     }
   }
 }

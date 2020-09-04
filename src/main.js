@@ -14,7 +14,9 @@ import HeadMenu from './views/Layout/Head' //顶部导航栏
 import FootMenu from './views/Layout/Foot' //底部
 import MakeStar from './components/makeStar' //星星评分组件
 Vue.config.productionTip = false
-
+// Vue.prototype.$fileSaver = require('file-saver'); // 下载文件
+Vue.prototype.$nodeEnv = process.env.NODE_ENV;
+Vue.prototype.$baseApi = process.env.VUE_APP_BASE_API;
 new Vue({
   router,
   store,

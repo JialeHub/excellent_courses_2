@@ -2,6 +2,7 @@ import { axiosG, axiosK, axiosD } from '../../index'
 
 /** 资源模块 **/
 const resourceGet = '/resource' //  分页搜索资源信息
+const sectionGet = '/resource/section' //  获取某类型资源的章节数
 const resourceDownload = '/resource/download/one' //  单资源下载
 const resourceDownloads= '/resource/downloads' //  多资源下载
 const resourcePost = '/resource' // 修改资源信息
@@ -11,6 +12,7 @@ const resourceDelete = '/resource' //  删除资源信息
 
 
 export const resourceGetApi = data => axiosG(resourceGet, data)
+export const RsectionGetApi = data => axiosG(sectionGet, data)
 export const resourceDownloadApi = data => axiosG(resourceDownload, data)
 export const resourceDownloadsApi = data => axiosG(resourceDownloads, data)
 export const resourcePostApi = data => axiosK(resourcePost, data)

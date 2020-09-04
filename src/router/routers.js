@@ -123,6 +123,17 @@ const routes = [
       keepAlive: true
     }
   },
+  //教学录像详情
+  {
+    path: '/resourceVideoDetails',
+    name: 'resourceVideoDetails',
+    component: () => import('@/views/resource/video/details.vue'),
+    meta: {
+      name: '教学录像详情 | 精品课程',
+      title: '教学录像详情 | 精品课程',
+      keepAlive: true
+    }
+  },
   // 教学大纲
   {
     path: '/outline',

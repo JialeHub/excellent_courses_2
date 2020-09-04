@@ -9,46 +9,47 @@
         <div style="width: 120px;height: 2px;background-color: #ffffff;border-radius: 2px 0px 0px 0px;margin-top: 3%"></div>
       </div>
     </div>
-    <div class="container ">
-      <ul class="nav  mb-3 flex-column flex-sm-row" id="pills-tab" role="tablist">
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link active"  data-toggle="pill" href="#pills-one" role="tab" aria-controls="pills-home" aria-selected="true">第一套</a>
-        </li>
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link"  data-toggle="pill" href="#pills-two" role="tab" aria-controls="pills-profile" aria-selected="false">第二套</a>
-        </li>
-        <li class="nav-item flex-sm-fill text-sm-center" role="presentation">
-          <a class="nav-link"  data-toggle="pill" href="#pills-three" role="tab" aria-controls="pills-contact" aria-selected="false">第三套</a>
-        </li>
+    <div class="tab container col-8" id="tab">
+      <ul class="mb-3" style="padding-top: 1%">
+        <li @click='change(index)' :class='currentIndex==index?"active":""' :key='item.id' v-for='(item,index) in sectionList'>第{{item+1}}章</li>
       </ul>
     </div>
-    <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
-    <div class="container">
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">1</div>
-        <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">2</div>
-        <div class="tab-pane fade" id="pills-three"  aria-labelledby="pills-contact-tab">3</div>
-      </div>
+    <div class="line" style="height: 1px;background-color: #dddddd;"></div>
+<!--    <div class="container col-8"  v-for="(item,index) in textList" :key="item.chIndex">-->
+<!--      <div :class='currentIndex==index?"current":""' class="img">-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="button text-center" style="padding:4% 0 5%">
+      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit(answers)" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
 </template>
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
-import {testStuGetApi, testStuPostApi} from "../../../api/modules/testingQues";
+import {testStuGetApi, testStuPostApi, TsectionGetApi} from "../../../api/modules/testingQues";
 
 export default {
   name: 'examPractice',
   data () {
     return {
-      imgSrc: ''
+      imgSrc: '',
+      currentIndex:0,
+      sectionList:[],
+      section: '',
+      index:1
     }
   },
   mounted() {
     this.getImage();
-    this.getTesting();
+    this.getSection();
   },
   methods: {
+    // 点击tab栏切换
+    change:function(index){
+      this.currentIndex=index;
+      this.getTesting(index)
+    },
     // 获取图片
     getImage(){
       imagesGetApi({board:'14'}).then(result => {
@@ -58,10 +59,11 @@ export default {
       })
     },
     // 获取测试题
-    getTesting(){
-      const params = {testingNum:''}
-      testStuGetApi(params).then(result => {
-        console.log(result)
+    getTesting(index){
+      this.index = index
+      testStuGetApi({testingNum: this.index}).then(result => {
+        console.log(result.data.choiceRos)
+        console.log(result.data.subjectiveQuesRos)
       })
     },
     // 提交测试题答案
@@ -74,12 +76,55 @@ export default {
       testStuPostApi(params).then(result => {
         console.log(result)
       })
-    }
+    },
+    // 获取客观题章节
+    getSection(){
+      TsectionGetApi().then(result => {
+        this.sectionList = result.data
+        this.section = this.sectionList[0]
+        this.getTesting(this.section)
+      })
+    },
   }
 }
 </script>
 
 <style lang="scss">
+  #tab{
+    .tab {
+      width: 400px;
+      height: 300px;
+    }
+    .mb-3 {
+      margin: 0;
+      padding: 0;
+      height: 50px;
+      li {
+        cursor: pointer;
+        box-sizing: border-box;
+        width: 100px;
+        list-style: none;
+        text-align: center;
+        line-height: 50px;
+        float: left;
+      }
+    }
+    .active {
+      color: #0b6ef6;
+    }
+    .img {
+      display: none;
+      height: 250px;
+      width: 400px;
+    }
+    .img img {
+      height: 100%;
+      width: 100%;
+    }
+    .current {
+      display: block;
+    }
+  }
   .container{
     .nav{
       margin-top: 2%;
