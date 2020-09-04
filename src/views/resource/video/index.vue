@@ -106,6 +106,7 @@
 import {imagesGetApi} from "../../../api/modules/images";
 import {resourceGetApi, RsectionGetApi} from "../../../api/modules/fileInfo";
 
+
 export default {
   name: 'resourceVideo',
   components: {ContentCard: () => import("./components/index")},

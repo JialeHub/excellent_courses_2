@@ -17,6 +17,14 @@ Vue.config.productionTip = false
 // Vue.prototype.$fileSaver = require('file-saver'); // 下载文件
 Vue.prototype.$nodeEnv = process.env.NODE_ENV;
 Vue.prototype.$baseApi = process.env.VUE_APP_BASE_API;
+
+//视频播放
+// import VideoPlayer from 'vue-video-player'
+// require('vue-video-player/node_modules/video.js/dist/video-js.cs')
+// require('vue-video-player/src/custom-theme.css')
+// Vue.use(VideoPlayer)
+
+
 new Vue({
   router,
   store,
@@ -26,3 +34,4 @@ new Vue({
 Vue.component('HeadMenu', HeadMenu)
 Vue.component('FootMenu', FootMenu)
 Vue.component('MakeStar', MakeStar)
+
