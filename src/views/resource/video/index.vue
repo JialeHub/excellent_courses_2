@@ -18,6 +18,9 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <!-- 内容区域-->
     <div class="container" style="margin-top: 5%;margin-bottom: 5%;">
+      <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top:80%" v-if="successSave">
+        提交成功
+      </div>
       <div class="row">
         <!--左边卡片区域-->
         <div class="col-sm-8">
@@ -53,8 +56,8 @@
             <div class="card-body">
               <div class="form">
                 <label for="exampleFormControlTextarea1"></label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-                <button class="btn btn-primary" type="submit" style="margin-top: 4%;width: 100%;border-radius: 20px">提出话题</button>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" v-model="topic"></textarea>
+                <button @click="sumbit(topic)" class="btn btn-primary" type="submit" style="margin-top: 4%;width: 100%;border-radius: 20px">提出话题</button>
               </div>
               <!--师生互动模块-->
               <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index" v-if="index < 2">
@@ -105,6 +108,7 @@
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
 import {resourceGetApi, RsectionGetApi} from "../../../api/modules/fileInfo";
+import {evaluatePostApi} from "../../../api/modules/evaluate";
 
 
 export default {
@@ -126,7 +130,9 @@ export default {
       all:[1,2,3,4],
       commentList: [],
       videoUrl: '',
-      visibleVideo: false
+      visibleVideo: false,
+      topic:'',
+      successSave:false
     }
   },
   mounted() {
@@ -179,6 +185,24 @@ export default {
       this.$router.push({name:'resourceVideoDetails',query:{url: url,name: name,type:type}})
       // this.videoUrl = url;
       // this.visibleVideo = true
+    },
+    // 提出话题
+    sumbit(topic){
+      console.log(topic)
+      const params = {
+        type: '1',
+        detail: topic
+      }
+      this.topic = ''
+      evaluatePostApi(params).then(result =>{
+        console.log(result)
+        if(result.isok === true){
+          this.successSave = true
+          const interval = setInterval(() => {
+            this.successSave = false
+          }, 2000)
+        }
+      })
     },
     rating: function (item) {
       if(this.active){

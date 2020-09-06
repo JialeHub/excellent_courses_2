@@ -19,10 +19,10 @@ Vue.prototype.$nodeEnv = process.env.NODE_ENV;
 Vue.prototype.$baseApi = process.env.VUE_APP_BASE_API;
 
 //视频播放
-// import VideoPlayer from 'vue-video-player'
-// require('vue-video-player/node_modules/video.js/dist/video-js.cs')
-// require('vue-video-player/src/custom-theme.css')
-// Vue.use(VideoPlayer)
+import VideoPlayer from 'vue-video-player'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
+Vue.use(VideoPlayer)
 
 
 new Vue({

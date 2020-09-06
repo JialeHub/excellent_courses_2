@@ -25,25 +25,25 @@
           </div>
           <div class="options" v-if="item.chType === 0">
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label  class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[0]}}
               </label>
             </div>
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[1])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[1]}}
               </label>
             </div>
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[2])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[2]}}
               </label>
             </div>
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input v-model="answers.first" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[3])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[3]}}
               </label>
@@ -52,20 +52,20 @@
           <div class="options" style="line-height: 26px;" v-if="item.chType === 1">
             <ul>
               <li>
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                <label class="form-check-label" for="inlineCheckbox1">{{item.chItem.split('&')[0]}}</label>
+                <input v-model="vals"  class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label  class="form-check-label" for="inlineCheckbox1">{{item.chItem.split('&')[0]}}</label>
               </li>
               <li>
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                <label class="form-check-label" for="inlineCheckbox2">{{item.chItem.split('&')[1]}}</label>
+                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label  class="form-check-label" for="inlineCheckbox2">{{item.chItem.split('&')[1]}}</label>
               </li>
               <li>
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
-                <label class="form-check-label" for="inlineCheckbox3">{{item.chItem.split('&')[2]}}</label>
+                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
+                <label  class="form-check-label" for="inlineCheckbox3">{{item.chItem.split('&')[2]}}</label>
               </li>
               <li>
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
-                <label class="form-check-label" for="inlineCheckbox4">{{item.chItem.split('&')[3]}}</label>
+                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+                <label  class="form-check-label" for="inlineCheckbox4">{{item.chItem.split('&')[3]}}</label>
               </li>
             </ul>
           </div>
@@ -87,7 +87,7 @@
       </div>
     </div>
     <div class="button text-center" style="padding:4% 0 5%">
-      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit(answers)" style="width: 130px;height: 40px;border-radius: 20px">
+      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit(vals)" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
 </template>
@@ -109,7 +109,8 @@ export default {
       section: '',
       chItem: '',
       chItemList: '' , //多选题选项列表
-      answers:[]
+      answers:[],
+      vals:[]
     }
   },
   computed: {
@@ -137,6 +138,10 @@ export default {
     }
   },
   methods: {
+    selectPosition (index, role) {
+      console.log(index,role),
+      this.answers.push({index,role})
+    },
     // 点击tab栏切换
     change:function(index){
       this.currentIndex=index;
@@ -167,8 +172,9 @@ export default {
       })
     },
     // 提交客观题答案
-    sumbit(answer){
-      console.log(answer)
+    sumbit(vals){
+      console.log(this.answers)
+      console.log(vals)
       // const params = {
       //   answers: '',
       //   section: ''

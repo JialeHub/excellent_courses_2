@@ -21,41 +21,25 @@
         <img  src="../../../assets/img/task.png" style="width: 18px"/>
         <span style="color: #666666;margin-left: 1%">视频任务未完成</span>
       </div>
-      <video-player></video-player>
     </div>
     <div style="text-align: center;padding-bottom: 6%">
       <video :src="videoUrl" width="70%" controls ></video>
     </div>
-    <div>
-      <video-player  class="video-player vjs-custom-skin"  ref="videoPlayer" :playsinline="true"
-                     :options="playerOptions"
-                     @play="onPlayerPlay($event)"
-                     @pause="onPlayerPause($event)"
-                     @ended="onPlayerEnded($event)"
-                     @loadeddata="onPlayerLoadeddata($event)"
-                     @waiting="onPlayerWaiting($event)"
-                     @playing="onPlayerPlaying($event)"
-                     @timeupdate="onPlayerTimeupdate($event)"
-                     @canplay="onPlayerCanplay($event)"
-                     @canplaythrough="onPlayerCanplaythrough($event)"
-                     @ready="playerReadied"
-                     @statechanged="playerStateChanged($event)"
-
-      ></video-player>
-    </div>
+<!--    <div>-->
+<!--      <video-player  class="video-player vjs-custom-skin"-->
+<!--                     ref="videoPlayer"-->
+<!--                     :playsinline="true"-->
+<!--                     :options="playerOptions"-->
+<!--      ></video-player>-->
+<!--    </div>-->
   </div>
 </template>
 
 <script>
-  import { videoPlayer } from 'vue-video-player'
-  import 'video.js/dist/video-js.css'
 import {imagesGetApi} from "../../../api/modules/images";
 
 export default {
   name: 'resourceVideoDetails',
-  components: {
-    videoPlayer
-  },
   data () {
     return {
       imgSrc: '',
