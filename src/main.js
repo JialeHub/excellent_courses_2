@@ -13,6 +13,7 @@ import './utils/globalFunction'
 import HeadMenu from './views/Layout/Head' //顶部导航栏
 import FootMenu from './views/Layout/Foot' //底部
 import MakeStar from './components/makeStar' //星星评分组件
+import CustomEditor from './components/CustomEditor'; //富文本组件
 Vue.config.productionTip = false
 // Vue.prototype.$fileSaver = require('file-saver'); // 下载文件
 Vue.prototype.$nodeEnv = process.env.NODE_ENV;
@@ -34,4 +35,6 @@ new Vue({
 Vue.component('HeadMenu', HeadMenu)
 Vue.component('FootMenu', FootMenu)
 Vue.component('MakeStar', MakeStar)
+Vue.component('CustomEditor', CustomEditor)
+
 

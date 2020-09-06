@@ -18,13 +18,14 @@
     "postcss-pxtorem": "^5.1.1",
     "register-service-worker": "^1.7.1",
     "silly-datetime": "^0.1.2",
+    "tinymce": "^5.4.2",
+    "video.js": "latest",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
     "vue-video-player": "^5.0.2",
     "vuex": "^3.5.1",
     "vuex-persistedstate": "^3.0.1",
-    "webpack": "^4.44.0",
-    "video.js": "latest"
+    "webpack": "^4.44.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.6",

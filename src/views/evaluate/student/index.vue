@@ -18,7 +18,10 @@
       <div style="display:flex;margin-top: 1%">趣味性：<make-star @star="interest" style="margin-left: 0.3%"/></div>
       <div style="display:flex;margin-top: 1%">教师参与：<make-star @star="participate"/></div>
       <div style="display:flex;margin-top: 1%">课程设计：<make-star @star="design"/></div>
-      <div class="text-center" style="margin-bottom: 5%">富文本放置</div>
+      <div class="text-center" style="margin-bottom: 5%">
+        富文本放置
+        <custom-editor></custom-editor>
+      </div>
       <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" value="提交" @click="submit" style="width: 115px;border-radius: 20px;"></div>
     </div>
     <div class="container">
