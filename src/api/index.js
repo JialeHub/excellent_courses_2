@@ -171,17 +171,14 @@ export const axiosU = (url, param) => {
  * @description post，文件格式。
  * */
 export const axiosF = (url, param) => {
-  return new Promise((resolve, reject) => {
-    service({
-      method: 'post',
-      url: url,
-      data: param,
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-      .then(result => resolve(result))
-      .catch(error => reject(error))
+  return service({
+    method: "post",
+    url: url,
+    data: param,
+    headers: {"Content-Type": "multipart/form-data"}
   })
-}
+};
+
 
 /**
  * @param {String} url 请求地址

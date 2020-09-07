@@ -15,14 +15,82 @@
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;"></div>
-<!--    <div class="container col-8"  v-for="(item,index) in textList" :key="item.chIndex">-->
-<!--      <div :class='currentIndex==index?"current":""' class="img">-->
-<!--      </div>-->
-<!--    </div>-->
-    <div class="button text-center" style="padding:4% 0 5%">
-      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit(answers)" style="width: 130px;height: 40px;border-radius: 20px">
+<!--    客观题-->
+    <div class="container col-8"  v-for="(item,index) in choiceRos" :key="item.chIndex">
+      <div :class='currentIndex==index?"current":""' class="img">
+        <div class="questions">
+          <div class="topic" style="display: flex;color: #585858;font-size: 16px;padding: 3% 0 3%;font-weight: bold">
+            <span>{{item.chIndex}}.</span>
+            <span>【{{item.chType | typeFormat}}】</span>
+            <span>{{item.chQuestion}}</span>
+          </div>
+          <div class="options" v-if="item.chType === 0">
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label  class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+                {{item.chItem.split('&')[0]}}
+              </label>
+            </div>
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[1])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+                {{item.chItem.split('&')[1]}}
+              </label>
+            </div>
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[2])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+                {{item.chItem.split('&')[2]}}
+              </label>
+            </div>
+            <div style="padding-left: 2%;margin-bottom: 6px">
+              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[3])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
+                {{item.chItem.split('&')[3]}}
+              </label>
+            </div>
+          </div>
+          <div class="options" style="line-height: 26px;" v-if="item.chType === 1">
+            <ul>
+              <li>
+                <input v-model="vals"  class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label  class="form-check-label" for="inlineCheckbox1">{{item.chItem.split('&')[0]}}</label>
+              </li>
+              <li>
+                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label  class="form-check-label" for="inlineCheckbox2">{{item.chItem.split('&')[1]}}</label>
+              </li>
+              <li>
+                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
+                <label  class="form-check-label" for="inlineCheckbox3">{{item.chItem.split('&')[2]}}</label>
+              </li>
+              <li>
+                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+                <label  class="form-check-label" for="inlineCheckbox4">{{item.chItem.split('&')[3]}}</label>
+              </li>
+            </ul>
+          </div>
+          <div class="options" v-if="item.chType === 2">
+            <div class="form-check form-check-inline" style="padding-left: 3%">
+              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios6" value="option1" checked>
+              <label class="form-check-label" for="exampleRadios6" style="font-size: 20px">
+                √
+              </label>
+            </div>
+            <div class="form-check form-check-inline" style="padding-left: 4%">
+              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios7" value="option2">
+              <label class="form-check-label" for="exampleRadios7" style="font-size: 20px">
+                ×
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
-  </div>
+<!--    <div class="button text-center" style="padding:4% 0 5%">-->
+<!--      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit()" style="width: 130px;height: 40px;border-radius: 20px">-->
+<!--    </div>-->
 </template>
 
 <script>
@@ -37,7 +105,9 @@ export default {
       currentIndex:0,
       sectionList:[],
       section: '',
-      index:1
+      index:1,
+      choiceRos:[],   //客观题
+      subjectiveQuesRos: []    //主观题
     }
   },
   mounted() {

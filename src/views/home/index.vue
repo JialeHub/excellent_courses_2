@@ -53,7 +53,7 @@
           </router-link>
         </div>
         <div class="card border-light" style="width: 300px;background-color: #f5f5f5;border-radius: 10px;margin: 1%;cursor: pointer">
-          <router-link to="/outline">
+          <router-link to="/practice">
             <img src="../../assets/img/home/test.png" class="card-img-top">
             <div class="card-body">
               <p class="card-text" style="color: #3c3c3c">自测题</p>

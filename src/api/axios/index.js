@@ -59,7 +59,8 @@ const isAddToken = (url) =>
     '/praiseByEval',
     '/praiseByWB',
     '/writeBack',
-    '/resource/section'
+    '/resource/section',
+    '/file/upload'
   ].some(item => url === item)
 
 export default service

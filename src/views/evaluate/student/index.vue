@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="giveMark" style="margin: 7% 19% 7%;font-family: MicrosoftYaHei,serif;font-weight: 600">
-      <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top: 75%" v-if="successSave">
+      <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 10%;top: 80%;width: 50%" v-if="successSave">
         提交评价成功
       </div>
       <div style="display:flex;margin-top: 1%">平均评分：<make-star @star="average"/></div>
@@ -18,11 +18,10 @@
       <div style="display:flex;margin-top: 1%">趣味性：<make-star @star="interest" style="margin-left: 0.3%"/></div>
       <div style="display:flex;margin-top: 1%">教师参与：<make-star @star="participate"/></div>
       <div style="display:flex;margin-top: 1%">课程设计：<make-star @star="design"/></div>
-      <div class="text-center" style="margin-bottom: 5%">
-        富文本放置
-        <custom-editor></custom-editor>
+      <div class="text-center" style="margin-bottom: 5%;margin-top: 5%">
+          <custom-editor v-model="evaluateVo[0].detail"></custom-editor>
       </div>
-      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" value="提交" @click="submit" style="width: 115px;border-radius: 20px;"></div>
+      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" value="提交" @click="submit(evaluateVo)" style="width: 115px;border-radius: 20px;"></div>
     </div>
     <div class="container">
       <div class="row justify-content-md-center">
@@ -36,13 +35,13 @@
             </div>
           </div>
           <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-           {{item.detail}}
+           {{$getSimpleHtml(item.detail)}}
           </div>
           <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-              <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-              <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
-              <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%">
-              <a style="color: #999999;font-size: 14px;padding-left: 0.5%" @click="toWbDetail(item)">回复（{{item.wbNum}}）</a>
+              <img style="padding-bottom: 1%;cursor: pointer;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+              <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+              <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%;cursor: pointer;">
+              <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;" @click="toWbDetail(item,$getSimpleHtml(item.detail))">回复（{{item.wbNum}}）</a>
           </div>
         </div>
         <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"   v-show="showList" v-if="index >= 2">
@@ -55,13 +54,13 @@
             </div>
           </div>
           <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-            {{item.detail}}
+            {{$getSimpleHtml(item.detail)}}
           </div>
           <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-            <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-            <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
-            <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%">
-            <a style="color: #999999;font-size: 14px;padding-left: 0.5%" @click="toWbDetail(item)">回复（{{item.wbNum}}）</a>
+            <img style="padding-bottom: 1%;cursor: pointer;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+            <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+            <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%;cursor: pointer;">
+            <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;" @click="toWbDetail(item,$getSimpleHtml(item.detail))">回复（{{item.wbNum}}）</a>
           </div>
         </div>
         <div class="shrink" v-if="commentList.length >= 2" @click='toggle()' style="margin-bottom: 5%">
@@ -107,13 +106,16 @@
   },
   methods: {
     //保存学生评价
-    submit(){
-      evaluatePostApi(this.evaluateVo[0]).then(result =>{
+    submit(evaluateVo){
+      console.log(evaluateVo)
+      evaluatePostApi(evaluateVo[0]).then(result =>{
         if(result.isok === true){
           this.successSave = true
           const interval = setInterval(() => {
             this.successSave = false
+            window.location.reload();
           }, 2000)
+
         }
       })
    },
@@ -151,10 +153,12 @@
       })
     },
     // 跳转至回复列表
-    toWbDetail(item){
-      this.$router.push({name:'reply',query:{item: item}})
+    toWbDetail(item,detail){
+      this.$router.push({name:'reply',query:{item: item,detail:detail}})
     },
+    // 点赞功能
     rating: function (item) {
+      console.log(item.id)
       if(this.active){
         this.likeNum--
         this.active = false

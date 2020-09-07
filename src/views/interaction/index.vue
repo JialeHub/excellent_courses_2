@@ -10,11 +10,15 @@
       </div>
     </div>
     <div class="container">
-      <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top: 75%" v-if="successSave">
-        提交成功
+      <div class="row justify-content-md-center" v-show="successSave">
+        <div class="col-5 alert alert-success text-center" role="alert" style="margin-top: 5%">
+          提交成功
+        </div>
       </div>
-      <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
-      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" @click="submit" value="提出话题" style="width: 155px;border-radius: 20px;"></div>
+      <div class="text-center" style="margin: 5% 0 2%">
+        <custom-editor v-model="detail"></custom-editor>
+      </div>
+      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" type="submit" @click="submit(detail)" value="提出话题" style="width: 155px;border-radius: 20px;"></div>
     </div>
     <!-- 师生互动回复-->
     <div class="container" style="margin-top: 5%">
@@ -22,35 +26,38 @@
         <div class="box1 align-items-center" style="display: flex">
           <img :src="$addBaseURL(item.scover)"  style="width: 40px;height: 40px;border-radius:20px;background-color: #666666;">
           <h6 style="font-size: 17px;letter-spacing: 1px;color: #333333;padding: 0 1% 0">{{item.sname}}</h6>
-          <div class="time justify-content-end" style="width:90%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
+          <div class="time row justify-content-md-end" style="width:87.5%;color: #999999;font-family: MicrosoftYaHeiL,serif;display: flex">
             <div>{{item.createTime}}</div>
           </div>
         </div>
         <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-          {{item.detail}}
+          {{$getSimpleHtml(item.detail)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
           <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
-          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toReply(index)">回复（{{item.wbNum}}）</a>
+          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
         </div>
-        <div class="reply" v-if="isReply">
-          <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
-          <div style="display: flex" class="justify-content-end align-items-center"><input class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
-        </div>
+<!--        <div class="reply" v-if="isReply">-->
+<!--          <div class="text-center" style="margin: 5% 0 2%">-->
+<!--            <custom-editor v-model="wbcontent"></custom-editor>-->
+<!--          </div>-->
+<!--          <div style="display: flex" class="justify-content-end align-items-center">-->
+<!--            <input @click="writeBack(item.id,wbcontent)" class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>-->
+<!--        </div>-->
         <!--回复评论-->
-        <div class="container col-8 align-self-end">
-          <div  style="border-radius: 5px;margin-top: 5%;margin-bottom: 5%">
-            <div class="row justify-content-md-center" style="padding: 5%">
-              <div class="col col-lg-12">
-                <div class="button" style="display:flex;justify-content: center;">
-                  <button @click="toDetail(index)" type="button" class="btn btn-outline-primary" style="height: 40px;width:160px;border-radius: 20px">查看全部</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!--        <div class="container col-8 align-self-end">-->
+<!--          <div  style="border-radius: 5px;margin-top: 5%;margin-bottom: 5%">-->
+<!--            <div class="row justify-content-md-center" style="padding: 5%">-->
+<!--              <div class="col col-lg-12">-->
+<!--                <div class="button" style="display:flex;justify-content: center;">-->
+<!--                  <button @click="toDetail(index)" type="button" class="btn btn-outline-primary" style="height: 40px;width:160px;border-radius: 20px">查看全部</button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index"  v-show="showList" v-if="index >= 2">
         <div class="box1 align-items-center" style="display: flex">
@@ -61,30 +68,33 @@
           </div>
         </div>
         <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-          {{item.detail}}
+          {{$getSimpleHtml(item.detail)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
           <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
-          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toReply(index)">回复（{{item.wbNum}}）</a>
+          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
         </div>
-        <div class="reply" v-if="isReply">
-          <div class="text-center" style="margin: 5% 0 2%">富文本放置处</div>
-          <div style="display: flex" class="justify-content-end align-items-center"><input class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
-        </div>
+<!--        <div class="reply" v-if="isReply">-->
+<!--          <div class="text-center" style="margin: 5% 0 2%">-->
+<!--            <custom-editor v-model="wbcontent"></custom-editor>-->
+<!--          </div>-->
+<!--          <div style="display: flex" class="justify-content-end align-items-center">-->
+<!--            <input @click="writeBack(item.id,wbcontent)" class="btn btn-primary" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>-->
+<!--        </div>-->
         <!--回复评论-->
-        <div class="container col-8 align-self-end">
-        <div  style="border-radius: 5px;margin-top: 5%;margin-bottom: 5%">
-          <div class="row justify-content-md-center" style="padding: 5%">
-            <div class="col col-lg-12">
-              <div class="button" style="display:flex;justify-content: center;">
-                <button  @click="toDetail(index)" type="button" class="btn btn-outline-primary" style="height: 40px;width:160px;border-radius: 20px">查看全部</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--        <div class="container col-8 align-self-end">-->
+<!--        <div  style="border-radius: 5px;margin-top: 5%;margin-bottom: 5%">-->
+<!--          <div class="row justify-content-md-center" style="padding: 5%">-->
+<!--            <div class="col col-lg-12">-->
+<!--              <div class="button" style="display:flex;justify-content: center;">-->
+<!--                <button  @click="toDetail(index)" type="button" class="btn btn-outline-primary" style="height: 40px;width:160px;border-radius: 20px">查看全部</button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       </div>
       <div class="shrink text-center" v-if="commentList.length >= 2" @click='toggle()' style="margin-bottom: 5%">
         <a  style="color: #666666;cursor:pointer">{{showList ? '收起 ↑': '查看更多 ↓'}}</a>
@@ -96,7 +106,7 @@
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
-import {evaluateListGetApi, evaluatePostApi, writeBackGetApi} from "../../api/modules/evaluate";
+import {evaluateListGetApi, evaluatePostApi, writeBackGetApi, writeBackPostApi} from "../../api/modules/evaluate";
 
 export default {
   name: 'interaction',
@@ -112,7 +122,9 @@ export default {
       isReply: false,
       imgSrc:'',
       size: '2',
-      commentList: []
+      commentList: [],
+      detail:'',
+      wbcontent:''
     }
   },
   mounted() {
@@ -127,10 +139,10 @@ export default {
       })
     },
     // 提出话题
-    submit(){
+    submit(detail){
       const params = {
         type: '1',
-        detail: '提出的话题'
+        detail: detail
       }
       evaluatePostApi(params).then(result =>{
         console.log(result)
@@ -138,6 +150,7 @@ export default {
           this.successSave = true
           const interval = setInterval(() => {
             this.successSave = false
+            this.detail = ''
           }, 2000)
         }
       })
@@ -155,7 +168,23 @@ export default {
         this.commentList = result.data.records
       })
     },
-
+    //回复话题
+    writeBack(id,content){
+      const params = {
+        content : content,
+        evalId : id
+      }
+      writeBackPostApi(params).then(result => {
+        console.log(result)
+        if(result.code === 200){
+          console.log(true)
+          this.successSave = true
+          const interval = setInterval(() => {
+            this.successSave = false
+          }, 2000)
+        }
+      })
+    },
     //跳转至回复的详情
     toDetail(index){
       console.log(index)

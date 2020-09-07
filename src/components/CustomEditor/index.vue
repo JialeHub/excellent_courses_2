@@ -1,11 +1,5 @@
 <template>
-  <div class="custom-editor" :style="`height: ${height}px`">
-    <div :style="`height: ${height}px`" v-show="mode==='edit'&&!pass">
-      <el-button type="text" @click="edit" size="default">编辑</el-button>
-      <div class="htmlBox" v-html="value"></div>
-    </div>
-    <textarea :id="`custom-editor-${editorKey}`" v-show="mode==='add'||pass"></textarea>
-  </div>
+  <textarea :id="`custom-editor-${editorKey}`"></textarea>
 </template>
 
 <script>
@@ -27,7 +21,7 @@
   import "tinymce/plugins/toc"; // 内容列表
   import "tinymce/plugins/codesample"; // 插入代码
 
-  import {uploadFilePlusApi} from '../../api/modules/file'
+  import {uploadPicturePlusApi} from '@/api/modules/file'
 
   export default {
     name: "CustomEditor",
@@ -40,25 +34,19 @@
         type: Number,
         default: 0
       },
-      height: {
-        type: Number,
-        default: 500
-      },
-      mode: {
+      typePath: {
         type: String,
-        default: 'add'
+        default: 'editor'
       }
     },
     data() {
       return {
         flag: true,
-        pass: false,
-        editor: null,
         DefaultInit: {
           language_url: "/assets/tinymce/langs/zh_CN.js", //导入语言文件
           skin_url: "/assets/tinymce/skins/ui/oxide", //主题样式
           language: "zh_CN", //语言设置
-          height: this.height, //高度
+          height: 300, //高度
           menubar: false, // 最上方menu菜单
           browser_spellcheck: true, // 拼写检查
           branding: false, // 去水印
@@ -79,7 +67,7 @@
       }
     },
     mounted() {
-      if (this.mode === 'add') this.init();
+      this.init();
     },
     watch: {
       value(val, old) {
@@ -104,61 +92,37 @@
           images_upload_handler: (blobInfo, success) => {
             let data = {};
             data.file = blobInfo.blob();
-            uploadFilePlusApi(data)
+            // data.typePath = this.typePath;
+            uploadPicturePlusApi(data)
               .then(result => {
-                let url = process.env.VUE_APP_BASE_API + result.data['accessPath'];
+                let url = this.$baseApi + result.data.accessPath;  //接口返回urL拼接
                 success(url)
               })
           },
           // 监听富文本内容
           setup: (editor) => {
-            this.editor = editor;
-            editor.on('init', () => {
-              this.set(this.value)
-            })
             editor.on('input change undo redo', () => {
               this.flag = false;
-              this.$emit('input', editor.getContent());
+              this.$emit('input', this.get());
               this.$parent.$emit('el.form.change')
             })
           }
         });
       },
-      // 开启编辑
-      edit() {
-        this.pass = true;
-        this.$nextTick(() => {
-          this.init();
-        })
+      // 获得富文本内容
+      get() {
+        return tinymce.activeEditor.getContent()
       },
       // 设置富文本内容
       set(value = "") {
-        if (this.mode === 'edit' && this.pass === false) return;
-        this.editor.setContent(value);
+        tinymce.editors[`custom-editor-${this.editorKey}`].setContent(value)
       }
     },
     // 退出销毁
     beforeDestroy() {
-      if (!this.editor) return;
-      this.editor.destroy();
+      tinymce.remove();
       let element = document.getElementById(`custom-editor-${this.editorKey}`);
       element.style.visibility = 'hidden'
     }
   };
 </script>
-
-<style lang="scss">
-  .custom-editor {
-    & > div:first-child {
-      position: relative;
-      overflow: auto;
-      box-sizing: border-box;
-      border: 1px solid #EBEEF5;
-
-      .el-button {
-        position: absolute;
-        right: 10px;
-      }
-    }
-  }
-</style>

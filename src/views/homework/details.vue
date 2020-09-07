@@ -12,8 +12,8 @@
     <div class="container" style="padding: 5% 7% 5%;font-size: 18px;" >
       <div class="title" style="display: flex">
         <span style="line-height: 20px">题目：</span>
-        <div class="content" style="padding-left: 2%">
-          <div style="line-height: 20px">{{homeworkList[0].hwQuestion}}</div>
+        <div class="content" style="">
+          <div style="line-height: 20px">{{$getSimpleHtml(homeworkList[0].hwQuestion)}}</div>
         </div>
       </div>
       <div class="time" style="line-height: 25px;padding-top: 5%">
@@ -24,8 +24,18 @@
        <span>作业要求： </span>
        <span>{{homeworkList[0].hwRequire}}</span>
      </div>
-      <div class="text-center" style="padding-top: 5%">富文本放置处</div>
-      <button  type="button" class="btn btn-primary" style="border-radius: 20px;width: 130px;margin-top:25px">提交答案</button>
+      <div class="row justify-content-md-center">
+        <div class="col-5 alert alert-success text-center" role="alert" style="" v-if="successSave">
+          提交评价成功
+        </div>
+      </div>
+
+      <div class="text-center" style="padding-top: 5%">
+        <custom-editor v-model="answer"></custom-editor>
+      </div>
+      <div class="row justify-content-md-end">
+        <button @click="submit(answer)" type="button" class="btn btn-primary" style="border-radius: 20px;width: 130px;margin-top:25px;margin-right: 2%">提交答案</button>
+      </div>
     </div>
   </div>
 </template>
@@ -33,13 +43,16 @@
 <script>
 import {imagesGetApi} from "../../api/modules/images";
 import {homeworkListGetApi} from "../../api/modules/homework";
+import {homeworkPostApi} from "../../api/modules/subhomework";
 
 export default {
   name: 'homeworkDetails',
   data () {
     return {
       imgSrc: '',
-      homeworkList:[]
+      homeworkList:[],
+      answer:'',
+      successSave: false
     }
   },
   mounted() {
@@ -63,6 +76,24 @@ export default {
       homeworkListGetApi(params).then(result => {
         console.log(result.data.records)
         this.homeworkList = result.data.records
+      })
+    },
+    // 提交作业
+    submit(answer){
+      const params ={
+        answer: answer,
+        hwId: this.$route.query.id
+      }
+      console.log(params)
+      homeworkPostApi(params).then(result =>{
+        if(result.code === 200){
+          console.log(true)
+          this.successSave = true
+          const interval = setInterval(() => {
+            this.successSave = false
+            this.$router.push('/homework')
+          }, 2000)
+        }
       })
     }
   }

@@ -10,10 +10,17 @@ import './styles/index.scss'
 import './styles/common.scss'
 import './utils/commonPro'
 import './utils/globalFunction'
+import 'element-ui/lib/theme-chalk/index.css'
 import HeadMenu from './views/Layout/Head' //顶部导航栏
 import FootMenu from './views/Layout/Foot' //底部
 import MakeStar from './components/makeStar' //星星评分组件
 import CustomEditor from './components/CustomEditor'; //富文本组件
+import ImageUploaderPlus from './components/ImageUploaderPlus'; //图片
+import SubmitButton from './components/SubmitButton'; //提交按钮
+import ElementUI from 'element-ui'
+
+
+
 Vue.config.productionTip = false
 // Vue.prototype.$fileSaver = require('file-saver'); // 下载文件
 Vue.prototype.$nodeEnv = process.env.NODE_ENV;
@@ -24,6 +31,7 @@ import VideoPlayer from 'vue-video-player'
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 Vue.use(VideoPlayer)
+Vue.use(ElementUI)
 
 
 new Vue({
@@ -36,5 +44,6 @@ Vue.component('HeadMenu', HeadMenu)
 Vue.component('FootMenu', FootMenu)
 Vue.component('MakeStar', MakeStar)
 Vue.component('CustomEditor', CustomEditor)
-
+Vue.component('ImageUploaderPlus', ImageUploaderPlus)
+Vue.component('SubmitButton', SubmitButton)
 

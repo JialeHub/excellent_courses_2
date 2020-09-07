@@ -27,7 +27,7 @@
             <td>{{item.hwRequire}}</td>
             <td>{{item.endTime}}</td>
             <td>
-              <button  type="button" class="btn btn-primary btn-sm" @click="toDetail(item.hwIndex)">查看详情</button>
+              <button  type="button" class="btn btn-primary btn-sm" @click="toDetail(item.hwIndex,item.id)">查看详情</button>
             </td>
           </tr>
         </tbody>
@@ -81,8 +81,8 @@ export default {
       })
     },
     // 跳转至详情页
-    toDetail(hwIndex){
-      this.$router.push({name:'homeworkDetails',query:{index:hwIndex}})
+    toDetail(hwIndex,hwId){
+      this.$router.push({name:'homeworkDetails',query:{index:hwIndex,id:hwId}})
     },
     // 分页跳转
     switchToPage:function (pageNo) {

@@ -1,4 +1,9 @@
 import Vue from "vue";
+import {
+  Message
+} from 'element-ui';
+export const errorMsg = msg => Message.error(msg);
+
 /**
  * @param string
  * @param noAddBase
@@ -37,6 +42,39 @@ export const isEmpty = (value) => {
   )
 }
 
+/**
+ * @param html
+ * @return {String}
+ * @description 过滤富文本HTML标签
+ * */
+export const getSimpleHtml = (html) => {
+    html = html.replace('↵', '123')
+    const re1 = new RegExp('<.+?>', 'g') // 匹配html标签的正则表达式，"g"是搜索匹配多个符合的内容
+    const msg = html.replace(re1, '') // 执行替换成空字符
+    return msg
+}
+
+
+/**
+ * @param {String} msg
+ * @param {String} time
+ * @description 报错信息不重复
+ */
+let errorText = '';
+let isForbid = false;
+export const errorMessage = (msg, time = 3000) => {
+  if (isForbid && msg === errorText) return;
+  isForbid = true;
+  errorMsg(msg);
+  errorText = msg;
+  setTimeout(() => {
+    isForbid = false;
+  }, time);
+};
+
+
 
 Vue.prototype.$addBaseURL = addBaseURL;
 Vue.prototype.$isEmpty = isEmpty;
+Vue.prototype.$getSimpleHtml = getSimpleHtml;
+Vue.prototype.$errorMsg = errorMsg;
