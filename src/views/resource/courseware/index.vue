@@ -47,11 +47,11 @@
 <!--          <button style="border-radius: 20px;width: 100px;height: 40px" type="button" class="btn btn-primary btn-sm" @click="downloads(checkboxModel)">批量下载</button>-->
           <!-- 分页-->
           <div class="row justify-content-center" style="padding-top: 2%;padding-bottom: 5%">
-            <ul class="nav pagination">
+            <ul class="nav pagination" v-if="isPagination">
               <li class="page-item">
                 <a href="#" class="page-link"><span @click="switchToPage(pageNow-1)"><&nbsp;</span></a>
               </li>
-              <li class="page-item" v-for="n in totalPages" :class="{active:n==pageNow+1}">
+              <li class="page-item" v-for="n in totalPages" :class="{active:n == pageNow}">
                 <a href="#" @click="switchToPage(n)" class="page-link">{{n}}</a>
               </li>
               <li class="page-item">
@@ -75,8 +75,9 @@ export default {
     return{
       coursewareList:[],
       perPage:10,
-      pageNow:0,
-      totalPages:2,
+      pageNow:0 ,
+      totalPages:'',
+      size:'10',
       checkedRows:[],
       checkboxModel:[],
       checked:false,
@@ -84,6 +85,8 @@ export default {
       sectionList:[],
       section:'',
       currentIndex:0,
+      pageNo:1,
+      isPagination:false
     }
   },
   watch: {//深度 watcher
@@ -143,10 +146,11 @@ export default {
     // 分页跳转
     switchToPage:function (pageNo) {
       console.log(pageNo)
+      this.pageNow = pageNo
+      this.getUserByPage(pageNo);
       if (pageNo < 0 || pageNo >= this.totalPages) {
         return false;
       }
-      this.getCourseware(pageNo);
     },
     // 全选
     checkedAll: function() {

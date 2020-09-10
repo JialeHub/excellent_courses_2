@@ -81,9 +81,9 @@
         </div>
         <!--我的头像-->
         <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">
-          <div class="container" style="margin-top: 8%;margin-bottom: 8%;margin-left: 10%">
+          <div class="container" style="margin-top: 8%;margin-bottom: 8%;margin-left: 10%;display: flex">
             <span style="color: #333333;">头像:</span>
-            <image-uploader-plus v-model="cover" :fixed="false"></image-uploader-plus>
+            <image-uploader-plus style="margin-left: 3%" v-model="cover" :fixed="false"></image-uploader-plus>
           </div>
         </div>
         <!--密码管理-->

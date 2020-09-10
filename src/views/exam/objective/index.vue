@@ -23,6 +23,7 @@
             <span>【{{item.chType | typeFormat}}】</span>
             <span>{{item.chQuestion}}</span>
           </div>
+          <!--单选题-->
           <div class="options" v-if="item.chType === 0">
             <div style="padding-left: 2%;margin-bottom: 6px">
               <input @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
@@ -49,26 +50,28 @@
               </label>
             </div>
           </div>
+          <!-- 多选题 -->
           <div class="options" style="line-height: 26px;" v-if="item.chType === 1">
             <ul>
               <li>
-                <input v-model="vals"  class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                <label  class="form-check-label" for="inlineCheckbox1">{{item.chItem.split('&')[0]}}</label>
+                <input class="form-check-input" type="checkbox" id="option1" value="option1" @change="getChecked(item.chItem.split('&')[0])" v-model="item.chItem.split('&')[0]">
+                <label  class="form-check-label" for="option1" >{{item.chItem.split('&')[0]}}</label>
               </li>
               <li>
-                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                <label  class="form-check-label" for="inlineCheckbox2">{{item.chItem.split('&')[1]}}</label>
+                <input  class="form-check-input" type="checkbox" id="option2" value="option2" @change="getChecked(item.chItem.split('&')[1])" v-model="item.chItem.split('&')[1]">
+                <label  class="form-check-label" for="option2">{{item.chItem.split('&')[1]}}</label>
               </li>
               <li>
-                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
-                <label  class="form-check-label" for="inlineCheckbox3">{{item.chItem.split('&')[2]}}</label>
+                <input  class="form-check-input" type="checkbox" id="option3" value="option2" @change="getChecked(item.chItem.split('&')[2])" v-model="item.chItem.split('&')[2]">
+                <label  class="form-check-label" for="option3">{{item.chItem.split('&')[2]}}</label>
               </li>
               <li>
-                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
-                <label  class="form-check-label" for="inlineCheckbox4">{{item.chItem.split('&')[3]}}</label>
+                <input class="form-check-input" type="checkbox" id="option4" value="option2" @change="getChecked(item.chItem.split('&')[3])" v-model="item.chItem.split('&')[3]">
+                <label  class="form-check-label" for="option4">{{item.chItem.split('&')[3]}}</label>
               </li>
             </ul>
           </div>
+          <!-- 判断题 -->
           <div class="options" v-if="item.chType === 2">
             <div class="form-check form-check-inline" style="padding-left: 3%">
               <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios6" value="option1" checked>
@@ -138,9 +141,14 @@ export default {
     }
   },
   methods: {
+    // 获取单选题答案
     selectPosition (index, role) {
       console.log(index,role),
       this.answers.push({index,role})
+    },
+    // 获取多选题答案
+    getChecked(item){
+      console.log(item)
     },
     // 点击tab栏切换
     change:function(index){
@@ -169,6 +177,11 @@ export default {
       const params = { section: this.section+1 }
       choiceStuGetApi(params).then(result => {
         this.textList = result.data
+          let val1 = this.textList
+          this.chItemList = val1.filter(function(val){
+            return val.chType === 1;
+          });
+          console.log(this.chItemList)
       })
     },
     // 提交客观题答案

@@ -11,7 +11,7 @@
     </div>
     <div class="tab container col-8" id="tab">
       <ul class="mb-3" style="padding-top: 1%">
-        <li  v-for='(item,index) in sectionList' :key='index' :class='currentIndex==item?"active":""' @click='change(item)'>第{{item}}章</li>
+        <li  v-for='(item,index) in sectionList' :key='index' :class='currentIndex==item?"active":""' @click='change(item)'>第{{item+1}}章</li>
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;"></div>
@@ -23,16 +23,18 @@
             <span>【简答题】</span>
             <span>{{item.sbQues}}</span>
           </div>
-          <div v-if="!isdone">富文本放置处</div>
+          <div v-if="!isdone">
+            <textarea v-model="answers[index]" style="width: 800px;height: 200px;margin-bottom: 5%"></textarea>
+          </div>
           <div v-if="isdone" style="font-size: 16px;">
-            <div class="myAnswer" style="color: #333333;line-height: 26px;">我的答案：XXXXXXXX</div>
+            <div class="myAnswer" style="color: #333333;line-height: 26px;">我的答案：{{answers[item.sbIndex]}}</div>
             <div class="rightAnswer" style="color: #d61111;line-height: 26px;padding-top: 2%">正确答案：{{item.ssAnswer}}}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="button text-center" style="padding:4% 0 5%">
-      <input class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
+      <input @click="sumbit(answers)" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
 </template>
@@ -50,7 +52,8 @@ export default {
       imgSrc:'',
       sectionList:[],
       section: '',
-      currentIndex:0
+      currentIndex:0,
+      answers:[]
     }
   },
   mounted() {
@@ -104,13 +107,26 @@ export default {
       })
     },
     // 提交主观题答案
-    sumbit(){
+    sumbit(answers){
+      console.log(answers)
+       let answersList = []
+      for(let i = 0; i<answers.length; i++){
+        if(i< answers.length-1){
+          answersList+=answers[i]+'&'
+        }
+        else {
+          answersList+=answers[i]
+        }
+      }
       const params = {
-        answers: '',
-        section: ''
+        answers: answersList,
+        section: this.currentIndex
       }
       quesPostApi(params).then(result => {
-        console.log(result.data)
+        if(result.data == true){
+          this.answers = []
+          // this.$successMsg('提交成功')
+        }
       })
     }
   }
