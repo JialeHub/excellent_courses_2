@@ -35,7 +35,7 @@
                 <div class="content" v-for="(item,index) in videoList" :key="item.sort" style="display: flex;margin-top: 3%;margin-bottom: 3%">
                   <div class="col-10">
                     <span style="color: #666666;">{{item.findex}}.</span>
-                    <span style="color: #666666;cursor: pointer" @click="toPreview($baseApi+item.faccess,item.fname,item.ftype)" data-toggle="modal" data-target="#exampleModal">{{item.fname}}</span>
+                    <span style="color: #666666;cursor: pointer" @click="toPreview($baseApi+item.faccess,item.fname,item.ftype,item.id)" data-toggle="modal" data-target="#exampleModal">{{item.fname}}</span>
                   </div>
                   <div class="col-4">
                     <img v-if="item.ftype == 1" src="../../../assets/img/taskOn.png"  style="width: 18px"/>
@@ -180,9 +180,9 @@ export default {
       this.visibleVideo = false
     },
     // 预览视频
-    toPreview(url,name,type){
+    toPreview(url,name,type,id){
       console.log(url)
-      this.$router.push({name:'resourceVideoDetails',query:{url: url,name: name,type:type}})
+      this.$router.push({name:'resourceVideoDetails',query:{url: url,name: name,type:type,id:id}})
       // this.videoUrl = url;
       // this.visibleVideo = true
     },

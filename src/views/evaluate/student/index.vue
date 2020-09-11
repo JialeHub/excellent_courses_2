@@ -38,7 +38,7 @@
            {{$getSimpleHtml(item.detail)}}
           </div>
           <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-              <img style="padding-bottom: 1%;cursor: pointer;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+              <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
               <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
               <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%;cursor: pointer;">
               <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;" @click="toWbDetail(item,$getSimpleHtml(item.detail))">回复（{{item.wbNum}}）</a>
@@ -58,7 +58,7 @@
           </div>
           <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
             <img style="padding-bottom: 1%;cursor: pointer;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-            <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+            <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;">赞（{{parseInt(item.praiseNum)}})</label>
             <img src="../../../assets/img/reply.png" style="padding-bottom: 1%;padding-left: 2%;cursor: pointer;">
             <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer;" @click="toWbDetail(item,$getSimpleHtml(item.detail))">回复（{{item.wbNum}}）</a>
           </div>
@@ -73,7 +73,12 @@
 
 <script>
   import {imagesGetApi} from "../../../api/modules/images";
-  import {evaluateListGetApi, evaluatePostApi} from "../../../api/modules/evaluate";
+  import {
+    evaluateListGetApi,
+    evaluatePostApi,
+    praiseByEvalPostApi,
+    praiseByWBPostApi
+  } from "../../../api/modules/evaluate";
 
   export default {
   name: 'evaluateStudent',
@@ -159,13 +164,23 @@
     // 点赞功能
     rating: function (item) {
       console.log(item.id)
-      if(this.active){
-        this.likeNum--
-        this.active = false
-      }else{
-        this.likeNum++
-        this.active = true
+      for(let i = 0; i < this.commentList.length; i++ ){
+        if(this.commentList[i].id == item.id){
+          if(!this.commentList[i].red){
+            this.commentList[i].red = true;
+            this.commentList[i].praiseNum =  Number(Number(this.commentList[i].praiseNum)+1)
+            this.likeEvaluate(item.id)
+          }
+        }
       }
+    },
+    // 点赞评价
+    likeEvaluate(id){
+      const params = {
+        evalId : id
+      }
+      praiseByEvalPostApi(params).then(result => {
+      })
     },
     toggle () {
         this.showList = ! this.showList

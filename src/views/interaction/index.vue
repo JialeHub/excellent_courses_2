@@ -34,8 +34,8 @@
           {{$getSimpleHtml(item.detail)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-          <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+          <img style="padding-bottom: 1%;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
           <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
         </div>
@@ -71,8 +71,8 @@
           {{$getSimpleHtml(item.detail)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-          <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+          <img style="padding-bottom: 1%;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
           <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
         </div>
@@ -106,7 +106,13 @@
 
 <script>
 import {imagesGetApi} from "../../api/modules/images";
-import {evaluateListGetApi, evaluatePostApi, writeBackGetApi, writeBackPostApi} from "../../api/modules/evaluate";
+import {
+  evaluateListGetApi,
+  evaluatePostApi,
+  praiseByWBPostApi,
+  writeBackGetApi,
+  writeBackPostApi
+} from "../../api/modules/evaluate";
 
 export default {
   name: 'interaction',
@@ -190,15 +196,27 @@ export default {
       console.log(index)
       this.$router.push({name:'interactionDetails',query:{comment: this.commentList[index]}})
     },
-    // 点赞
+    // 点赞评价
     rating: function (item) {
-      if(this.active){
-        this.likeNum--
-        this.active = false
-      }else{
-        this.likeNum++
-        this.active = true
+      console.log(item.id)
+      for(let i = 0; i < this.commentList.length; i++ ){
+        if(this.commentList[i].id == item.id){
+          if(!this.commentList[i].red){
+            this.commentList[i].red = true;
+            this.commentList[i].praiseNum =  Number(Number(this.commentList[i].praiseNum)+1)
+            this.likeReply(item.id)
+          }
+        }
       }
+    },
+    // 点赞回复
+    likeReply(id){
+      const params = {
+        evalWbId : id
+      }
+      praiseByWBPostApi(params).then(result => {
+        console.log(result)
+      })
     },
     // 查看收起
     toggle () {

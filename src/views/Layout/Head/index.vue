@@ -97,7 +97,7 @@
               'nav-item ',
               ['user', 'login'].indexOf($route.name) !== -1 ? 'active' : ''
             ]"
-              :to="{ name: 'login' }"
+              :to="{ name: 'personal' }"
             >
               <img
                 v-if="

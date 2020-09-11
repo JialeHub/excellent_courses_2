@@ -57,8 +57,8 @@
           {{$getSimpleHtml(item.content)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-          <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+          <img style="padding-bottom: 1%;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
         </div>
       </div>
       <div class="col col-lg-12" v-for="(item,index) in commentList"  v-show="showList" v-if="index >= 4">
@@ -73,8 +73,8 @@
           {{$getSimpleHtml(item.content)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
-          <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)+likeNum}})</label>
+          <img style="padding-bottom: 1%;"  :src="item.id == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
         </div>
       </div>
       <div class="shrink" v-if="commentList.length >= 4" @click='toggle()' style="margin-bottom: 5%">
@@ -88,7 +88,7 @@
 <script>
 
 import {imagesGetApi} from "../../api/modules/images";
-import {writeBackGetApi, writeBackPostApi} from "../../api/modules/evaluate";
+import {praiseByEvalPostApi, writeBackGetApi, writeBackPostApi} from "../../api/modules/evaluate";
 
 export default {
   name: 'interactionDetails',
@@ -156,14 +156,25 @@ export default {
         }
       })
     },
+    // 点赞评价
     rating: function (item) {
-      if(this.active){
-        this.likeNum--
-        this.active = false
-      }else{
-        this.likeNum++
-        this.active = true
+      for(let i = 0; i < this.commentList.length; i++ ){
+        if(this.commentList[i].id == item.id){
+          if(!this.commentList[i].red){
+            this.commentList[i].red = true;
+            this.commentList[i].praiseNum =  Number(Number(this.commentList[i].praiseNum)+1)
+            this.likeEvaluate(item.id)
+          }
+        }
       }
+    },
+    // 点赞评价
+    likeEvaluate(id){
+      const params = {
+        evalId : id
+      }
+      praiseByEvalPostApi(params).then(result => {
+      })
     },
     toggle () {
       this.showList = ! this.showList

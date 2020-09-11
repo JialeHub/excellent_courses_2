@@ -26,14 +26,14 @@
           <div v-if="!isdone">
             <textarea v-model="answers[index]" style="width: 800px;height: 200px;margin-bottom: 5%"></textarea>
           </div>
-          <div v-if="isdone" style="font-size: 16px;">
-            <div class="myAnswer" style="color: #333333;line-height: 26px;">我的答案：{{answers[item.sbIndex]}}</div>
-            <div class="rightAnswer" style="color: #d61111;line-height: 26px;padding-top: 2%">正确答案：{{item.ssAnswer}}}</div>
+          <div style="font-size: 16px;"  v-if="isdone">
+            <div class="myAnswer" style="color: #333333;line-height: 26px;">我的答案：{{answers[index]}}</div>
+            <div class="rightAnswer" style="color: #d61111;line-height: 26px;padding-top: 2%" >正确答案：{{item.ssAnswer}}</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="button text-center" style="padding:4% 0 5%">
+    <div class="button text-center" style="padding:4% 0 5%"  v-if="!isdone">
       <input @click="sumbit(answers)" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
@@ -96,14 +96,21 @@ export default {
     },
     // 获取主观题
     getSubjective(section){
-      console.log(section)
       if(section!=undefined || section!= null){
         this.section = section
       }
       const params = { section: this.section+1 }
       quesGetApi(params).then(result => {
         this.textList = result.data
-        console.log(this.textList)
+        for(let i=0;i<=this.textList.length-1;i++){
+          console.log(this.textList[i])
+          if(this.textList[i].sbAnsw == null){
+            this.isdone =false
+          }else {
+            this.isdone =true
+          }
+        }
+
       })
     },
     // 提交主观题答案
@@ -124,7 +131,7 @@ export default {
       }
       quesPostApi(params).then(result => {
         if(result.data == true){
-          this.answers = []
+          this.isdone = true
           // this.$successMsg('提交成功')
         }
       })

@@ -23,7 +23,7 @@
             <span>【{{item.chType | typeFormat}}】</span>
             <span>{{item.chQuestion}}</span>
           </div>
-          <!--单选题-->
+          <!-- 单选题 -->
           <div class="options" v-if="item.chType === 0">
             <div style="padding-left: 2%;margin-bottom: 6px">
               <input @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
@@ -54,19 +54,19 @@
           <div class="options" style="line-height: 26px;" v-if="item.chType === 1">
             <ul>
               <li>
-                <input class="form-check-input" type="checkbox" id="option1" value="option1" @change="getChecked(item.chItem.split('&')[0])" v-model="item.chItem.split('&')[0]">
+                <input class="form-check-input" type="checkbox" id="option1" value="option1" @change="getChecked(item.chIndex,item.chItem.split('&')[0])">
                 <label  class="form-check-label" for="option1" >{{item.chItem.split('&')[0]}}</label>
               </li>
               <li>
-                <input  class="form-check-input" type="checkbox" id="option2" value="option2" @change="getChecked(item.chItem.split('&')[1])" v-model="item.chItem.split('&')[1]">
+                <input  class="form-check-input" type="checkbox" id="option2" value="option2" @change="getChecked(item.chIndex,item.chItem.split('&')[1])" >
                 <label  class="form-check-label" for="option2">{{item.chItem.split('&')[1]}}</label>
               </li>
               <li>
-                <input  class="form-check-input" type="checkbox" id="option3" value="option2" @change="getChecked(item.chItem.split('&')[2])" v-model="item.chItem.split('&')[2]">
+                <input  class="form-check-input" type="checkbox" id="option3" value="option2" @change="getChecked(item.chIndex,item.chItem.split('&')[2])">
                 <label  class="form-check-label" for="option3">{{item.chItem.split('&')[2]}}</label>
               </li>
               <li>
-                <input class="form-check-input" type="checkbox" id="option4" value="option2" @change="getChecked(item.chItem.split('&')[3])" v-model="item.chItem.split('&')[3]">
+                <input class="form-check-input" type="checkbox" id="option4" value="option2" @change="getChecked(item.chIndex,item.chItem.split('&')[3])">
                 <label  class="form-check-label" for="option4">{{item.chItem.split('&')[3]}}</label>
               </li>
             </ul>
@@ -74,14 +74,14 @@
           <!-- 判断题 -->
           <div class="options" v-if="item.chType === 2">
             <div class="form-check form-check-inline" style="padding-left: 3%">
-              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios6" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios6" style="font-size: 20px">
+              <input class="form-check-input" type="radio" :name="item.id" :id="item.id" :value="questionYes"  @change="toYes(item.chIndex,questionYes)" >
+              <label class="form-check-label" :for="item.id" style="font-size: 20px">
                 √
               </label>
             </div>
             <div class="form-check form-check-inline" style="padding-left: 4%">
-              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios7" value="option2">
-              <label class="form-check-label" for="exampleRadios7" style="font-size: 20px">
+              <input class="form-check-input" type="radio" :name="item.id"  :id="item.id"  :value="questionNo" @change="toYes(item.chIndex,questionNo)">
+              <label class="form-check-label" :for="item.id" style="font-size: 20px">
                 ×
               </label>
             </div>
@@ -90,7 +90,7 @@
       </div>
     </div>
     <div class="button text-center" style="padding:4% 0 5%">
-      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit(vals)" style="width: 130px;height: 40px;border-radius: 20px">
+      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit()" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
 </template>
@@ -113,7 +113,9 @@ export default {
       chItem: '',
       chItemList: '' , //多选题选项列表
       answers:[],
-      vals:[]
+      questionYes: 1,
+      questionNo: 0,
+      arr:[]
     }
   },
   computed: {
@@ -143,12 +145,20 @@ export default {
   methods: {
     // 获取单选题答案
     selectPosition (index, role) {
-      console.log(index,role),
-      this.answers.push({index,role})
+      console.log(index,role)
+      // this.answers.push({index,role})
+      this.answers[index] = role
     },
     // 获取多选题答案
-    getChecked(item){
-      console.log(item)
+    getChecked(index, role){
+      console.log(index, role)
+      this.arr[index]=role
+
+    },
+
+    // 获取判断题答案
+    toYes(index, role){
+      console.log(index, role)
     },
     // 点击tab栏切换
     change:function(index){
@@ -177,17 +187,26 @@ export default {
       const params = { section: this.section+1 }
       choiceStuGetApi(params).then(result => {
         this.textList = result.data
-          let val1 = this.textList
-          this.chItemList = val1.filter(function(val){
-            return val.chType === 1;
-          });
-          console.log(this.chItemList)
+          // let val1 = this.textList
+          // this.chItemList = val1.filter(function(val){
+          //   return val.chType === 1;
+          // });
+          // console.log(this.chItemList)
       })
     },
     // 提交客观题答案
-    sumbit(vals){
-      console.log(this.answers)
-      console.log(vals)
+    sumbit(){
+
+      let countedNames = this.arr.reduce(function (allNames, name) {
+        if (name in allNames) {
+          allNames[name]++;
+        }
+        else {
+          allNames[name] = 1;
+        }
+        return allNames;
+      }, {});
+      console.log(countedNames)
       // const params = {
       //   answers: '',
       //   section: ''

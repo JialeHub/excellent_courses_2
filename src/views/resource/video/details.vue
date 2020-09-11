@@ -37,6 +37,7 @@
 
 <script>
 import {imagesGetApi} from "../../../api/modules/images";
+import {statusPostApi} from "@/api/modules/stuVideo";
 
 export default {
   name: 'resourceVideoDetails',
@@ -83,11 +84,21 @@ export default {
   mounted() {
     this.getImage();
     this.videoUrl = this.$route.query.url
+    this.player()
   },
   methods: {
     getImage(){
       imagesGetApi({board:'18'}).then(result => {
         this.imgSrc = result.data.cover
+      })
+    },
+    player(){
+      const params = {
+        type: true,
+        vId:  this.$route.query.id
+      }
+      statusPostApi(params).then(result => {
+        console.log(result)
       })
     },
     //监听播放状态改变
