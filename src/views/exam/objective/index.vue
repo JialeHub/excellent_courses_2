@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="tab container col-8" id="tab">
-      <ul class="mb-3" style="padding-top: 1%">
+      <ul class="mb-3" style="padding-top: 1%;font-weight: bold;font-size: 20px">
         <li @click='change(item)' :class='currentIndex==item?"active":""' :key='index' v-for='(item,index) in sectionList'>第{{item+1}}章</li>
       </ul>
     </div>
@@ -26,25 +26,25 @@
           <!-- 单选题 -->
           <div class="options" v-if="item.chType === 0">
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input :checked="item.isCheck" @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label  class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[0]}}
               </label>
             </div>
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[1])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input :checked="item.isCheck" @click="selectPosition(item.chIndex,item.chItem.split('&')[1])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[1]}}
               </label>
             </div>
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[2])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input :checked="item.isCheck" @click="selectPosition(item.chIndex,item.chItem.split('&')[2])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[2]}}
               </label>
             </div>
             <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[3])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
+              <input :checked="item.isCheck" @click="selectPosition(item.chIndex,item.chItem.split('&')[3])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
               <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
                 {{item.chItem.split('&')[3]}}
               </label>
@@ -52,13 +52,13 @@
           </div>
           <!-- 多选题 -->
           <div class="options" style="line-height: 26px;" v-if="item.chType === 1">
-            <ul>
+            <ul >
               <li>
                 <input class="form-check-input" type="checkbox" id="option1" value="option1" @change="getChecked(item.chIndex,item.chItem.split('&')[0])">
                 <label  class="form-check-label" for="option1" >{{item.chItem.split('&')[0]}}</label>
               </li>
               <li>
-                <input  class="form-check-input" type="checkbox" id="option2" value="option2" @change="getChecked(item.chIndex,item.chItem.split('&')[1])" >
+                <input  class="form-check-input" type="checkbox" id="option2" value="option2" @change="getChecked(item.chIndex,item.chItem.split('&')[1])">
                 <label  class="form-check-label" for="option2">{{item.chItem.split('&')[1]}}</label>
               </li>
               <li>
@@ -115,7 +115,12 @@ export default {
       answers:[],
       questionYes: 1,
       questionNo: 0,
-      arr:[]
+      arr:[],
+      arr1:[],
+      arr2:[],
+      arr3:[],
+      arr4:[],
+      checked: false
     }
   },
   computed: {
@@ -145,20 +150,23 @@ export default {
   methods: {
     // 获取单选题答案
     selectPosition (index, role) {
-      console.log(index,role)
-      // this.answers.push({index,role})
-      this.answers[index] = role
+      this.answers.push({index,role})
+      console.log(this.answers)
     },
     // 获取多选题答案
     getChecked(index, role){
-      console.log(index, role)
-      this.arr[index]=role
-
+      console.log(event.target.checked)
+      if(event.target.checked === true){  //判断复选框是否选中
+        this.arr.push({index,role})
+      }else {   //取消选中时从数组删除
+        this.arr.splice(this.arr.indexOf(index),1)
+      }
     },
 
     // 获取判断题答案
     toYes(index, role){
       console.log(index, role)
+      this.arr2.push({index,role})
     },
     // 点击tab栏切换
     change:function(index){
@@ -196,17 +204,40 @@ export default {
     },
     // 提交客观题答案
     sumbit(){
-
-      let countedNames = this.arr.reduce(function (allNames, name) {
-        if (name in allNames) {
-          allNames[name]++;
+      let res = []
+      //处理单选题
+      while(this.answers.length!==0){
+        let list = this.answers.shift()
+        let arr2 = [list]
+        for (let i = 0; i < this.answers.length; i++) {
+          if (this.answers[i].index === list.index) {
+            arr2 = arr2.concat(this.answers.splice(i, 1))
+            i--
+          }
         }
-        else {
-          allNames[name] = 1;
+        res.push(arr2)
+      }
+      for(let i=0;i<res.length;i++){
+        res[i].splice(0,res[i].length-1)
+        this.arr2.push(res[i][0])
+      }
+      //处理多选题
+      let res1 = []
+      while(this.arr.length!==0){
+        let list1 = this.arr.shift()
+        let arr3 = [list1]
+        for (let i = 0; i < this.arr.length; i++) {
+          if (this.arr[i].index === list1.index) {
+            arr3 = arr3.concat(this.arr.splice(i, 1))
+            i--
+          }
         }
-        return allNames;
-      }, {});
-      console.log(countedNames)
+        this.arr3.push(arr3)
+        //拼接字符串
+        console.log(this.arr3)
+      }
+      // console.log(this.arr2)
+      // console.log(this.arr3)
       // const params = {
       //   answers: '',
       //   section: ''

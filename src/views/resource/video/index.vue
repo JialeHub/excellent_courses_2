@@ -11,7 +11,7 @@
     </div>
     <!--tab栏-->
     <div class="tab container col-8" id="tab">
-      <ul class="mb-3" style="padding-top: 1%">
+      <ul class="mb-3" style="padding-top: 1%;font-weight: bold;font-size: 20px">
         <li @click='change(item)' :class='currentIndex==item?"active":""' :key='index' v-for='(item,index) in sectionList'>第{{item}}章</li>
       </ul>
     </div>

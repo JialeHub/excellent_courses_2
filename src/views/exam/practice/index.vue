@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="tab container col-8" id="tab">
-      <ul class="mb-3" style="padding-top: 1%">
+      <ul class="mb-3" style="padding-top: 1%;font-weight: bold;font-size: 20px">
         <li @click='change(index)' :class='currentIndex==index?"active":""' :key='item.id' v-for='(item,index) in sectionList'>第{{item+1}}章</li>
       </ul>
     </div>

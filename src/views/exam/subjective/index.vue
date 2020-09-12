@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="tab container col-8" id="tab">
-      <ul class="mb-3" style="padding-top: 1%">
+      <ul class="mb-3" style="padding-top: 1%;font-weight: bold;font-size: 20px">
         <li  v-for='(item,index) in sectionList' :key='index' :class='currentIndex==item?"active":""' @click='change(item)'>第{{item+1}}章</li>
       </ul>
     </div>
@@ -21,7 +21,7 @@
           <div class="topic" style="display: flex;color: #585858;font-size: 16px;padding: 3% 0 3%;font-weight: bold">
             <span>{{item.sbIndex}}.</span>
             <span>【简答题】</span>
-            <span>{{item.sbQues}}</span>
+            <span>{{$getSimpleHtml(item.sbQues)}}</span>
           </div>
           <div v-if="!isdone">
             <textarea v-model="answers[index]" style="width: 800px;height: 200px;margin-bottom: 5%"></textarea>
