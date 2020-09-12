@@ -95,7 +95,7 @@
             // data.typePath = this.typePath;
             uploadPicturePlusApi(data)
               .then(result => {
-                let url = this.$baseApi + result.data.accessPath;  //接口返回urL拼接
+                let url = this.$baseApi + result.data['accessPath'];  //接口返回urL拼接
                 success(url)
               })
           },

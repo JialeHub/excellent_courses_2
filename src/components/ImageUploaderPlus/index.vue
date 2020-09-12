@@ -1,67 +1,67 @@
 <template>
   <div class="image-uploader-plus">
     <el-upload
-        ref="ImageUploaderPlus"
-        action="action"
-        :accept="accept"
-        :disabled="disabled"
-        :auto-upload="false"
-        :on-change="changeUpload"
-        :show-file-list="false"
-        :style="{width: styleWidth,height:styleHeight}">
+      ref="ImageUploaderPlus"
+      action="action"
+      :accept="accept"
+      :disabled="disabled"
+      :auto-upload="false"
+      :on-change="changeUpload"
+      :show-file-list="false"
+      :style="{width: styleWidth,height:styleHeight}">
       <div
-          v-show="value"
-          class="delete-mask"
-          :style="{width: styleWidth,height: styleHeight}">
+        v-show="value"
+        class="delete-mask"
+        :style="{width: styleWidth,height: styleHeight}">
         <div
-            class="el-icon-delete"
-            :style="{marginTop: styleMargin}"
-            @click.stop="deleteFile"/>
+          class="el-icon-delete"
+          :style="{marginTop: styleMargin}"
+          @click.stop="deleteFile"/>
       </div>
       <img
-          v-if="url"
-          :src="url"
-          class="upload-image"
-          alt=""
-          :style="{width: styleWidth,height:styleHeight}"/>
+        v-if="url"
+        :src="url"
+        class="upload-image"
+        alt=""
+        :style="{width: styleWidth,height:styleHeight}"/>
       <img
-          v-else-if="value"
-          :src="$baseApi + value"
-          class="upload-image"
-          alt=""
-          :style="{width: styleWidth,height:styleHeight}"/>
+        v-else-if="value"
+        :src="$baseApi + value"
+        class="upload-image"
+        alt=""
+        :style="{width: styleWidth,height:styleHeight}"/>
       <i
-          v-else
-          class="el-icon-plus"
-          :style="{width: styleWidth,lineHeight: styleHeight}"/>
+        v-else
+        class="el-icon-plus"
+        :style="{width: styleWidth,lineHeight: styleHeight}"/>
     </el-upload>
     <el-dialog
-        title="图片剪裁"
-        width="700px"
-        :visible.sync="visible"
-        append-to-body
-        :close-on-click-modal="false"
-        @close="closeUpload">
+      title="图片剪裁"
+      width="700px"
+      :visible.sync="visible"
+      append-to-body
+      :close-on-click-modal="false"
+      @close="closeUpload">
       <div class="cropper">
         <vueCropper
-            ref="cropper"
-            :img="options.img"
-            :output-size="options.size"
-            :output-type="options.outputType"
-            :info="options.info"
-            :full="options.full"
-            :fixed="options.fixed"
-            :fixed-number="options.fixedNumber"
-            :can-move="options.canMove"
-            :can-move-box="options.canMoveBox"
-            :fixed-box="options.fixedBox"
-            :original="options.original"
-            :auto-crop="options.autoCrop"
-            :auto-crop-width="options.autoCropWidth"
-            :auto-crop-height="options.autoCropHeight"
-            :center-box="options.centerBox"
-            :high="options.high"
-            @imgLoad="imgLoad"/>
+          ref="cropper"
+          :img="options.img"
+          :output-size="options.size"
+          :output-type="options.outputType"
+          :info="options.info"
+          :full="options.full"
+          :fixed="options.fixed"
+          :fixed-number="options.fixedNumber"
+          :can-move="options.canMove"
+          :can-move-box="options.canMoveBox"
+          :fixed-box="options.fixedBox"
+          :original="options.original"
+          :auto-crop="options.autoCrop"
+          :auto-crop-width="options.autoCropWidth"
+          :auto-crop-height="options.autoCropHeight"
+          :center-box="options.centerBox"
+          :high="options.high"
+          @imgLoad="imgLoad"/>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="closeUpload">取 消</el-button>
@@ -73,7 +73,7 @@
 
 <script>
   import {VueCropper} from 'vue-cropper'
-  import {uploadFileApi} from "@/api/modules/file";
+  import {uploadFileApi, uploadPicturePlusApi} from "@/api/modules/file";
 
   export default {
     name: "ImageUploaderPlus",
@@ -172,7 +172,6 @@
           this.$refs.Submit.start();
           uploadFileApi(formData)
             .then(result => {
-              console.log(result)
               this.url = URL.createObjectURL(data);
               this.$emit('input', result.data['accessPath']);
               this.$parent.$emit('el.form.change');
