@@ -147,7 +147,7 @@ export default {
   methods: {
     getImage(){
       imagesGetApi({board:'21'}).then(result => {
-        this.imgSrc = result.data.cover
+        this.imgSrc = result.data['cover']
       })
     },
     //修改资料

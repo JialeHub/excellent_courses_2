@@ -31,17 +31,17 @@
           <div class="myAnswer" style="margin-top: 20px;font-size: 15px;display: flex;align-items: center" v-if="isSubmit">
             <span>
               <span>我的答案：</span>
-              <span v-if="item.answer === 0">A</span>
-              <span v-if="item.answer === 1">B</span>
-              <span v-if="item.answer === 2">C</span>
-              <span v-if="item.answer === 3">D</span>
+              <span v-if="item.answer === '0'">A</span>
+              <span v-if="item.answer === '1'">B</span>
+              <span v-if="item.answer === '2'">C</span>
+              <span v-if="item.answer === '3'">D</span>
             </span>
             <span style="margin-left: 60px;" v-if="item['chAnswer']">
               <span>正确答案：</span>
-              <span v-if="item['chAnswer'] === 0">A</span>
-              <span v-if="item['chAnswer'] === 1">B</span>
-              <span v-if="item['chAnswer'] === 2">C</span>
-              <span v-if="item['chAnswer'] === 3">D</span>
+              <span v-if="item['chAnswer'] === '0'">A</span>
+              <span v-if="item['chAnswer'] === '1'">B</span>
+              <span v-if="item['chAnswer'] === '2'">C</span>
+              <span v-if="item['chAnswer'] === '3'">D</span>
             </span>
             <span style="margin-left: 60px;" v-if="item['chAnswer']">
               <embed v-if="item['chAnswer'] === item.answer" :src="require('@/assets/true.svg')" width="20" height="20" />
@@ -53,7 +53,7 @@
         <li class="type2" v-if="item['chType']===1" style="margin-top: 60px;">
           <p style="font-weight: 600;color: #565656">{{item['chIndex']}}.【多选题】{{item['chQuestion']}}</p>
           <div class="form-check" v-for="(item2,index2) in (item['chItem']).split('&')" style="margin-top: 6px;margin-left: 10px;">
-            <input :disabled="isSubmit" class="form-check-input" type="checkbox" :name="'objective'+item.id+'_'+index2" :id="'objective'+item.id+'_'+index2" v-model="item.answer[index2]" :value="false">
+            <input :disabled="isSubmit" class="form-check-input" type="checkbox" :name="'objective'+item.id+'_'+index2" :id="'objective'+item.id+'_'+index2" v-model="item.answer[index2]">
             <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===0" style="color: #565656" >A.{{item2}}</label>
             <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===1" style="color: #565656" >B.{{item2}}</label>
             <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===2" style="color: #565656" >C.{{item2}}</label>
@@ -75,16 +75,8 @@
               <span v-if="(item['chAnswer']).split(',').indexOf('3') !== -1">D</span>
             </span>
             <span style="margin-left: 60px;" v-if="item['chAnswer']">
-              <embed v-if="(item['chAnswer']).split(',').indexOf(item.answer[0]+0+'') !== -1
-                && (item['chAnswer']).split(',').indexOf(item.answer[1]+0+'') !== -1
-                && (item['chAnswer']).split(',').indexOf(item.answer[2]+0+'') !== -1
-                && (item['chAnswer']).split(',').indexOf(item.answer[3]+0+'') !== -1"
-               :src="require('@/assets/true.svg')" width="20" height="20" />
-              <embed v-if="(item['chAnswer']).split(',').indexOf(item.answer[0]+0+'') !== -1
-                || (item['chAnswer']).split(',').indexOf(item.answer[1]+0+'') !== -1
-                || (item['chAnswer']).split(',').indexOf(item.answer[2]+0+'') !== -1
-                || (item['chAnswer']).split(',').indexOf(item.answer[3]+0+'') !== -1"
-               :src="require('@/assets/true_false.svg')" width="20" height="20" />
+              <embed v-if="item['chAnswer'].split(',').every(i=>item.answer[i])" :src="require('@/assets/true.svg')" width="20" height="20" />
+              <embed v-else-if="item['chAnswer'].split(',').some(i=>item.answer[i])" :src="require('@/assets/true_false.svg')" width="30" height="30" />
               <embed v-else :src="require('@/assets/false.svg')" width="20" height="20" />
             </span>
           </div>
@@ -100,13 +92,13 @@
           <div class="myAnswer" style="margin-top: 20px;font-size: 15px;display: flex;align-items: center" v-if="isSubmit">
             <span>
               <span>我的答案：</span>
-              <span v-if="item.answer === 0">错误</span>
-              <span v-if="item.answer === 1">正确</span>
+              <span v-if="item.answer === '0'">错误</span>
+              <span v-if="item.answer === '1'">正确</span>
             </span>
             <span style="margin-left: 60px;" v-if="item['chAnswer']">
               <span>正确答案：</span>
-              <span v-if="item['chAnswer'] === 0">错误</span>
-              <span v-if="item['chAnswer'] === 1">正确</span>
+              <span v-if="item['chAnswer'] === '0'">错误</span>
+              <span v-if="item['chAnswer'] === '1'">正确</span>
             </span>
             <span style="margin-left: 60px;" v-if="item['chAnswer']">
               <embed v-if="item['chAnswer'] === item.answer" :src="require('@/assets/true.svg')" width="20" height="20" />
@@ -151,6 +143,7 @@ export default {
     this.getImage();
     this.getSection();
   },
+
   methods: {
     // 点击tab栏切换
     change(index){
@@ -172,13 +165,27 @@ export default {
       })
     },
     submit(){
+      let myAnswerList = ''
+      this.formData.forEach(item =>{
+        if (item['chType']===1){
+          myAnswerList+=item.answer[0]?'0,':''
+          myAnswerList+=item.answer[1]?'1,':''
+          myAnswerList+=item.answer[2]?'2,':''
+          myAnswerList+=item.answer[3]?'3,':''
+          if (myAnswerList[myAnswerList.length-1]===',')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
+          myAnswerList+='&'
+        }else if (item['chType']===0 || item['chType']===2){
+          myAnswerList+=item.answer+'&'
+        }
+      })
+      if (myAnswerList[myAnswerList.length-1]==='&')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
       let data = {
-        answer: '1&1&1&1&1&1',
+        answer: myAnswerList,
         section: this.currentIndex+1
       };
       choiceStuPostApi(data).then(response => {
         this.isSubmit=true
-        console.log(response);
+        this.choiceStuGet()
       }).catch(error => {
         console.log(error);
       })
@@ -189,12 +196,27 @@ export default {
       this.loading = true
       this.formData = []
       choiceStuGetApi({section :this.currentIndex+1 }).then(response => {
-        this.isSubmit = false
+        this.isSubmit = true
         this.loading = false
         let res = []
+        let isSubmitTemp = false
         response.data.forEach(item =>{
-          res.push({answer:item['chType']===1?[]:NaN,...item})
+          if (!this.$isEmpty(item['csAnswer'])) {
+            isSubmitTemp = true
+            if (item['chType']===1){
+              let answerTemp=[]
+              item['csAnswer'].split(',').forEach(item =>{
+                answerTemp[item]=true
+              })
+              res.push({answer:answerTemp,...item})
+            }else{
+              res.push({answer:item['csAnswer'],...item})
+            }
+          }else{
+            res.push({answer:item['chType']===1?[]:NaN,...item})
+          }
         })
+        if (!isSubmitTemp)this.isSubmit = false
         this.formData = res
       }).catch(error => {
         this.loading = false
