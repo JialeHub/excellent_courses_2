@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="button text-center" style="padding:4% 0 5%"  v-if="!isdone">
-      <input @click="sumbit(answers)" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
+      <input @click="submit(answers)" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
     </div>
   </div>
 </template>
@@ -114,7 +114,7 @@ export default {
       })
     },
     // 提交主观题答案
-    sumbit(answers){
+    submit(answers){
       console.log(answers)
        let answersList = []
       for(let i = 0; i<answers.length; i++){

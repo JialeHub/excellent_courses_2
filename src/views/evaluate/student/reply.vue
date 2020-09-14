@@ -38,7 +38,7 @@
       <div class="text-center" style="padding: 5% 0 5%">
         <custom-editor v-model="comment.content"></custom-editor>
       </div>
-      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" @click="sumbit(comment.id,comment.content)" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
+      <div style="display: flex" class="justify-content-end"><input class="btn btn-primary" @click="submit(comment.id,comment.content)" type="submit" value="回复" style="width: 115px;border-radius: 20px;"></div>
     </div>
     <!-- 回复详情-->
     <div class="container" style="background-color: #f7f7f7;border-radius: 5px;margin-top: 5%;margin-bottom: 5%">
@@ -142,7 +142,7 @@ export default {
       })
     },
     // 回复评价
-    sumbit(id,content){
+    submit(id,content){
       const params = {
         content : content,
         evalId : id

@@ -57,7 +57,7 @@
               <div class="form">
                 <label for="exampleFormControlTextarea1"></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" v-model="topic"></textarea>
-                <button @click="sumbit(topic)" class="btn btn-primary" type="submit" style="margin-top: 4%;width: 100%;border-radius: 20px">提出话题</button>
+                <button @click="submit(topic)" class="btn btn-primary" type="submit" style="margin-top: 4%;width: 100%;border-radius: 20px">提出话题</button>
               </div>
               <!--师生互动模块-->
               <div class="col col-lg-12" v-for="(item,index) in commentList" :key="index" v-if="index < 2">
@@ -187,7 +187,7 @@ export default {
       // this.visibleVideo = true
     },
     // 提出话题
-    sumbit(topic){
+    submit(topic){
       console.log(topic)
       const params = {
         type: '1',

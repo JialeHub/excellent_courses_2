@@ -73,7 +73,7 @@
               </div>
               <div class="form-group row">
                 <div class="col-sm-5 text-center" style="margin-top: 3%;margin-left: 2%">
-                  <input value="保存"  class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;" @click="sumbit(stuInfo)"/>
+                  <input value="保存"  class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;" @click="submit(stuInfo)"/>
                 </div>
               </div>
             </form>
@@ -140,8 +140,8 @@ export default {
     }
   },
   mounted() {
+    this.cover = this.$store.getters.user['Info']['scover']
     this.getImage();
-    console.log(this.$store.getters.user.Info)
   },
   methods: {
     getImage(){
@@ -150,7 +150,7 @@ export default {
       })
     },
     //修改资料
-    sumbit(stuInfo){
+    submit(stuInfo){
       console.log(stuInfo)
       stuInfoEditApi(stuInfo).then(result => {
         if(result.message === '请求成功'){

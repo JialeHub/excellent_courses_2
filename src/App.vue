@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
-    <div v-if="$route.meta.keepAlive">
+  <div id="app" style="min-height: 100%">
+    <div v-if="$route.meta.keepAlive" style="display: flex;min-height: 100vh" class="flex-column">
       <head-menu/>
-      <router-view/>
-      <foot-menu/>
+      <router-view style="flex: 1 1 auto"/>
+      <foot-menu />
     </div>
     <div v-else>
       <router-view/>
@@ -17,7 +17,6 @@ export default {
   data () {
     return {
       text: '',
-      xssTest: ''
     }
   },
   created () {
@@ -26,15 +25,13 @@ export default {
       document.body.removeChild(loadingPage)
     }
   },
-  mounted () {
-    setInterval(() => {
-      this.xssTest = window.xssTest
-    }, 1000)
-  }
 }
 </script>
 
 <style lang="scss">
+html{
+  min-width: 1260px;
+}
 #app {
 
 }

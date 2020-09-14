@@ -25,7 +25,7 @@
         <div style="color: #333333;font-size: 32px;">课程负责人</div><br/>
         <div style="width: 611px;color: #808080;font-size: 18px;letter-spacing: 1px;line-height: 29px;margin-top:6%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.Lorem ipsum dolor sit amet, consectetur adipiscing elit. </div>
       </div>
-      <img style="width: 400px;height: 500px;background-color: #aaaaaa;border: solid 10px #ffffff;margin-top: 6%;margin-left: 4%"
+      <img style="width: 400px;height: 500px;background-color: #fff;border: solid 6px #ffffff;margin-top: 6%;margin-left: 4%"
         src="../../assets/img/home/leader.png">
     </div>
     <div class="review text-center" style="margin-top: 4%;">

@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 a, a:hover {
   text-decoration: none;
 }
@@ -13,4 +18,8 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+ol, ul {
+  list-style: none;
 }

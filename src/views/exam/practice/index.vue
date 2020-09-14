@@ -89,7 +89,7 @@
       </div>
     </div>
 <!--    <div class="button text-center" style="padding:4% 0 5%">-->
-<!--      <input class="btn btn-primary" type="submit" value="提交答案" @click="sumbit()" style="width: 130px;height: 40px;border-radius: 20px">-->
+<!--      <input class="btn btn-primary" type="submit" value="提交答案" @click="submit()" style="width: 130px;height: 40px;border-radius: 20px">-->
 <!--    </div>-->
 </template>
 
@@ -137,7 +137,7 @@ export default {
       })
     },
     // 提交测试题答案
-    sumbit(){
+    submit(){
       const params = {
         choiceAnswer: '',
         subjectiveAnswer: '',

@@ -116,14 +116,12 @@
 </template>
 
 <script>
-window.xssTest = {}
 
 export default {
   name: 'Head',
   data () {
     return {
       text: '',
-      xssTest: '',
       isLogin: true
     }
   },
@@ -132,11 +130,6 @@ export default {
     if (loadingPage) {
       document.body.removeChild(loadingPage)
     }
-  },
-  mounted () {
-    setInterval(() => {
-      this.xssTest = window.xssTest
-    }, 1000)
   },
   methods: {
   }
