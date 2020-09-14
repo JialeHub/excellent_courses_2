@@ -81,9 +81,12 @@
         </div>
         <!--我的头像-->
         <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">
-          <div class="container" style="margin-top: 8%;margin-bottom: 8%;margin-left: 10%;display: flex">
+          <div class="container" style="margin-top: 8%;margin-bottom: 8%;display: flex;justify-content: center">
             <span style="color: #333333;">头像:</span>
-            <image-uploader-plus style="margin-left: 3%" v-model="cover" :fixed="false"></image-uploader-plus>
+            <image-uploader-plus style="margin-left: 3%" v-model="stuInfo.scover" :fixed="false"></image-uploader-plus>
+          </div>
+          <div class="container" style="text-align: center;margin-bottom: 10%">
+            <input value="保存"  class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;" @click="sumbit(stuInfo)"/>
           </div>
         </div>
         <!--密码管理-->
@@ -160,12 +163,10 @@ export default {
             this.successSave = false
           }, 2000)
         }
-        clearInterval(interval)
       })
     },
     // 修改密码
     resetPassword(passwordList){
-      console.log(passwordList[0])
       passwordEditApi(passwordList[0]).then(result => {
         if(result.message === '账号或密码错误.'){
           this.passwordMes = result.message
