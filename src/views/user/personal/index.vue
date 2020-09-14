@@ -139,11 +139,9 @@ export default {
       'password': '',
       'username': this.$store.getters.user.username
       } ],
-      cover:''
     }
   },
   mounted() {
-    this.cover = this.$store.getters.user['Info']['scover']
     this.getImage();
   },
   methods: {
@@ -154,7 +152,6 @@ export default {
     },
     //修改资料
     submit(stuInfo){
-      console.log(stuInfo)
       stuInfoEditApi(stuInfo).then(result => {
         if(result.message === '请求成功'){
           this.$store.dispatch('setUser', { username: this.$store.getters.user.username,Info: stuInfo })
