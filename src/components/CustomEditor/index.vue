@@ -122,7 +122,7 @@
     beforeDestroy() {
       tinymce.remove();
       let element = document.getElementById(`custom-editor-${this.editorKey}`);
-      element.style.visibility = 'hidden'
+      if (element)element.style.visibility = 'hidden'
     }
   };
 </script>

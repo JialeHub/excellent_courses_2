@@ -15,99 +15,129 @@
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;"></div>
-<!--    客观题-->
-    <div class="container col-8"  v-for="(item,index) in choiceRos" :key="item.chIndex">
-      <div :class='currentIndex==index?"current":""' class="img">
-        <div class="questions">
-          <div class="topic" style="display: flex;color: #585858;font-size: 16px;padding: 3% 0 3%;font-weight: bold">
-            <span>{{item.chIndex}}.</span>
-            <span>【{{item.chType | typeFormat}}】</span>
-            <span>{{item.chQuestion}}</span>
+    <!--题目主体-->
+    <div class="main container col-9" style="margin-bottom: 60px;">
+      <!--题目-->
+      <ul class="objective ml-3" v-for="(item,index) in formData" :key="item.id">
+        <!--单选题-->
+        <li class="type1" v-if="item['chType']===0" style="margin-top: 60px;">
+          <p style="font-weight: 600;color: #565656">{{item['chIndex']}}.【单选题】{{item['chQuestion']}}</p>
+          <div class="form-check" v-for="(item2,index2) in (item['chItem']).split('&')" style="margin-top: 6px;margin-left: 10px;">
+            <input :disabled="isSubmit" class="form-check-input" type="radio" :name="'objective'+item.id+'_'+index2" :id="'objective'+item.id+'_'+index2" v-model="item.answer" :value="index2" >
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===0" style="color: #565656" >A.{{item2}}</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===1" style="color: #565656" >B.{{item2}}</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===2" style="color: #565656" >C.{{item2}}</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===3" style="color: #565656" >D.{{item2}}</label>
           </div>
-          <div class="options" v-if="item.chType === 0">
-            <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[0])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id" :value="item.chItem.split('&')[0]" checked style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label  class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
-                {{item.chItem.split('&')[0]}}
-              </label>
-            </div>
-            <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[1])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[1]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
-                {{item.chItem.split('&')[1]}}
-              </label>
-            </div>
-            <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[2])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"   :value="item.chItem.split('&')[2]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
-                {{item.chItem.split('&')[2]}}
-              </label>
-            </div>
-            <div style="padding-left: 2%;margin-bottom: 6px">
-              <input @click="selectPosition(item.chIndex,item.chItem.split('&')[3])" v-model="item.id" type="radio" :name="'name'+item.id" :id="item.id"    :value="item.chItem.split('&')[3]"  style="outline: none;border: 1px solid rgb(216, 216, 216);padding: 2px 20px 2px 0px;">
-              <label class="form-check-label" :for="item.id" style="display: inline-block;padding: 0 5px;vertical-align: middle;margin-top: 2px">
-                {{item.chItem.split('&')[3]}}
-              </label>
-            </div>
+          <div class="myAnswer" style="margin-top: 20px;font-size: 15px;display: flex;align-items: center" v-if="isSubmit">
+            <span>
+              <span>我的答案：</span>
+              <span v-if="item.answer === '0'">A</span>
+              <span v-if="item.answer === '1'">B</span>
+              <span v-if="item.answer === '2'">C</span>
+              <span v-if="item.answer === '3'">D</span>
+            </span>
+            <span style="margin-left: 60px;" v-if="item['chAnswer']">
+              <span>正确答案：</span>
+              <span v-if="item['chAnswer'] === '0'">A</span>
+              <span v-if="item['chAnswer'] === '1'">B</span>
+              <span v-if="item['chAnswer'] === '2'">C</span>
+              <span v-if="item['chAnswer'] === '3'">D</span>
+            </span>
+            <span style="margin-left: 60px;" v-if="item['chAnswer']">
+              <embed v-if="item['chAnswer'] === item.answer" :src="require('@/assets/true.svg')" width="20" height="20" />
+              <embed v-else :src="require('@/assets/false.svg')" width="20" height="20" />
+            </span>
           </div>
-          <div class="options" style="line-height: 26px;" v-if="item.chType === 1">
-            <ul>
-              <li>
-                <input v-model="vals"  class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                <label  class="form-check-label" for="inlineCheckbox1">{{item.chItem.split('&')[0]}}</label>
-              </li>
-              <li>
-                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                <label  class="form-check-label" for="inlineCheckbox2">{{item.chItem.split('&')[1]}}</label>
-              </li>
-              <li>
-                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
-                <label  class="form-check-label" for="inlineCheckbox3">{{item.chItem.split('&')[2]}}</label>
-              </li>
-              <li>
-                <input v-model="vals" class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
-                <label  class="form-check-label" for="inlineCheckbox4">{{item.chItem.split('&')[3]}}</label>
-              </li>
-            </ul>
+        </li>
+        <!--多选题-->
+        <li class="type2" v-if="item['chType']===1" style="margin-top: 60px;">
+          <p style="font-weight: 600;color: #565656">{{item['chIndex']}}.【多选题】{{item['chQuestion']}}</p>
+          <div class="form-check" v-for="(item2,index2) in (item['chItem']).split('&')" style="margin-top: 6px;margin-left: 10px;">
+            <input :disabled="isSubmit" class="form-check-input" type="checkbox" :name="'objective'+item.id+'_'+index2" :id="'objective'+item.id+'_'+index2" v-model="item.answer[index2]">
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===0" style="color: #565656" >A.{{item2}}</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===1" style="color: #565656" >B.{{item2}}</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===2" style="color: #565656" >C.{{item2}}</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+index2" v-if="index2===3" style="color: #565656" >D.{{item2}}</label>
           </div>
-          <div class="options" v-if="item.chType === 2">
-            <div class="form-check form-check-inline" style="padding-left: 3%">
-              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios6" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios6" style="font-size: 20px">
-                √
-              </label>
-            </div>
-            <div class="form-check form-check-inline" style="padding-left: 4%">
-              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios7" value="option2">
-              <label class="form-check-label" for="exampleRadios7" style="font-size: 20px">
-                ×
-              </label>
-            </div>
+          <div class="myAnswer" style="margin-top: 20px;font-size: 15px;display: flex;align-items: center" v-if="isSubmit">
+            <span>
+              <span>我的答案：</span>
+              <span v-if="item.answer[0]">A</span>
+              <span v-if="item.answer[1]">B</span>
+              <span v-if="item.answer[2]">C</span>
+              <span v-if="item.answer[3]">D</span>
+            </span>
+            <span style="margin-left: 60px;" v-if="item['chAnswer']">
+              <span>正确答案：</span>
+              <span v-if="(item['chAnswer']).split(',').indexOf('0') !== -1">A</span>
+              <span v-if="(item['chAnswer']).split(',').indexOf('1') !== -1">B</span>
+              <span v-if="(item['chAnswer']).split(',').indexOf('2') !== -1">C</span>
+              <span v-if="(item['chAnswer']).split(',').indexOf('3') !== -1">D</span>
+            </span>
+            <span style="margin-left: 60px;" v-if="item['chAnswer']">
+              <embed v-if="item['chAnswer'].split(',').every(i=>item.answer[i])" :src="require('@/assets/true.svg')" width="20" height="20" />
+              <embed v-else-if="item['chAnswer'].split(',').some(i=>item.answer[i])" :src="require('@/assets/true_false.svg')" width="30" height="30" />
+              <embed v-else :src="require('@/assets/false.svg')" width="20" height="20" />
+            </span>
           </div>
-        </div>
-      </div>
+        </li>
+        <!--判断题-->
+        <li class="type3" v-if="item['chType']===2" style="margin-top: 60px;">
+          <p style="font-weight: 600;color: #565656">{{item['chIndex']}}.【判断题】{{item['chQuestion']}}</p>
+          <div class="form-check" v-for="(index2) in 2" style="margin-top: 6px;margin-left: 10px;">
+            <input :disabled="isSubmit" class="form-check-input" type="radio" :name="'objective'+item.id+'_'+(index2-1)" :id="'objective'+item.id+'_'+(index2-1)" v-model="item.answer" :value="index2-1" >
+            <label class="form-check-label" :for="'objective'+item.id+'_'+0"  style="color: #565656" v-if="index2-1 === 0">X</label>
+            <label class="form-check-label" :for="'objective'+item.id+'_'+1"  style="color: #565656" v-if="index2-1 === 1">√</label>
+          </div>
+          <div class="myAnswer" style="margin-top: 20px;font-size: 15px;display: flex;align-items: center" v-if="isSubmit">
+            <span>
+              <span>我的答案：</span>
+              <span v-if="item.answer === '0'">错误</span>
+              <span v-if="item.answer === '1'">正确</span>
+            </span>
+            <span style="margin-left: 60px;" v-if="item['chAnswer']">
+              <span>正确答案：</span>
+              <span v-if="item['chAnswer'] === '0'">错误</span>
+              <span v-if="item['chAnswer'] === '1'">正确</span>
+            </span>
+            <span style="margin-left: 60px;" v-if="item['chAnswer']">
+              <embed v-if="item['chAnswer'] === item.answer" :src="require('@/assets/true.svg')" width="20" height="20" />
+              <embed v-else :src="require('@/assets/false.svg')" width="20" height="20" />
+            </span>
+          </div>
+        </li>
+      </ul>
+      <!--提交-->
+      <div class="button text-center" style="padding:4% 0 5%"  v-if="!isSubmit">
+        <input @click="submit" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
       </div>
     </div>
-<!--    <div class="button text-center" style="padding:4% 0 5%">-->
-<!--      <input class="btn btn-primary" type="submit" value="提交答案" @click="submit()" style="width: 130px;height: 40px;border-radius: 20px">-->
-<!--    </div>-->
+    <!--转圈-->
+    <div class="w-100 text-center" style="padding-bottom: 60px;" v-if="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import {imagesGetApi} from "../../../api/modules/images";
-import {testStuGetApi, testStuPostApi, TsectionGetApi} from "../../../api/modules/testingQues";
+import {imagesGetApi} from "@/api/modules/images";
+import {testStuGetApi, testStuPostApi, TsectionGetApi} from "@/api/modules/testingQues";
 
 export default {
   name: 'examPractice',
   data () {
     return {
-      imgSrc: '',
+      loading: true,
+      isSubmit: true,
+      imgSrc:'',
       currentIndex:0,
       sectionList:[],
       section: '',
+      formData: [],
       index:1,
-      choiceRos:[],   //客观题
-      subjectiveQuesRos: []    //主观题
     }
   },
   mounted() {
@@ -116,24 +146,28 @@ export default {
   },
   methods: {
     // 点击tab栏切换
-    change:function(index){
+    change(index){
       this.currentIndex=index;
       this.getTesting(index)
     },
     // 获取图片
     getImage(){
       imagesGetApi({board:'14'}).then(result => {
-        this.imgSrc = result.data.cover
-        console.log(result.data.page)
-
+        this.imgSrc = result.data['cover']
+      })
+    },
+    // 获取客观题章节
+    getSection(){
+      TsectionGetApi().then(result => {
+        this.sectionList = result.data
+        this.section = this.sectionList[0]
+        this.getTesting(this.section)
       })
     },
     // 获取测试题
     getTesting(index){
       this.index = index
       testStuGetApi({testingNum: this.index}).then(result => {
-        console.log(result.data.choiceRos)
-        console.log(result.data.subjectiveQuesRos)
       })
     },
     // 提交测试题答案
@@ -144,15 +178,8 @@ export default {
         testingNum: ''
       }
       testStuPostApi(params).then(result => {
+
         console.log(result)
-      })
-    },
-    // 获取客观题章节
-    getSection(){
-      TsectionGetApi().then(result => {
-        this.sectionList = result.data
-        this.section = this.sectionList[0]
-        this.getTesting(this.section)
       })
     },
   }

@@ -153,7 +153,7 @@ export default {
     // 获取图片
     getImage(){
       imagesGetApi({board:'12'}).then(result => {
-        this.imgSrc = result.data.cover
+        this.imgSrc = result.data['cover']
       })
     },
     // 获取客观题章节

@@ -15,127 +15,125 @@
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;"></div>
-    <div class="container col-8" v-for='(item,index) in textList' :key='item.sbIndex'>
-      <div :class='currentIndex==index?"current":""' class="img">
-        <div class="questions">
-          <div class="topic" style="display: flex;color: #585858;font-size: 16px;padding: 3% 0 3%;font-weight: bold">
-            <span>{{item.sbIndex}}.</span>
-            <span>【简答题】</span>
-            <span>{{$getSimpleHtml(item.sbQues)}}</span>
+    <!--题目主体-->
+    <div class="main container col-9" style="margin-bottom: 60px;">
+      <!--题目-->
+      <ul class="objective ml-3" v-for="(item,index) in formData" :key="item.id">
+        <!--主观题-->
+        <li class="type1" style="margin-top: 80px;">
+          <div class="title" style="line-height: 1.4;">
+            <span style="font-weight: 600;color: #565656">{{item['sbIndex']}}.【简答题】</span>
+            <span style="font-weight: 600;color: #565656;" class="v-html" v-html="item['sbQues']"></span>
           </div>
-          <div v-if="!isdone">
-            <textarea v-model="answers[index]" style="width: 800px;height: 200px;margin-bottom: 5%"></textarea>
+          <custom-editor v-model="item['answer']" :editor-key="currentIndex*1000+index"  v-if="!isSubmit"/>
+          <div class="myAnswer" style="margin-top: 20px;font-size: 15px;" v-if="isSubmit">
+            <div style="line-height: 1.4;">
+              <span>我的答案：</span>
+              <span class="htmlBox" v-html="item['answer']"></span>
+            </div>
+            <div style="margin-top: 30px;line-height: 1.4;color: green" v-if="item['sbAnsw']">
+              <span>正确答案：</span>
+              <span class="htmlBox" v-html="item['sbAnsw']"></span>
+            </div>
           </div>
-          <div style="font-size: 16px;"  v-if="isdone">
-            <div class="myAnswer" style="color: #333333;line-height: 26px;">我的答案：{{answers[index]}}</div>
-            <div class="rightAnswer" style="color: #d61111;line-height: 26px;padding-top: 2%" >正确答案：{{item.ssAnswer}}</div>
-          </div>
-        </div>
+        </li>
+      </ul>
+      <!--提交-->
+      <div class="button text-center" style="padding:4% 0 5%"  v-if="!isSubmit">
+        <input @click="submit" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
       </div>
     </div>
-    <div class="button text-center" style="padding:4% 0 5%"  v-if="!isdone">
-      <input @click="submit(answers)" class="btn btn-primary" type="submit" value="提交答案" style="width: 130px;height: 40px;border-radius: 20px">
+    <!--转圈-->
+    <div class="w-100 text-center" style="padding-bottom: 60px;" v-if="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {imagesGetApi} from "../../../api/modules/images";
+import {imagesGetApi} from "@/api/modules/images";
 import {OsectionGetApi, quesGetApi, quesPostApi} from "../../../api/modules/subjectiveQues";
 
 export default {
   name: 'examSubjective',
   data(){
     return{
-      isdone: false,
-      textList:[],
+      loading: true,
+      isSubmit: true,
       imgSrc:'',
+      currentIndex:0,
       sectionList:[],
       section: '',
-      currentIndex:0,
-      answers:[]
+      formData: [],
     }
   },
   mounted() {
     this.getImage();
     this.getSection();
   },
-  filters: {  // 题目类型过滤
-    typeFormat(type) {
-      if(type == 0){
-        return '单选题'
-      }else if(type === 1){
-        return '多选题'
-      }else if(type === 2){
-        return '判断题'
-      }
-    },
-    chItemListFormat(chItem){
-      return  chItem.split('&')
-    }
-  },
   methods: {
     // 获取图片
     getImage(){
       imagesGetApi({board:'13'}).then(result => {
-        this.imgSrc = result.data.cover
+        this.imgSrc = result.data['cover']
       })
     },
     // 点击tab栏切换
     change:function(index){
       this.currentIndex=index;
-      this.getSubjective(index)
+      this.quesGet();
     },
     // 获取主观题章节
     getSection(){
       OsectionGetApi().then(result => {
         this.sectionList = result.data
         this.section = this.sectionList[0]
-        this.getSubjective()
+        this.quesGet()
       })
     },
-    // 获取主观题
-    getSubjective(section){
-      if(section!=undefined || section!= null){
-        this.section = section
-      }
-      const params = { section: this.section+1 }
-      quesGetApi(params).then(result => {
-        this.textList = result.data
-        for(let i=0;i<=this.textList.length-1;i++){
-          console.log(this.textList[i])
-          if(this.textList[i].sbAnsw == null){
-            this.isdone =false
-          }else {
-            this.isdone =true
+    quesGet(){
+      this.isSubmit = true
+      this.loading = true
+      this.formData = []
+      quesGetApi({section :this.currentIndex+1 }).then(response => {
+        this.isSubmit = true
+        this.loading = false
+        let res = []
+        let isSubmitTemp = false
+        response.data.forEach(item =>{
+          if (!this.$isEmpty(item['ssAnswer'])) {
+            isSubmitTemp = true
+            res.push({answer:item['ssAnswer'].replace(/%_And_%/g,"&"),...item})
+          }else{
+            res.push({answer:'',...item})
           }
-        }
-
+        })
+        if (!isSubmitTemp)this.isSubmit = false
+        this.formData = res
+      }).catch(error => {
+        this.loading = false
       })
     },
-    // 提交主观题答案
-    submit(answers){
-      console.log(answers)
-       let answersList = []
-      for(let i = 0; i<answers.length; i++){
-        if(i< answers.length-1){
-          answersList+=answers[i]+'&'
-        }
-        else {
-          answersList+=answers[i]
-        }
-      }
-      const params = {
-        answers: answersList,
-        section: this.currentIndex
-      }
-      quesPostApi(params).then(result => {
-        if(result.data == true){
-          this.isdone = true
-          // this.$successMsg('提交成功')
-        }
+    submit(){
+      let myAnswerList = ''
+      this.formData.forEach(item =>{
+        myAnswerList+=item.answer.replace(/&/g,"%_And_%")+'&'
+      })
+      if (myAnswerList[myAnswerList.length-1]==='&')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
+      let data = {
+        answers: myAnswerList,
+        section: this.currentIndex+1
+      };
+      quesPostApi(data).then(response => {
+        this.isSubmit=true
+        this.quesGet()
+      }).catch(error => {
+        console.log(error);
       })
     }
+
   }
 }
 </script>
