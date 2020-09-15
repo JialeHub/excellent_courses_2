@@ -57,7 +57,7 @@
           {{$getSimpleHtml(item.content)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
         </div>
       </div>
@@ -73,7 +73,7 @@
           {{$getSimpleHtml(item.content)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="item.id == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.id == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
         </div>
       </div>

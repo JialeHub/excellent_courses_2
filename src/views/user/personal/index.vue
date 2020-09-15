@@ -81,12 +81,15 @@
         </div>
         <!--我的头像-->
         <div class="tab-pane fade" id="pills-two" aria-labelledby="pills-contact-tab">
+          <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 15%;top: 70%" v-if="successSave">
+            保存个人资料成功
+          </div>
           <div class="container" style="margin-top: 8%;margin-bottom: 8%;display: flex;justify-content: center">
             <span style="color: #333333;">头像:</span>
             <image-uploader-plus style="margin-left: 3%" v-model="stuInfo.scover" :fixed="false"></image-uploader-plus>
           </div>
           <div class="container" style="text-align: center;margin-bottom: 10%">
-            <input value="保存"  class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;" @click="sumbit(stuInfo)"/>
+            <input value="保存"  class="btn btn-primary" style="width: 100px;background-color: #1089f0;border-radius: 25px;" @click="submit(stuInfo)"/>
           </div>
         </div>
         <!--密码管理-->

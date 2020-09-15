@@ -34,7 +34,7 @@
           {{$getSimpleHtml(item.detail)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
           <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
@@ -71,7 +71,7 @@
           {{$getSimpleHtml(item.detail)}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
-          <img style="padding-bottom: 1%;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
+          <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
           <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
