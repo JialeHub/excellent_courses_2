@@ -1,24 +1,23 @@
 <template>
-  <div>
-    <div id="examSubjective"
-         :style="`background-image: url('${$addBaseURL(imgSrc)}');position: relative ;width: 100%;height:350px;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`"
-    >
+  <div id="subjective">
+    <div id="examSubjective" :style="`background-image: url('${$addBaseURL(imgSrc)}');position: relative ;width: 100%;height:350px;background-repeat: no-repeat;background-position: 0px 0px;background-size:cover;`">
       <div class="banner" style="padding-left: 21%">
-        <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">主观题</div>
-        <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">SUBJECTIVE QUESTIONS</div>
-        <div style="width: 120px;height: 2px;background-color: #ffffff;border-radius: 2px 0px 0px 0px;margin-top: 3%"></div>
-      </div>
+      <div style="font-size: 38px;letter-spacing: 2px;color: #ffffff;padding-top: 6%">主观题</div>
+      <div style="font-size: 20px;letter-spacing: 2px;color: #ffffff;padding-top: 2%">SUBJECTIVE QUESTIONS</div>
+      <div style="width: 120px;height: 2px;background-color: #ffffff;border-radius: 2px 0px 0px 0px;margin-top: 3%"></div>
     </div>
-    <div class="tab container col-8" id="tab">
+    </div>
+    <!--章节栏-->
+    <div class="tab container col-9" id="tab">
       <ul class="mb-3" style="padding-top: 1%;font-weight: bold;font-size: 20px">
-        <li  v-for='(item,index) in sectionList' :key='index' :class='currentIndex==item?"active":""' @click='change(item)'>第{{item+1}}章</li>
+        <li @click='change(item)' :class='currentIndex===item?"active":""' v-for='(item,index) in sectionList' :key='index'>第{{item+1}}章</li>
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;"></div>
     <!--题目主体-->
     <div class="main container col-9" style="margin-bottom: 60px;">
       <!--题目-->
-      <ul class="objective ml-3" v-for="(item,index) in formData" :key="item.id">
+      <ul class="subjective ml-3" v-for="(item,index) in formData" :key="item.id">
         <!--主观题-->
         <li class="type1" style="margin-top: 80px;">
           <div class="title" style="line-height: 1.4;">
@@ -93,6 +92,7 @@ export default {
         this.quesGet()
       })
     },
+    // 获取主观题
     quesGet(){
       this.isSubmit = true
       this.loading = true
@@ -116,6 +116,7 @@ export default {
         this.loading = false
       })
     },
+    // 提交答案
     submit(){
       let myAnswerList = ''
       this.formData.forEach(item =>{
@@ -139,56 +140,58 @@ export default {
 </script>
 
 <style lang="scss">
-  input {
-    vertical-align: middle;
-  }
-  #tab{
-    .tab {
-      width: 400px;
-      height: 300px;
+  #subjective{
+    input {
+      vertical-align: middle;
     }
-    .mb-3 {
-      margin: 0;
-      padding: 0;
-      height: 50px;
-      li {
-        cursor: pointer;
-        box-sizing: border-box;
-        width: 100px;
-        list-style: none;
-        text-align: center;
-        line-height: 50px;
-        float: left;
+    #tab{
+      .tab {
+        width: 400px;
+        height: 300px;
+      }
+      .mb-3 {
+        margin: 0;
+        padding: 0;
+        height: 50px;
+        li {
+          cursor: pointer;
+          box-sizing: border-box;
+          width: 100px;
+          list-style: none;
+          text-align: center;
+          line-height: 50px;
+          float: left;
+        }
+      }
+      .active {
+        color: #0b6ef6;
+      }
+      .img {
+        display: none;
+        height: 250px;
+        width: 400px;
+      }
+      .img img {
+        height: 100%;
+        width: 100%;
+      }
+      .current {
+        display: block;
       }
     }
-    .active {
-      color: #0b6ef6;
-    }
-    .img {
-      display: none;
-      height: 250px;
-      width: 400px;
-    }
-    .img img {
-      height: 100%;
-      width: 100%;
-    }
-    .current {
-      display: block;
-    }
-  }
-  .container{
-    .nav{
-      margin-top: 2%;
-      margin-bottom: 3%;
-      .nav-item{
-        a{
-          color: #333333;
-          font-family: MicrosoftYaHei,sans-serif;
-          font-weight: bold;
-        }
-        .active{
-          color: #1089f0;
+    .container{
+      .nav{
+        margin-top: 2%;
+        margin-bottom: 3%;
+        .nav-item{
+          a{
+            color: #333333;
+            font-family: MicrosoftYaHei,sans-serif;
+            font-weight: bold;
+          }
+          .active{
+            color: #1089f0;
+          }
         }
       }
     }

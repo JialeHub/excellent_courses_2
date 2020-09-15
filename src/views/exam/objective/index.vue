@@ -10,7 +10,7 @@
     <!--章节栏-->
     <div class="tab container col-9" id="tab">
       <ul class="mb-3" style="padding-top: 1%;font-weight: bold;font-size: 20px">
-        <li @click='change(item)' :class='currentIndex===item?"active":""' :key='index' v-for='(item,index) in sectionList'>第{{item+1}}章</li>
+        <li @click='change(item)' :class='currentIndex===item?"active":""' v-for='(item,index) in sectionList' :key='index'>第{{item+1}}章</li>
       </ul>
     </div>
     <div class="line" style="height: 1px;background-color: #dddddd;"></div>
@@ -164,32 +164,6 @@ export default {
         this.choiceStuGet()
       })
     },
-    submit(){
-      let myAnswerList = ''
-      this.formData.forEach(item =>{
-        if (item['chType']===1){
-          myAnswerList+=item.answer[0]?'0,':''
-          myAnswerList+=item.answer[1]?'1,':''
-          myAnswerList+=item.answer[2]?'2,':''
-          myAnswerList+=item.answer[3]?'3,':''
-          if (myAnswerList[myAnswerList.length-1]===',')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
-          myAnswerList+='&'
-        }else if (item['chType']===0 || item['chType']===2){
-          myAnswerList+=item.answer+'&'
-        }
-      })
-      if (myAnswerList[myAnswerList.length-1]==='&')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
-      let data = {
-        answer: myAnswerList,
-        section: this.currentIndex+1
-      };
-      choiceStuPostApi(data).then(response => {
-        this.isSubmit=true
-        this.choiceStuGet()
-      }).catch(error => {
-        console.log(error);
-      })
-    },
     // 获取客观题
     choiceStuGet(){
       this.isSubmit = true
@@ -221,7 +195,34 @@ export default {
       }).catch(error => {
         this.loading = false
       })
-    }
+    },
+    // 提交答案
+    submit(){
+      let myAnswerList = ''
+      this.formData.forEach(item =>{
+        if (item['chType']===1){
+          myAnswerList+=item.answer[0]?'0,':''
+          myAnswerList+=item.answer[1]?'1,':''
+          myAnswerList+=item.answer[2]?'2,':''
+          myAnswerList+=item.answer[3]?'3,':''
+          if (myAnswerList[myAnswerList.length-1]===',')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
+          myAnswerList+='&'
+        }else if (item['chType']===0 || item['chType']===2){
+          myAnswerList+=item.answer+'&'
+        }
+      })
+      if (myAnswerList[myAnswerList.length-1]==='&')myAnswerList = myAnswerList.substr(0, myAnswerList.length - 1);
+      let data = {
+        answer: myAnswerList,
+        section: this.currentIndex+1
+      };
+      choiceStuPostApi(data).then(response => {
+        this.isSubmit=true
+        this.choiceStuGet()
+      }).catch(error => {
+        console.log(error);
+      })
+    },
   }
 }
 </script>
