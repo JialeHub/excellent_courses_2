@@ -151,10 +151,7 @@ export default {
         console.log(result)
         if(result.code === 200){
           console.log(true)
-          this.successSave = true
-          const interval = setInterval(() => {
-            this.successSave = false
-          }, 2000)
+          this.$successMsg(`提交回复成功`);
         }
       })
     },

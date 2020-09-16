@@ -197,10 +197,8 @@ export default {
       evaluatePostApi(params).then(result =>{
         console.log(result)
         if(result.isok === true){
-          this.successSave = true
-          const interval = setInterval(() => {
-            this.successSave = false
-          }, 2000)
+        this.$successMsg('提出成功')
+         window.location.reload()
         }
       })
     },

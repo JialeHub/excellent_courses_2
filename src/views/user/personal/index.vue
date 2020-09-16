@@ -158,10 +158,7 @@ export default {
       stuInfoEditApi(stuInfo).then(result => {
         if(result.message === '请求成功'){
           this.$store.dispatch('setUser', { username: this.$store.getters.user.username,Info: stuInfo })
-          this.successSave = true
-          const interval = setInterval(() => {
-            this.successSave = false
-          }, 2000)
+         this.$successMsg('保存个人资料成功')
         }
       })
     },
@@ -170,13 +167,13 @@ export default {
       passwordEditApi(passwordList[0]).then(result => {
         if(result.message === '账号或密码错误.'){
           this.passwordMes = result.message
-          this.passwordAlert = true
+          this.$errorsMsg(this.passwordMes)
           const interval = setInterval(() => {
             this.passwordAlert = false
           }, 2000)
         }else if(result.code === 200){
           this.passwordMes = result.data
-          this.passwordAlert = true
+          this.$successMsg('修改密码成功')
           const interval = setInterval(() => {
             this.$router.push({ path: '/login' })
           }, 3000)

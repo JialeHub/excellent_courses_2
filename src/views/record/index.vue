@@ -151,6 +151,7 @@ export default {
       historyStuDeleteApi(params).then(result => {
         console.log(result)
         if(result.code === 200){
+          this.$successMsg('删除成功')
           this.getUserByPage()
         }
       })

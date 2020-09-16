@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="box2" style="width: 1035px;overflow: hidden;padding-left: 4.5%;color: #666666;line-height: 30px">
-          {{comment.detail}}
+          {{myComment}}
         </div>
         <div class="box3 justify-content-end" style="display: flex;width:94%;margin-top: 3%;margin-bottom: 5%">
           <img style="padding-bottom: 1%;"  :src="active == true ? likeOnImg:likeOffImg" alt="点赞图片" />
@@ -108,13 +108,15 @@ export default {
       isEmpty: false,
       successSave:false,
       average1: '0',
-      detail:''
+      detail:'',
+      myComment:''
     }
   },
   mounted() {
     this.getImage();
     this.getWriteBack();
     this.comment = this.$route.query.comment
+    this.myComment = this.$route.query.detail
   },
   methods: {
     // 获取图片
@@ -148,10 +150,9 @@ export default {
       writeBackPostApi(params).then(result => {
         console.log(result)
         if(result.code === 200){
-          this.successSave = true
+          this.$successMsg(`提交成功`);
           const interval = setInterval(() => {
-            this.successSave = false
-            this.detail = ''
+            window.location.reload();
           }, 2000)
         }
       })

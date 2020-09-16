@@ -83,11 +83,10 @@
             </div>
           </li>
           <li class="nav-item " style="margin-left: 80px">
-            <router-link to="/login" v-if="!isLogin">登录  |</router-link>
+            <router-link to="/login" v-if="!isLogin">登录 </router-link>
             <router-link to="/record" v-if="isLogin">我的学习 | </router-link>
           </li>
           <li class="nav-item ">
-            <router-link to="/register" v-if="!isLogin">注册</router-link>
             <router-link to="/personal" v-if="isLogin">{{$store.getters.user.Info.sname}}</router-link>
           </li>
           <li>
@@ -97,15 +96,21 @@
               'nav-item ',
               ['user', 'login'].indexOf($route.name) !== -1 ? 'active' : ''
             ]"
-              :to="{ name: 'personal' }"
+              :to="{ name: 'login' }"
             >
               <img
-                v-if="
-                  $store.getters.user.Info.scover === undefined &&
-                    $store.getters.user.Info.scover === ''
-                "
+                v-if="!isLogin "
                 src="../../../assets/img/portrait.png"/>
-              <img v-else :src="$addBaseURL($store.getters.user.Info.scover)" width="40px" height="40px" style="border-radius: 20px">
+            </router-link>
+            <router-link
+              class="nav-link"
+              :class="[
+              'nav-item ',
+              ['user', 'login'].indexOf($route.name) !== -1 ? 'active' : ''
+            ]"
+              :to="{ name: 'personal' }"
+            >
+              <img v-if="isLogin" :src="$addBaseURL($store.getters.user.Info.scover)" width="40px" height="40px" style="border-radius: 20px">
             </router-link>
           </li>
         </ul>
@@ -123,6 +128,13 @@ export default {
     return {
       text: '',
       isLogin: true
+    }
+  },
+  mounted() {
+    if(this.$store.getters.user.Info){
+      this.isLogin = true
+    }else {
+      this.isLogin = false
     }
   },
   created () {

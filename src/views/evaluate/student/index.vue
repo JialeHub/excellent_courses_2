@@ -115,7 +115,7 @@
       console.log(evaluateVo)
       evaluatePostApi(evaluateVo[0]).then(result =>{
         if(result.isok === true){
-          this.successSave = true
+          this.$successMsg(`提交评价成功`);
           const interval = setInterval(() => {
             this.successSave = false
             window.location.reload();

@@ -3,6 +3,7 @@ import {
   Message
 } from 'element-ui';
 export const errorMsg = msg => Message.error(msg);
+export const successMsg = msg => Message.success(msg);
 
 /**
  * @param string
@@ -78,3 +79,4 @@ Vue.prototype.$addBaseURL = addBaseURL;
 Vue.prototype.$isEmpty = isEmpty;
 Vue.prototype.$getSimpleHtml = getSimpleHtml;
 Vue.prototype.$errorMsg = errorMsg;
+Vue.prototype.$successMsg = successMsg;

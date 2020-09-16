@@ -37,7 +37,7 @@
           <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
-          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
+          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index,$getSimpleHtml(item.detail))">回复（{{item.wbNum}}）</a>
         </div>
 <!--        <div class="reply" v-if="isReply">-->
 <!--          <div class="text-center" style="margin: 5% 0 2%">-->
@@ -74,7 +74,7 @@
           <img style="padding-bottom: 1%;cursor: pointer;"  :src="item.red == true ? likeOnImg:likeOffImg" @click="rating(item)" alt="点赞图片" />
           <label class="align-items-center"  style="cursor: pointer;color: #999999;font-size: 14px;padding-left: 0.5%">赞（{{parseInt(item.praiseNum)}})</label>
           <img src="../../assets/img/reply.png" style="cursor: pointer;padding-bottom: 1%;padding-left: 2%">
-          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index)">回复（{{item.wbNum}}）</a>
+          <a style="color: #999999;font-size: 14px;padding-left: 0.5%;cursor: pointer" @click="toDetail(index,$getSimpleHtml(item.detail))">回复（{{item.wbNum}}）</a>
         </div>
 <!--        <div class="reply" v-if="isReply">-->
 <!--          <div class="text-center" style="margin: 5% 0 2%">-->
@@ -153,10 +153,9 @@ export default {
       evaluatePostApi(params).then(result =>{
         console.log(result)
         if(result.isok === true){
-          this.successSave = true
+          this.$successMsg(`提出话题成功`);
           const interval = setInterval(() => {
-            this.successSave = false
-            this.detail = ''
+            window.location.reload();
           }, 2000)
         }
       })
@@ -184,17 +183,17 @@ export default {
         console.log(result)
         if(result.code === 200){
           console.log(true)
-          this.successSave = true
+          this.$successMsg(`提交评价成功`);
           const interval = setInterval(() => {
-            this.successSave = false
+            window.location.reload();
           }, 2000)
         }
       })
     },
     //跳转至回复的详情
-    toDetail(index){
+    toDetail(index,detail){
       console.log(index)
-      this.$router.push({name:'interactionDetails',query:{comment: this.commentList[index]}})
+      this.$router.push({name:'interactionDetails',query:{comment: this.commentList[index],detail:detail}})
     },
     // 点赞评价
     rating: function (item) {

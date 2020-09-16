@@ -6,7 +6,7 @@
       <div style="font-family: MicrosoftYaHei,sans-serif;font-size: 50px;font-stretch: normal;color: #ffffff;padding-top: 8%;padding-left: 18%;letter-spacing: 5px;">嵌入式系统原理与开发</div>
       <div style="font-family: MicrosoftYaHeiLight,monospace;font-size: 24px;color: #ffffff;padding-left: 18%;padding-top: 2%;letter-spacing: 3px;">PRINCIPLE AND DEVELOPMENT OF EMBEDDED SYSTEM</div>
       <div style="width: 300px;height: 4px;background-color: #ffffff;border-radius: 2px;margin-left: 18%;margin-top: 4%;"></div>
-      <div><button type="button" class="btn btn-light" style="color: #1089f0;width: 156px;border-radius: 29px;margin-left: 18%;margin-top:5%">进入学习 > > </button></div>
+      <div><button type="button" class="btn btn-light" style="color: #1089f0;width: 156px;border-radius: 29px;margin-left: 18%;margin-top:5%" @click="toVideo">进入学习 > > </button></div>
     </div>
     <div class="intro" style="display: flex;margin-left: 18%;margin-top: 8%;margin-bottom: 10%">
       <div>
@@ -72,11 +72,17 @@ export default {
   name: 'home',
   data () {
     return {
-      imgSrc: ''
+      imgSrc: '',
+      isLogin:true
     }
   },
   mounted() {
     this.getImage();
+    if(this.$store.getters.user.Info){
+      this.isLogin = true
+    }else {
+      this.isLogin = false
+    }
   },
   methods: {
     getImage(){
@@ -84,6 +90,13 @@ export default {
         this.imgSrc = result.data.cover
 
       })
+    },
+    toVideo(){
+      if(this.isLogin == true){
+        this.$router.push('/video')
+      }else{
+        this.$router.push('/login')
+      }
     }
   }
 }

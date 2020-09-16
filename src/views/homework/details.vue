@@ -88,9 +88,8 @@ export default {
       homeworkPostApi(params).then(result =>{
         if(result.code === 200){
           console.log(true)
-          this.successSave = true
+          this.$successMsg('提交成功')
           const interval = setInterval(() => {
-            this.successSave = false
             this.$router.push('/homework')
           }, 2000)
         }
