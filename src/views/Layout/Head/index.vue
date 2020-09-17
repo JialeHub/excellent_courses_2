@@ -113,6 +113,9 @@
               <img v-if="isLogin" :src="$addBaseURL($store.getters.user.Info.scover)" width="40px" height="40px" style="border-radius: 20px">
             </router-link>
           </li>
+          <li class="nav-item " style="cursor: pointer">
+            <span v-if="isLogin" @click="outLogin">退出登录</span>
+          </li>
         </ul>
       </div>
       <!--导航内容End-->
@@ -144,6 +147,14 @@ export default {
     }
   },
   methods: {
+    // 退出登录
+    outLogin(){
+      this.$store.dispatch('setUser','');//更新userInfo
+      this.$store.dispatch('setToken','');//更新userInfo
+      const interval = setInterval(() => {
+        this.$router.push('/login')
+      }, 1000)
+    }
   }
 }
 </script>
