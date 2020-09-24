@@ -13,27 +13,29 @@
       <div class="title" style="display: flex">
         <span style="line-height: 20px">题目：</span>
         <div class="content" style="">
-          <div style="line-height: 20px">{{$getSimpleHtml(homeworkList[0].hwQuestion)}}</div>
+          <div style="line-height: 20px">{{$getSimpleHtml(this.$route.query.hwQuestion)}}</div>
         </div>
       </div>
       <div class="time" style="line-height: 25px;padding-top: 5%">
         <span>截止时间： </span>
-        <span style="color: #f59f38">{{homeworkList[0].endTime}}</span>
+        <span style="color: #f59f38">{{this.$route.query.endTime}}</span>
       </div>
      <div class="require" style="line-height: 25px;padding-top: 5%">
        <span>作业要求： </span>
-       <span>{{homeworkList[0].hwRequire}}</span>
+       <span>{{this.$route.query.hwRequire}}</span>
      </div>
-      <div class="row justify-content-md-center">
-        <div class="col-5 alert alert-success text-center" role="alert" style="" v-if="successSave">
-          提交评价成功
-        </div>
+      <div class="require" style="line-height: 25px;padding-top: 5%;color: #cc312d" v-if="state">
+        <span>我的答案： </span>
+        <span>{{$getSimpleHtml(this.$route.query.subAnswer)}}</span>
       </div>
-
-      <div class="text-center" style="padding-top: 5%">
+      <div class="require" style="line-height: 25px;padding-top: 5%;color: #cc312d" v-if="state">
+        <span>提交时间： </span>
+        <span>{{this.$route.query.subTime}}</span>
+      </div>
+      <div class="text-center" style="padding-top: 5%" v-if="!state">
         <custom-editor v-model="answer"></custom-editor>
       </div>
-      <div class="row justify-content-md-end">
+      <div class="row justify-content-md-end" v-if="!state">
         <button @click="submit(answer)" type="button" class="btn btn-primary" style="border-radius: 20px;width: 130px;margin-top:25px;margin-right: 2%">提交答案</button>
       </div>
     </div>
@@ -52,12 +54,18 @@ export default {
       imgSrc: '',
       homeworkList:[],
       answer:'',
-      successSave: false
+      successSave: false,
+      state: false // 是否答过题
     }
   },
   mounted() {
+
     this.getImage();
     this.getUserByPage();
+    if(this.$route.query.subTime!= null){
+      this.state = true
+    }
+    console.log(this.state)
   },
   methods: {
     // 获取图片
@@ -73,6 +81,7 @@ export default {
         size : '1',
         index: this.$route.query.index
       }
+      console.log(this.$route.query.index)
       homeworkListGetApi(params).then(result => {
         console.log(result.data.records)
         this.homeworkList = result.data.records

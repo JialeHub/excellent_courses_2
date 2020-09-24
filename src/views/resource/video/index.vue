@@ -18,9 +18,6 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <!-- 内容区域-->
     <div class="container" style="margin-top: 5%;margin-bottom: 5%;">
-      <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top:80%" v-if="successSave">
-        提交成功
-      </div>
       <div class="row">
         <!--左边卡片区域-->
         <div class="col-sm-8">
@@ -109,6 +106,7 @@
 import {imagesGetApi} from "../../../api/modules/images";
 import {resourceGetApi, RsectionGetApi} from "../../../api/modules/fileInfo";
 import {evaluatePostApi} from "../../../api/modules/evaluate";
+import {uploadApi} from "@/api/modules/file";
 
 
 export default {
@@ -140,6 +138,19 @@ export default {
     this.getSection();
   },
   methods: {
+    // 获取视频观看历史
+    historyGet(){
+      uploadApi().then(result => {
+        for(let i=0;i<this.videoList.length;i++){
+          for(let j=0;j<result.data.length;j++){
+            if(result.data[j] === this.videoList[i].id){
+              console.log(j) // 遍历获取已看过的视频id
+              this.videoList[i].ftype =  1
+            }
+          }
+        }
+      })
+    },
     // 点击tab栏切换
     change:function(index){
       this.currentIndex=index;
@@ -171,8 +182,8 @@ export default {
         section: this.section
       }
       resourceGetApi(params).then(result => {
-        // console.log(result.data)
         this.videoList = result.data.records
+        this.historyGet();
       })
     },
     closeVideo(){
@@ -181,21 +192,18 @@ export default {
     },
     // 预览视频
     toPreview(url,name,type,id){
-      console.log(url)
       this.$router.push({name:'resourceVideoDetails',query:{url: url,name: name,type:type,id:id}})
       // this.videoUrl = url;
       // this.visibleVideo = true
     },
     // 提出话题
     submit(topic){
-      console.log(topic)
       const params = {
         type: '1',
         detail: topic
       }
       this.topic = ''
       evaluatePostApi(params).then(result =>{
-        console.log(result)
         if(result.isok === true){
         this.$successMsg('提出成功')
          window.location.reload()

@@ -14,11 +14,11 @@
     <div style="text-align: center;font-size: 22px;padding-bottom: 5%">{{this.$route.query.name}}</div>
     <div style="text-align: left;margin-left: 15%;margin-bottom: 2%">
       <div v-if="this.$route.query.type === 1" style="display: flex;align-items: center">
-        <img  src="../../../assets/img/taskOn.png" style="width: 18px;text-align: left;width: 70%"/>
+        <img  src="../../../assets/img/taskOn.png" style="text-align: left;width: 20px"/>
         <span style="color: #666666;margin-left: 1%">视频任务已完成</span>
       </div>
       <div v-if="this.$route.query.type === 0" style="display: flex;align-items: center">
-        <img  src="../../../assets/img/task.png" style="width: 18px"/>
+        <img  src="../../../assets/img/task.png" style="text-align: left;width:20px"/>
         <span style="color: #666666;margin-left: 1%">视频任务未完成</span>
       </div>
     </div>
