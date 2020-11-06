@@ -80,6 +80,7 @@ export default {
           console.log('登录成功')
           this.$store.dispatch('setUser', { username: this.userVo.username,Info: result.data.studentInfo })
           this.$store.dispatch('setToken', result.data.token)
+          console.log(this.$route.query)
           if (!this.$isEmpty(this.$route.query.redirect)) {
             console.log('!isEmpty')
             this.$router.push({ path: this.$route.query.redirect + '' })

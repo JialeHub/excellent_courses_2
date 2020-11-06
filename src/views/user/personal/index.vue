@@ -25,7 +25,6 @@
     <div class="line" style="height: 1px;background-color: #dddddd;margin-top: 1%"></div>
     <div class="container">
       <div class="tab-content" id="pills-tabContent">
-        <!--基本资料-->
         <div class="tab-pane fade show active" id="pills-one"  aria-labelledby="pills-profile-tab">
           <div class="col-5 alert alert-success text-center" role="alert" style="position:absolute;margin-left: 20%;top: 85%" v-if="successSave">
             保存个人资料成功

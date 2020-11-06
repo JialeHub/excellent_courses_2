@@ -18,7 +18,12 @@ import CustomEditor from './components/CustomEditor'; //富文本组件
 import ImageUploaderPlus from './components/ImageUploaderPlus'; //图片
 import SubmitButton from './components/SubmitButton'; //提交按钮
 import ElementUI from 'element-ui'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
+// import style
+import 'swiper/swiper-bundle.css'
+
+Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 
 
 Vue.config.productionTip = false

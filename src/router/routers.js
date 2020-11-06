@@ -10,6 +10,17 @@ const routes = [
       keepAlive: true
     }
   },
+  {
+    path: '/teamDetail',
+    name: 'teamDetail',
+    component: () => import('@/views/home/teamDetail.vue'),
+    meta: {
+      name: '精品课程',
+      title: '精品课程',
+      keepAlive: true
+    }
+  },
+
   /** **************************************** 评价evaluate **************************************** **/
   // 校外专家评价
   {
@@ -250,7 +261,9 @@ const routes = [
     redirect: '/',
     meta: {
       name: '精品课程',
-      title: '精品课程'
+      title: '精品课程',
+      keepAlive: true
+
     }
   },
   // 错误页
@@ -260,7 +273,8 @@ const routes = [
     component: () => import('@/views/error/404/index.vue'),
     meta: {
       name: '未找到页面 | 精品课程',
-      title: '未找到页面 | 精品课程'
+      title: '未找到页面 | 精品课程',
+      keepAlive: false
     }
   },
   // 重定向404
@@ -269,7 +283,8 @@ const routes = [
     redirect: '/404',
     meta: {
       name: '未找到页面 | 精品课程',
-      title: '未找到页面 | 精品课程'
+      title: '未找到页面 | 精品课程',
+      keepAlive: false
     }
   }
 ]
