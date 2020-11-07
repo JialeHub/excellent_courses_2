@@ -87,7 +87,7 @@
             <router-link to="/record" v-if="isLogin">我的学习 | </router-link>
           </li>
           <li class="nav-item ">
-            <router-link to="/personal" v-if="isLogin">{{$store.getters.user.Info.sname}}</router-link>
+            <router-link to="/personal" v-if="isLogin">{{$tryRead('$store.getters.user.Info.sname',$store) }}</router-link>
           </li>
           <li>
             <router-link
@@ -110,7 +110,7 @@
             ]"
               :to="{ name: 'personal' }"
             >
-              <img v-if="isLogin" :src="$addBaseURL($store.getters.user.Info.scover)" width="40px" height="40px" style="border-radius: 20px">
+              <img v-if="isLogin" :src="$addBaseURL($tryRead('$store.getters.user.Info.scover',$store) )" width="40px" height="40px" style="border-radius: 20px">
             </router-link>
           </li>
           <li class="nav-item " style="cursor: pointer">
@@ -133,10 +133,10 @@ export default {
       isLogin: true
     }
   },
-  mounted() {
-    if(this.$store.getters.user.Info){
+  mounted () {
+    if (this.$store.getters.user.Info) {
       this.isLogin = true
-    }else {
+    } else {
       this.isLogin = false
     }
   },
@@ -148,12 +148,13 @@ export default {
   },
   methods: {
     // 退出登录
-    outLogin(){
-      this.$store.dispatch('setUser','');//更新userInfo
-      this.$store.dispatch('setToken','');//更新userInfo
-      const interval = setInterval(() => {
+    outLogin () {
+      this.$store.dispatch('setUser', '')// 更新userInfo
+      this.$store.dispatch('setToken', '')// 更新userInfo
+      this.$router.push('/login')
+      /* const interval = setInterval(() => {
         this.$router.push('/login')
-      }, 1000)
+      }, 1000) */
     }
   }
 }

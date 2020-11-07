@@ -16,7 +16,7 @@ export default {
   name: 'app',
   data () {
     return {
-      text: '',
+      text: ''
     }
   },
   created () {
@@ -24,13 +24,13 @@ export default {
     if (loadingPage) {
       document.body.removeChild(loadingPage)
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss">
 html{
-  min-width: 1260px;
+  min-width: 1400px;
 }
 #app {
 
