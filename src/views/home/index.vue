@@ -25,7 +25,7 @@
         <div style="color: #333333;font-size: 32px;">课程负责人</div><br/>
         <div style="width: 611px;color: #808080;font-size: 18px;letter-spacing: 1px;line-height: 29px;margin-top:6%;">{{teacherIntro.text}}</div>
       </div>
-      <img style="width: 400px;height: 500px;background-color: #fff;border: solid 6px #ffffff;margin-top: 6%;margin-left: 4%"
+      <img style="width: 400px;height: 400px;background-color: #fff;border: solid 6px #ffffff;margin-top: 6%;margin-left: 4%"
           :src="$addBaseURL(teacherIntro.img)" >
     </div>
     <!--教学团队-->
