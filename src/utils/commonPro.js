@@ -101,13 +101,13 @@ export const tryRead = (objPath, source) => {
   objStr.shift()
   let objTemp = source
   let objTempStr = objStrArr[0] + '.'
-  const objTempJSON = []
+  // const objTempJSON = []
   let i
   try {
     for (i = 0; i < objStr.length; i++) {
       objTempStr += objStr[i] + '.'
       if (objTemp[objStr[i]] !== undefined) {
-        objTempJSON.push(tryJSONParse(tryJSONStringify(objTemp[objStr[i]])))// 记录对象
+        // objTempJSON.push(tryJSONParse(tryJSONStringify(objTemp[objStr[i]])))// 记录对象快照
         objTemp = objTemp[objStr[i]]
       } else {
         successFlag = false
@@ -122,11 +122,11 @@ export const tryRead = (objPath, source) => {
       return objTemp
     } else {
       if (process.env.NODE_ENV === 'development') {
-        console.warn('↓ 对象解析失败！ ↓')
-        console.log('记录寻址对象 _ objTempJSON：', objTempJSON)
-        console.log('最终寻址路径 _ objTempStr：', objTempStr)
+        console.log('↓ 对象解析失败！ ↓')
+        // console.log('记录对象快照(objTempJSON)：', objTempJSON)
+        console.log('最终寻址路径(objTempStr)：', objTempStr)
         console.log('undefined:', objStr[i], '《=====》 下一个地址不能寻址:', objStr[i + 1])
-        console.log('最后成功寻址 _ objTemp：', objTemp)
+        // console.log('最后成功寻址 _ objTemp：', objTemp)
         console.warn('↑=====↑=====↑')
       }
       return undefined
