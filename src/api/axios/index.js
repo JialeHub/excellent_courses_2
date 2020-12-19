@@ -63,6 +63,8 @@ const isAddToken = (url) =>
     'file/upload',
     '/info/homeworkByStudent',
     '/resource/video',
+    '/student/get',
+    '/student/page',
     '/intro'
   ].some(item => url === item)
 

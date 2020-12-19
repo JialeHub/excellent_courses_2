@@ -5,8 +5,8 @@ const routes = [
     name: 'home',
     component: () => import('@/views/home/index.vue'),
     meta: {
-      name: '精品课程',
-      title: '精品课程',
+      name: '嵌入式系统原理与开发精品课程',
+      title: '嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -15,8 +15,8 @@ const routes = [
     name: 'teamDetail',
     component: () => import('@/views/home/teamDetail.vue'),
     meta: {
-      name: '精品课程',
-      title: '精品课程',
+      name: '嵌入式系统原理与开发精品课程',
+      title: '嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -28,8 +28,8 @@ const routes = [
     name: 'outside',
     component: () => import('@/views/evaluate/outside/index.vue'),
     meta: {
-      name: '校外专家评价 | 精品课程',
-      title: '校外专家评价 | 精品课程',
+      name: '校外专家评价 | 嵌入式系统原理与开发精品课程',
+      title: '校外专家评价 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -39,8 +39,8 @@ const routes = [
     name: 'school',
     component: () => import('@/views/evaluate/school/index.vue'),
     meta: {
-      name: '校内专家评价 | 精品课程',
-      title: '校内专家评价 | 精品课程',
+      name: '校内专家评价 | 嵌入式系统原理与开发精品课程',
+      title: '校内专家评价 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -50,8 +50,8 @@ const routes = [
     name: 'teacher',
     component: () => import('@/views/evaluate/teacher/index.vue'),
     meta: {
-      name: '教师评价 | 精品课程',
-      title: '教师评价 | 精品课程',
+      name: '教师评价 | 嵌入式系统原理与开发精品课程',
+      title: '教师评价 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -61,8 +61,8 @@ const routes = [
     name: 'student',
     component: () => import('@/views/evaluate/student/index.vue'),
     meta: {
-      name: '学生评价 | 精品课程',
-      title: '学生评价 | 精品课程',
+      name: '学生评价 | 嵌入式系统原理与开发精品课程',
+      title: '学生评价 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -72,8 +72,8 @@ const routes = [
     name: 'reply',
     component: () => import('@/views/evaluate/student/reply.vue'),
     meta: {
-      name: '学生评价详情 | 精品课程',
-      title: '学生评价详情 | 精品课程',
+      name: '学生评价详情 | 嵌入式系统原理与开发精品课程',
+      title: '学生评价详情 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -84,8 +84,8 @@ const routes = [
     name: 'objective',
     component: () => import('@/views/exam/objective/index.vue'),
     meta: {
-      name: '客观题 | 精品课程',
-      title: '客观题 | 精品课程',
+      name: '客观题 | 嵌入式系统原理与开发精品课程',
+      title: '客观题 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -95,8 +95,8 @@ const routes = [
     name: 'subjective',
     component: () => import('@/views/exam/subjective/index.vue'),
     meta: {
-      name: '主观题 | 精品课程',
-      title: '主观题 | 精品课程',
+      name: '主观题 | 嵌入式系统原理与开发精品课程',
+      title: '主观题 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -106,8 +106,8 @@ const routes = [
     name: 'practice',
     component: () => import('@/views/exam/practice/index.vue'),
     meta: {
-      name: '模拟考试 | 精品课程',
-      title: '模拟考试 | 精品课程',
+      name: '模拟考试 | 嵌入式系统原理与开发精品课程',
+      title: '模拟考试 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -118,8 +118,8 @@ const routes = [
     name: 'courseware',
     component: () => import('@/views/resource/courseware/index.vue'),
     meta: {
-      name: '教学课件 | 精品课程',
-      title: '教学课件 | 精品课程',
+      name: '教学课件 | 嵌入式系统原理与开发精品课程',
+      title: '教学课件 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -129,19 +129,19 @@ const routes = [
     name: 'video',
     component: () => import('@/views/resource/video/index.vue'),
     meta: {
-      name: '教学录像 | 精品课程',
-      title: '教学录像 | 精品课程',
+      name: '教学录像 | 嵌入式系统原理与开发精品课程',
+      title: '教学录像 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
-  //教学录像详情
+  // 教学录像详情
   {
     path: '/resourceVideoDetails',
     name: 'resourceVideoDetails',
     component: () => import('@/views/resource/video/details.vue'),
     meta: {
-      name: '教学录像详情 | 精品课程',
-      title: '教学录像详情 | 精品课程',
+      name: '教学录像详情 | 嵌入式系统原理与开发精品课程',
+      title: '教学录像详情 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -151,8 +151,8 @@ const routes = [
     name: 'outline',
     component: () => import('@/views/resource/outline/index.vue'),
     meta: {
-      name: '教学大纲 | 精品课程',
-      title: '教学大纲 | 精品课程',
+      name: '教学大纲 | 嵌入式系统原理与开发精品课程',
+      title: '教学大纲 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -162,8 +162,8 @@ const routes = [
     name: 'record',
     component: () => import('@/views/record/index.vue'),
     meta: {
-      name: '学习记录 | 精品课程',
-      title: '学习记录 | 精品课程',
+      name: '学习记录 | 嵌入式系统原理与开发精品课程',
+      title: '学习记录 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -173,8 +173,8 @@ const routes = [
     name: 'interaction',
     component: () => import('@/views/interaction/index.vue'),
     meta: {
-      name: '师生互动 | 精品课程',
-      title: '师生互动 | 精品课程',
+      name: '师生互动 | 嵌入式系统原理与开发精品课程',
+      title: '师生互动 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -183,8 +183,8 @@ const routes = [
     name: 'interactionDetails',
     component: () => import('@/views/interaction/details.vue'),
     meta: {
-      name: '师生互动详情 | 精品课程',
-      title: '师生互动详情 | 精品课程',
+      name: '师生互动详情 | 嵌入式系统原理与开发精品课程',
+      title: '师生互动详情 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -194,8 +194,8 @@ const routes = [
     name: 'homework',
     component: () => import('@/views/homework/index.vue'),
     meta: {
-      name: '作业提交 | 精品课程',
-      title: '作业提交 | 精品课程',
+      name: '作业提交 | 嵌入式系统原理与开发精品课程',
+      title: '作业提交 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -204,8 +204,8 @@ const routes = [
     name: 'homeworkDetails',
     component: () => import('@/views/homework/details.vue'),
     meta: {
-      name: '作业详情 | 精品课程',
-      title: '作业详情 | 精品课程',
+      name: '作业详情 | 嵌入式系统原理与开发精品课程',
+      title: '作业详情 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -216,8 +216,8 @@ const routes = [
     name: 'login',
     component: () => import('@/views/user/login/index.vue'),
     meta: {
-      name: '用户登录 | 精品课程',
-      title: '用户登录 | 精品课程',
+      name: '用户登录 | 嵌入式系统原理与开发精品课程',
+      title: '用户登录 | 嵌入式系统原理与开发精品课程',
       keepAlive: false
     }
   },
@@ -227,8 +227,8 @@ const routes = [
     name: 'register',
     component: () => import('@/views/user/register/index.vue'),
     meta: {
-      name: '用户注册 | 精品课程',
-      title: '用户注册 | 精品课程',
+      name: '用户注册 | 嵌入式系统原理与开发精品课程',
+      title: '用户注册 | 嵌入式系统原理与开发精品课程',
       keepAlive: false
     }
   },
@@ -238,8 +238,8 @@ const routes = [
     name: 'password',
     component: () => import('@/views/user/password/index.vue'),
     meta: {
-      name: '修改密码 | 精品课程',
-      title: '修改密码 | 精品课程',
+      name: '修改密码 | 嵌入式系统原理与开发精品课程',
+      title: '修改密码 | 嵌入式系统原理与开发精品课程',
       keepAlive: false
     }
   },
@@ -249,8 +249,8 @@ const routes = [
     name: 'personal',
     component: () => import('@/views/user/personal/index.vue'),
     meta: {
-      name: '个人中心 | 精品课程',
-      title: '个人中心 | 精品课程',
+      name: '个人中心 | 嵌入式系统原理与开发精品课程',
+      title: '个人中心 | 嵌入式系统原理与开发精品课程',
       keepAlive: true
     }
   },
@@ -260,8 +260,8 @@ const routes = [
     path: '/home',
     redirect: '/',
     meta: {
-      name: '精品课程',
-      title: '精品课程',
+      name: '嵌入式系统原理与开发精品课程',
+      title: '嵌入式系统原理与开发精品课程',
       keepAlive: true
 
     }
@@ -272,8 +272,8 @@ const routes = [
     name: 'Error404',
     component: () => import('@/views/error/404/index.vue'),
     meta: {
-      name: '未找到页面 | 精品课程',
-      title: '未找到页面 | 精品课程',
+      name: '未找到页面 | 嵌入式系统原理与开发精品课程',
+      title: '未找到页面 | 嵌入式系统原理与开发精品课程',
       keepAlive: false
     }
   },
@@ -282,8 +282,8 @@ const routes = [
     path: '*',
     redirect: '/404',
     meta: {
-      name: '未找到页面 | 精品课程',
-      title: '未找到页面 | 精品课程',
+      name: '未找到页面 | 嵌入式系统原理与开发精品课程',
+      title: '未找到页面 | 嵌入式系统原理与开发精品课程',
       keepAlive: false
     }
   }

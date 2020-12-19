@@ -5,7 +5,7 @@ import routes from './routers'
 
 // 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push(location) {
+VueRouter.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
@@ -29,7 +29,7 @@ const router = new VueRouter({
   }
 })
 
-const needLogin = [] // 拦截对象
+const needLogin = ['/login'] // 拦截对象
 
 // 路由守卫：
 router.beforeEach((to, from, next) => {
@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
   if (store.getters.token && store.getters.token !== '') {
     next()
   } else {
-    if (needLogin.indexOf(to.path) === -1) {
+    if (needLogin.indexOf(to.path) !== -1) {
       next()
     } else {
       next('/login?redirect=' + to.path)

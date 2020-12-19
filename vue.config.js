@@ -3,7 +3,7 @@ module.exports = {
   assetsDir: 'static',
 
   pwa: {
-    name: '精品课程'
+    name: '嵌入式系统原理与开发精品课程'
   },
 
   devServer: {

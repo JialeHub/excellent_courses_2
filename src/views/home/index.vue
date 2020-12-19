@@ -87,8 +87,8 @@
 </template>
 
 <script>
-import { imagesGetApi } from "../../api/modules/images";
-import {introtGetApi, teamGetApi} from "@/api/modules/intro";
+import { imagesGetApi } from '../../api/modules/images'
+import { introtGetApi, teamGetApi } from '@/api/modules/intro'
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 import 'swiper/swiper-bundle.css'
 
@@ -98,16 +98,18 @@ export default {
     SwiperSlide
   },
 
-
   name: 'home',
   data () {
     return {
       imgSrc: '',
-      isLogin:true,
-      teacherIntro:[],
-      courseIntro:[],
+      isLogin: true,
+      teacherIntro: [],
+      courseIntro: {
+        img: '',
+        text: ''
+      },
       items: [],
-      ImgList:[],
+      ImgList: [],
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: 30,
@@ -125,55 +127,54 @@ export default {
       }
     }
   },
-  mounted() {
-    this.getImage();
-    this.getTeacherIntro();
-    this.getCourseIntro();
-    this.getTeam();
-    if(this.$store.getters.user.Info){
+  mounted () {
+    this.getImage()
+    this.getTeacherIntro()
+    this.getCourseIntro()
+    this.getTeam()
+    if (this.$store.getters.user.Info) {
       this.isLogin = true
-    }else {
+    } else {
       this.isLogin = false
     };
     this.items = this.ImgList
   },
   methods: {
     // 获取板块图片
-    getImage(){
-      imagesGetApi({board:'1'}).then(result => {
+    getImage () {
+      imagesGetApi({ board: '1' }).then(result => {
         this.imgSrc = result.data.cover
-
       })
     },
     // 进入学习
-    toVideo(){
-      if(this.isLogin == true){
+    toVideo () {
+      if (this.isLogin == true) {
         this.$router.push('/video')
-      }else{
+      } else {
         this.$router.push('/login')
       }
     },
-    //获取简介信息
-    getTeacherIntro(){
-      introtGetApi({intIndex:2}).then(result => {
+    // 获取简介信息
+    getTeacherIntro () {
+      introtGetApi({ intIndex: 2 }).then(result => {
         this.teacherIntro = result.data
       })
     },
-    getCourseIntro(){
-      introtGetApi({intIndex:1}).then(result => {
+    getCourseIntro () {
+      introtGetApi({ intIndex: 1 }).then(result => {
         this.courseIntro = result.data
       })
     },
-    getTeam(){
-      teamGetApi({current:1,size:999}).then(result => {
+    getTeam () {
+      teamGetApi({ current: 1, size: 999 }).then(result => {
         this.ImgList = result.data.records
         // console.log(this.ImgList)
       })
     },
     // 点击教学团队进入详情
-    toDetail(id){
+    toDetail (id) {
       console.log(id)
-      this.$router.push({name:'teamDetail',query:{id:id}})
+      this.$router.push({ name: 'teamDetail', query: { id: id } })
     }
   }
 
